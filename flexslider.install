@@ -1,0 +1,75 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the galleria module.
+ */
+
+/**
+ * Implements hook_schema().
+ * Always returns the latest schema version!
+ */
+function flexslider_schema() {
+  return array(
+    'flexslider_optionset' => array(
+      'description' => 'Store option sets for flexslider instances.',
+      'fields' => array(
+        'name' => array(
+          'description' => 'The machine-readable option set name.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+        ),
+        'title' => array(
+          'description' => 'The human-readable title for this option set.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+        ),
+        'theme' => array(
+          'description' => 'The flexslider theme.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+          'default' => 'classic',
+        ),
+        'imagestyle_thumb' => array(
+          'description' => 'The image style for thumbnails.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+          'default' => 'galleria_thumb',
+        ),
+        'imagestyle_normal' => array(
+          'description' => 'The image style for normal images.',
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => TRUE,
+          'default' => 'galleria_zoom',
+        ),
+        'options' => array(
+          'description' => 'The options array.',
+          'type' => 'blob',
+          'size' => 'big',
+          'serialize' => TRUE,
+        ),
+      ),
+      'primary key' => array('name'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_install().
+ * Adds a 'default' option set for fresh installs.
+ */
+function flexslider_install() {
+  $optionset = array(
+    'name' => 'default',
+    'title' => 'Default',
+    'options' => array(
+      'height' => 300,
+      'width' => 450,
+    ),
+  );
+  flexslider_optionset_save($optionset, TRUE);
+}
