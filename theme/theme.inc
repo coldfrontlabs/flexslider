@@ -25,7 +25,7 @@ function template_preprocess_flexslider_container(&$vars) {
   }
   
   // Attach flexslider JavaScript
-  flexslider_add_js($flexslider_id, $optionset);
+  flexslider_add($flexslider_id, $optionset);
 
   // Prepare image elements
   $items = $vars['items'];

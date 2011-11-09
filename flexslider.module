@@ -5,6 +5,63 @@
  */
 
 /**
+ * Implements hook_library().
+ * @author minorOffense <mwinstone@coldfrontlabs.ca>
+ */
+function flexslider_library() {
+  $libraries['flexslider'] = array(
+    'title' => 'FlexSlider',
+    'website' => 'http://flex.madebymufffin.com/',
+    'version' => '1.8',
+    'js' => array(
+      libraries_get_path('flexslider') . '/jquery.flexslider-min.js' => array(),
+    ),
+    'css' => array(
+      libraries_get_path('flexslider') . '/flexslider.css' => array(
+        'type' => 'file',
+        'media' => 'screen',
+      ),
+    ),
+  );
+  return $libraries;
+}
+
+/**
+ * Implements hook_library_alter().
+ * @author minorOffense <mwinstone@coldfrontlabs.ca>
+ */
+function flexslider_library_alter(&$libraries, $module) {
+  $debug = variable_get('flexslider_debug', FALSE);
+  if ($debug) {
+    // Switch to the unminified version of the library
+    if ($module == 'flexslider' && isset($libraries['flexslider'])) {
+        $libraries['flexslider']['js'] = array(
+          libraries_get_path('flexslider') . '/jquery.flexslider.js' => array(),
+        );
+    }
+  }
+  
+  // @todo configure the styles for the theme to be altered by admin configurations
+
+  // As it's only possible to use one theme per page, use the first one we get for everything.
+  // @todo load the selected theme
+  // @todo override css path
+  $theme = (!empty($optionset['theme'])) ? $optionset['theme'] : 'default';
+}
+
+/**
+ * Implements hook_permission().
+ * @author minorOffense <mwinstone@coldfrontlabs.ca>
+ */
+function flexslider_permission() {
+  return array(
+    'administer flexslider' =>  array(
+      'title' => t('Administer the FlexSlider module'),
+    ),
+  );
+}
+
+/**
  * Implements hook_menu().
  */
 function flexslider_menu() {
@@ -14,7 +71,7 @@ function flexslider_menu() {
     'title' => 'flexslider',
     'description' => 'Configure flexslider galleries.',
     'page callback' => 'flexslider_page_optionset_list',
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('administer site configuration', 'administer flexslider'),
     'file' => 'includes/flexslider.admin.inc',
   );
   $items['admin/config/media/flexslider/list'] = array(
@@ -28,7 +85,7 @@ function flexslider_menu() {
     'description' => 'Add a new flexslider option set.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('flexslider_form_optionset_add'),
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('administer site configuration', 'administer flexslider'),
     'type' => MENU_LOCAL_ACTION,
     'weight' => 1,
     'file' => 'includes/flexslider.admin.inc',
@@ -38,7 +95,7 @@ function flexslider_menu() {
     'description' => 'Configure an option set.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('flexslider_form_optionset_edit', 5),
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('administer site configuration', 'administer flexslider'),
     'file' => 'includes/flexslider.admin.inc',
   );
   $items['admin/config/media/flexslider/delete/%flexslider_optionset'] = array(
@@ -46,7 +103,7 @@ function flexslider_menu() {
     'description' => 'Delete an option set.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('flexslider_optionset_form_delete', 5),
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('administer site configuration', 'administer flexslider'),
     'file' => 'includes/flexslider.admin.inc',
   );
   $items['admin/config/media/flexslider/advanced'] = array(
@@ -54,7 +111,7 @@ function flexslider_menu() {
     'description' => 'Configure the advanced flexslider module settings.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('flexslider_form_settings'),
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('administer site configuration', 'administer flexslider'),
     'type' => MENU_LOCAL_TASK,
     'weight' => 2,
     'file' => 'includes/flexslider.admin.inc',
@@ -94,56 +151,30 @@ function flexslider_theme() {
     ),
     'flexslider_form_table' => array(
       'render element' => 'form',
-      'file' => 'includes/flexslider.admin.inc',
+      'file' => 'flexslider.admin.inc',
     ),
   );
 }
 
 /**
  * Implements hook_image_default_styles().
- *
- * Provides default image style presets that can be overridden by site administrators.
  */
 function flexslider_image_default_styles() {
   $styles = array();
 
-  // image preset for the big image
-  $styles['flexslider_zoom'] = array(
+  // Default image preset for FlexSlider
+  $styles['flexslider_full'] = array(
     'effects' => array(
       array(
         'name' => 'image_scale',
-        'data' => array('width' => 450, 'height' => 300, 'upscale' => 1),
+        'data' => array('width' => 960, 'upscale' => 1),
         'weight' => 0,
       ),
     )
   );
 
-  // image preset for thumbnails
-//  $styles['flexslider_thumb'] = array(
-//    'effects' => array(
-//      array(
-//        'name' => 'image_scale',
-//        'data' => array('width' => 50, 'height' => 40, 'upscale' => 1),
-//        'weight' => 0,
-//      ),
-//    )
-//  );
-
   return $styles;
 }
-
-/**
- * Implements hook_views_api().
- *
- * This tells drupal that there is Views integration file named
- * flexslider.views.inc
- */
-function flexslider_views_api() {
-  return array(
-    'api' => 3,
-  );
-}
-
 
 /**
  * Fetches all option sets from the database and returns them as an associative array.
@@ -202,36 +233,6 @@ function flexslider_optionset_delete($optionset) {
   return TRUE;
 }
 
-
-/*
- * Returns the JavaScript file of the flexslider core.
- * Uses a cached filename until this file gets deleted or the cache gets cleared.
- */
-function flexslider_get_library_file() {
-  $cache = cache_get('flexslider_lib_file');
-  if (($cache !== FALSE) && file_exists($cache->data))
-    return $cache->data;
-
-  // Search for library file
-  $libpath = libraries_get_path('flexslider');
-  
-  // Seach for minimized files first.
-  // Sort the found files to use the newest version if there's more than one.
-  $js = glob($libpath . '/jquery.flexslider-*.min.js');
-  if (count($js) == 0)
-    $js = glob($libpath . '/jquery.flexslider-*.js');
-
-  if (count($js) > 0) {
-    rsort($js);
-    cache_set('flexslider_lib_file', $js[0]);
-    return $js[0];
-  }
-  else {
-    // Could not find JavaScript library
-    return FALSE;
-  }
-}
-
 /**
  * Searches for available themes inside the flexslider folder.
  * The list of themes
@@ -243,7 +244,7 @@ function flexslider_get_themes($nocache = FALSE) {
   $themes = array();
 
   // Search for theme folders
-  $path = drupal_get_path('module', 'flexslider') . '/themes/';
+  $path = libraries_get_path('flexslider') . '/themes/';
   
   if (is_dir($path) && (($path_handle = opendir($path)) !== FALSE)) {
     while (($theme = readdir($path_handle)) !== FALSE) {
@@ -268,219 +269,19 @@ function flexslider_get_themes($nocache = FALSE) {
   return $themes;
 }
 
-/**
- * Returns the JavaScript file of the given theme, or FALSE if it could not be found.
- */
-function flexslider_get_theme_file($theme) {
-  $themes = flexslider_get_themes();
-  return isset($themes[$theme]) ? $themes[$theme] : FALSE;
-}
-
-
-/**
- * Implements hook_field_formatter_info().
- *
- * Adds the flexslider format option within the manage display form of
- * of an image field.
- */
-function flexslider_field_formatter_info() {
-  return array(
-    'flexslider' => array(
-      'label' => t('flexslider'),
-      'field types' => array('image', 'node_reference', 'media'),
-      'settings' => array(
-        'flexslider_optionset' => 'default',
-        'flexslider_reference_img_src' => NULL,
-      ),
-    ),
-  );
-}
-
-/**
- * Implements hook_field_formatter_settings_form().
- *
- * Provides display settings form within the manage display page of
- * an image field with formatter flexslider.
- */
-function flexslider_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
-  $display = $instance['display'][$view_mode];
-  $settings = $display['settings'];
-
-  $form = array();
-
-  // Show select box for the option set
-  $optionsets = array();
-  foreach (flexslider_optionsets() as $name => $optionset) {
-    $optionsets[$name] = check_plain($optionset['title']);
-  }
-  $form['flexslider_optionset'] = array(
-    '#title' => t('Option set'),
-    '#type' => 'select',
-    '#options' => $optionsets,
-    '#default_value' => $settings['flexslider_optionset'],
-  );
-
-  // Show select box for image fields if we're formatting a node_reference field
-  if ($field['type'] == 'node_reference') {
-    // Find all image fields
-    $image_fields = array();
-    $fields = field_info_fields();
-    $ref_node_types = array_filter($field['settings']['referenceable_types']);
-    foreach ($ref_node_types as $ref_node_type) {
-      foreach (field_info_instances('node', $ref_node_type) as $field_name => $field_instance) {
-        if ($fields[$field_name]['type'] == 'image') {
-          $image_fields[$field_name] = $field_name;
-        }
-      }
-    }
-    asort($image_fields);
-
-    if (count($image_fields) == 0) {
-      drupal_set_message(t('The referenced node type does not contain any valid image field(s).'), 'error');
-      return FALSE;
-    }
-    elseif (count($image_fields) == 1) {
-      $keys = array_keys($image_fields);
-      $key = $keys[0];
-      $form['flexslider_reference_img_src'] = array(
-        '#type' => 'hidden',
-        '#value' => $image_fields[$key],
-      );
-    }
-    elseif (count($image_fields) > 1) {
-      $form['flexslider_reference_img_src'] = array(
-        '#type' => 'select',
-        '#title' => t('Image source field of the referenced content type'),
-        '#options' => $image_fields,
-        '#default_value' => isset($settings['flexslider_reference_img_src']) ? $settings['flexslider_reference_img_src'] : '', // defaults to classic theme
-      );
-    }
-  }
-
-  return $form;
-}
-
-/**
- * Implements hook_field_formatter_settings_summary().
- *
- * Displays the summary of the set options of a flexslider formatted image field
- */
-function flexslider_field_formatter_settings_summary($field, $instance, $view_mode) {
-  $display = $instance['display'][$view_mode];
-  $settings = $display['settings'];
-
-  $summary = array();
-
-  // Load option set
-  if (!empty($settings['flexslider_optionset'])) {
-    $o = flexslider_optionset_load($settings['flexslider_optionset']);
-    if ($o !== FALSE) {
-      $optionset = $o;
-    }
-  }
-
-  // Build settings summary
-  $optionset = isset($optionset) ? $optionset['title'] : t('Default settings');
-  $summary[] = t('Option set: %optionset', array('%optionset' => $optionset));
-
-  if (isset($settings['flexslider_reference_img_src'])) {
-    $summary[] = t('Image field of the referenced node: %field', array('%field' => $settings['flexslider_reference_img_src']));
-  }
-
-  return implode('<br />', $summary);
-}
-
-/**
- * Implements hook_field_formatter_view().
- *
- * Prepares a renderable array of images and adds the neccessary JS and CSS
- */
-function flexslider_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
-  if ($field['type'] == 'node_reference') {
-    $items = flexslider_get_referenced_images($display['settings']['flexslider_reference_img_src']);
-  }
-  elseif ($field['type'] == 'media') {
-    $image_items = array();
-    foreach ($items as $item) {
-      if ($item['file']->type == 'image') {
-        $file = (array) $item['file'];
-        $file += array('alt' => '', 'title' => '');
-        $image_items[] = $file;
-      }
-    }
-    $items = $image_items;
-  }
-
-  $element = array();
-  if (count($items) > 0) {
-    $element[] = array(
-      '#theme' => 'flexslider_container',
-      '#items' => $items,
-      '#settings' => $display['settings'],
-    );
-  }
-  return $element;
-}
-
 /*
- * This function returns all images of an image field whose name is passed in argument $field
+ * This function loads the required JavaScripts and settings for a flexslider
+ * instance.
  */
-function flexslider_get_referenced_images($field) {
-  if (empty($field)) {
-    drupal_set_message(t('The referenced field does not contain any image field.'), 'error');
-    return FALSE;
-  }
-
-  $fid_col_name = $field . '_fid';
-  $alt_col_name = $field . '_alt';
-  $title_col_name = $field . '_title';
-  $result = db_query('SELECT ' . $fid_col_name . ',' . $alt_col_name . ',' . $title_col_name . ' FROM {field_data_' . $field . '}');
-
-  $images = array();
-  while ($row = $result->fetchAssoc()) {
-    $image = (array) file_load($row[$fid_col_name]);
-    $image['alt'] = $row[$alt_col_name];
-    $image['title'] = $row[$title_col_name];
-    $images[] = $image; 
-  }
-
-  return $images;
- 
-/*  $output = '<div class="flex-caption">'$image['alt']'</div>';
-  return $output; */
-}
-
-
-/*
- * This function loads the required JavaScripts and settings for a flexslider instance.
- */
-function flexslider_add_js($id, $optionset) {
+function flexslider_add($id, $optionset) {
   // Static array to remember which scripts are already attached.
+  // @todo not currently in use
   $cache = &drupal_static(__FUNCTION__, array());
 
-  // Library JavaScript
-  //   Cache this filename to prevent multiple file_exists() calls.
-  if (!isset($cache['lib'])) {
-    $lib = flexslider_get_library_file();
-    if ($lib === FALSE) {
-      drupal_set_message(t('The flexslider JavaScript file was not found in its path. Please refer to README.txt for installation instructions.'), 'error');
-      return;
-    }
-    $cache['lib'] = $lib;
-  }
-  drupal_add_js($cache['lib'], array('group' => JS_LIBRARY));
+  // @todo investigate the best way to cache data loaded from drupal_add_library()
+  drupal_add_library('flexslider', 'flexslider');
 
-  // Theme
-  //   As it's only possible to use one theme per page, use the first one we get for everything.
-  if (empty($cache['theme'])) {
-    $theme = (!empty($optionset['theme'])) ? $optionset['theme'] : 'default';
-    $theme_file = flexslider_get_theme_file($theme);
-    if (($theme_file === FALSE) && ($theme !== 'default')) {
-      // Try to fall back to classic theme, the other one might have been deleted.
-      $theme_file = flexslider_get_theme_file('default');
-    }
-    $cache['theme'] = $theme_file;
-  }
+  // Moved theme configuration into hook_library_alter().
 
   // JavaScript settings
   $js_settings = array(
@@ -494,9 +295,7 @@ function flexslider_add_js($id, $optionset) {
   );
 
   drupal_add_js(array('flexslider' => $js_settings), 'setting');
-  drupal_add_css($cache['theme']);
- 
-
+  
   // Loader JavaScript
-  drupal_add_js(drupal_get_path('module', 'flexslider') . '/js/flexslider.load.js');
+  drupal_add_js(drupal_get_path('module', 'flexslider') . '/assets/js/flexslider.load.js');
 }

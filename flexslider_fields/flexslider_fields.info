@@ -1,0 +1,6 @@
+name = FlexSlider Fields
+description = Adds a display mode in Fields for FlexSlider
+core = 7.x
+package = Flexslider
+
+dependencies[] = flexslider

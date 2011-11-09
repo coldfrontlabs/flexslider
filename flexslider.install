@@ -1,65 +1,60 @@
 <?php
 /**
  * @file
- * Install, update and uninstall functions for the galleria module.
+ * Installation actions for FlexSlider
  */
 
 /**
  * Implements hook_schema().
- * Always returns the latest schema version!
  */
 function flexslider_schema() {
-  return array(
-    'flexslider_optionset' => array(
-      'description' => 'Store option sets for flexslider instances.',
-      'fields' => array(
-        'name' => array(
-          'description' => 'The machine-readable option set name.',
-          'type' => 'varchar',
-          'length' => 255,
-          'not null' => TRUE,
-        ),
-        'title' => array(
-          'description' => 'The human-readable title for this option set.',
-          'type' => 'varchar',
-          'length' => 255,
-          'not null' => TRUE,
-        ),
-        'theme' => array(
-          'description' => 'The flexslider theme.',
-          'type' => 'varchar',
-          'length' => 255,
-          'not null' => TRUE,
-          'default' => 'classic',
-        ),
-        'imagestyle_thumb' => array(
-          'description' => 'The image style for thumbnails.',
-          'type' => 'varchar',
-          'length' => 255,
-          'not null' => TRUE,
-          'default' => 'galleria_thumb',
-        ),
-        'imagestyle_normal' => array(
-          'description' => 'The image style for normal images.',
-          'type' => 'varchar',
-          'length' => 255,
-          'not null' => TRUE,
-          'default' => 'galleria_zoom',
-        ),
-        'options' => array(
-          'description' => 'The options array.',
-          'type' => 'blob',
-          'size' => 'big',
-          'serialize' => TRUE,
-        ),
+  $schema = array();
+  
+  $schema['flexslider_optionset'] = array(
+    'description' => 'Store option sets for flexslider instances.',
+    'fields' => array(
+      'name' => array(
+        'description' => 'The machine-readable option set name.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
       ),
-      'primary key' => array('name'),
+      'title' => array(
+        'description' => 'The human-readable title for this option set.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+      'theme' => array(
+        'description' => 'The flexslider theme.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => 'classic',
+      ),
+      'imagestyle_normal' => array(
+        'description' => 'The image style for normal images.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => 'flexslider_full',
+      ),
+      'options' => array(
+        'description' => 'The options array.',
+        'type' => 'blob',
+        'size' => 'big',
+        'serialize' => TRUE,
+      ),
     ),
+    'primary key' => array('name'),
   );
+  
+  return $schema;
 }
 
 /**
  * Implements hook_install().
+ *
  * Adds a 'default' option set for fresh installs.
  */
 function flexslider_install() {
@@ -71,5 +66,72 @@ function flexslider_install() {
       'width' => 450,
     ),
   );
+  
   flexslider_optionset_save($optionset, TRUE);
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function flexslider_uninstall() {
+  variable_del('flexslider_debug');
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function flexslider_requirements($phase) {
+  $requirements = array();
+  // Ensure translations don't break at install time
+  $t = get_t();
+
+  // Check to see if the flexslider library is available
+  if ($phase == 'runtime' || $phase == 'install') {
+    $requirements['flexslider'] = array(
+      'title' => $t('FlexSlider'),
+      // @todo have the version automatically detected
+      'value' => $t('Version 1.8 installed'),
+      'severity' => REQUIREMENT_OK,
+    );
+    _flexslider_requirements_library_installed($requirements);
+  }
+  return $requirements;
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Remove/Update table fields to better suit FlexSlider
+ */
+function flexslider_update_7001(&$sandbox) {
+  $field_new = array(
+    'description' => 'The image style for normal images.',
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+    'default' => 'flexslider_full',
+  );
+  // Change the default image style
+  db_change_field('flexslider_optionset', 'imagestyle_normal', $field_new, array());
+  // Drop the unused table column
+  db_drop_field('flexslider_optionset', 'imagestyle_thumb');
+}
+
+/**
+ * Check if the library is available
+ *
+ * @param array $requirements
+ *  Requirements definition
+ */
+function _flexslider_requirements_library_installed(&$requirements) {
+  $t = get_t();
+  
+  $path = libraries_get_path('flexslider');
+  $installed = file_exists($path . '/jquery.flexslider-min.js') && file_exists($path . '/jquery.flexslider.js');
+  
+  // Check the results of the test
+  if (!$installed) {
+    $requirements['flexslider']['value'] = $t('FlexSlider library not found. Please consult the README.txt for installation instructions.');
+    $requirements['flexslider']['severity'] = REQUIREMENT_ERROR;
+  }
 }

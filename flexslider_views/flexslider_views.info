@@ -1,0 +1,10 @@
+name = FlexSlider Views
+description = Adds a Views display plugin for FlexSlider
+core = 7.x
+package = Flexslider
+
+dependencies[] = views
+dependencies[] = flexslider
+
+files[] = flexslider_views.module
+files[] = flexslider_views.views.inc
