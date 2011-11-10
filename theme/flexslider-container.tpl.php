@@ -12,6 +12,6 @@
        <div class="flex-caption"><strong><?php print $item['#item']['title']; ?></strong>&nbsp;<?php print $item['#item']['alt'];?></div>
       <?php endif; ?>
     </li>
-  <?php endfor; ?>
+  <?php endforeach; ?>
   </ul>
 </div>

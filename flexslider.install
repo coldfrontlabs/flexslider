@@ -9,7 +9,7 @@
  */
 function flexslider_schema() {
   $schema = array();
-  
+
   $schema['flexslider_optionset'] = array(
     'description' => 'Store option sets for flexslider instances.',
     'fields' => array(
@@ -48,7 +48,7 @@ function flexslider_schema() {
     ),
     'primary key' => array('name'),
   );
-  
+
   return $schema;
 }
 
@@ -66,7 +66,7 @@ function flexslider_install() {
       'width' => 450,
     ),
   );
-  
+
   flexslider_optionset_save($optionset, TRUE);
 }
 
@@ -90,7 +90,7 @@ function flexslider_requirements($phase) {
     $requirements['flexslider'] = array(
       'title' => $t('FlexSlider'),
       // @todo have the version automatically detected
-      'value' => $t('Version 1.8 installed'),
+      'description' => $t('Version 1.8 installed'),
       'severity' => REQUIREMENT_OK,
     );
     _flexslider_requirements_library_installed($requirements);
@@ -125,13 +125,31 @@ function flexslider_update_7001(&$sandbox) {
  */
 function _flexslider_requirements_library_installed(&$requirements) {
   $t = get_t();
-  
+
   $path = libraries_get_path('flexslider');
   $installed = file_exists($path . '/jquery.flexslider-min.js') && file_exists($path . '/jquery.flexslider.js');
-  
+
   // Check the results of the test
   if (!$installed) {
-    $requirements['flexslider']['value'] = $t('FlexSlider library not found. Please consult the README.txt for installation instructions.');
+    $requirements['flexslider']['description'] = $t('FlexSlider library not found. Please consult the README.txt for installation instructions.');
     $requirements['flexslider']['severity'] = REQUIREMENT_ERROR;
+    return;
+  }
+
+  $js = file_exists($path . '/jquery.flexslider-min.js') ? fopen($path . '/jquery.flexslider-min.js', 'r') : fopen($path . '/jquery.flexslider.js', 'r');
+  $header = fread($js, 64);
+  $matches = array();
+  if (preg_match("/ v([0-9]+)\.([0-9]+)/", $header, $matches)) {
+    if (!($matches[1] == 1 and $matches[2] >= 8)) {
+      $requirements['flexslider']['description'] = $t('FlexSlider must be version 1.8 or higher, but lower than version 2.0.  Please consult the README.txt for installation instructions.');
+      $requirements['flexslider']['severity'] = REQUIREMENT_WARNING;
+      return;
+    } else {
+      $requirements['flexslider']['description'] = $t('Version %version installed', array( '%version' => $matches[1] . "." . $matches[2]));
+      return;
+    }
+  } else {
+    $requirements['flexslider']['description'] = $t('FlexSlider version could not be determined.  Please consult the README.txt for installation instructions.');
+    $requirements['flexslider']['severity'] = REQUIREMENT_WARNING;
   }
 }

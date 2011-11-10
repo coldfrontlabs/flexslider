@@ -1,4 +1,4 @@
-name = FlexSlider Views
+name = FlexSlider Views Slideshow
 description = Integrate the FlexSlider library with Views Slideshow
 core = 7.x
 package = Flexslider
