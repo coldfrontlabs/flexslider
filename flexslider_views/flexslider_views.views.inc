@@ -14,7 +14,7 @@ function flexslider_views_plugins() {
     'module' => 'flexslider', // This just tells our themes are elsewhere.
     'style' => array(
       // Style plugin for the navigation.
-      'galleria' => array(
+      'flexslider' => array(
         'title' => t('Flex Slide'),
         'help' => t('Display the results as a flexslider slider.'),
         'handler' => 'views_plugin_style_flexslider',

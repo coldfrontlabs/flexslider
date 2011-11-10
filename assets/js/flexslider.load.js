@@ -1,6 +1,6 @@
 (function ($) {
 
-// Behavior to load Galleria
+// Behavior to load FlexSlider
 Drupal.behaviors.flexslider = {
   attach: function(context, settings) {
     $('.flexslider-content', context).once('flexslider', function() {

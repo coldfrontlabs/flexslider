@@ -604,24 +604,6 @@ function flexslider_form_settings() {
     '#title' => 'Library',
   );
 
-  $file = libraries_get_path('flexslider');
-  if (!is_dir($file)) {
-    drupal_set_message(t('Library directory not found: <code>@file</code>', array('@file' => $file)), 'error', FALSE);
-  }
-  $form['library']['lib_path'] = array(
-    '#type' => 'item',
-    '#title' => t('Library path'),
-    '#markup' => t('<code>@file</code>', array('@file' => $file)),
-  );
-
-  $file = flexslider_get_library_file();
-  $form['library']['lib_file'] = array(
-    '#type' => 'item',
-    '#title' => t('Library file'),
-    '#markup' => $file ? t('<code>@file</code>', array('@file' => $file)) : t('Unknown'),
-    '#description' => t('This filename is cached until the file is deleted.'),
-  );
-
   $form['library']['themes_title'] = array(
     '#type' => 'item',
     '#title' => t('Themes'),
@@ -642,13 +624,21 @@ function flexslider_form_settings() {
       ),
     );
   }
-
-
+  
   $form['library']['button_clearcache'] = array(
     '#type' => 'submit',
     '#name' => 'button_clearcache',
     '#value' => t('Clear cache'),
     '#submit' => array('flexslider_form_settings_submit_clearcache'),
+  );
+
+  // Debug mode toggle
+  $form['library']['flexslider_debug'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable debug mode'),
+    '#description' => t('Load the human-readable version of the FlexSlider library.'),
+    '#default_value' => variable_get('flexslider_debug', FALSE),
+    '#access' => user_access('administer flexslider'),
   );
 
   return $form;
@@ -667,4 +657,7 @@ function flexslider_form_settings_submit_clearcache($form, &$form_state) {
  */
 function flexslider_form_settings_submit($form, &$form_state) {
   drupal_set_message(t('NYI: Nothing done.'));
+  
+  // Set the debug mode
+  variable_set($form_state['values']['flexslider_debug'], FALSE);
 }
