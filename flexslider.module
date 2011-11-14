@@ -71,8 +71,8 @@ function flexslider_menu() {
     'title' => 'flexslider',
     'description' => 'Configure flexslider galleries.',
     'page callback' => 'flexslider_page_optionset_list',
-    'access arguments' => array('administer site configuration', 'administer flexslider'),
-    'file' => 'includes/flexslider.admin.inc',
+    'access arguments' => array('administer flexslider'),
+    'file' => 'flexslider.admin.inc',
   );
   $items['admin/config/media/flexslider/list'] = array(
     'title' => 'Option sets',
@@ -85,36 +85,36 @@ function flexslider_menu() {
     'description' => 'Add a new flexslider option set.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('flexslider_form_optionset_add'),
-    'access arguments' => array('administer site configuration', 'administer flexslider'),
+    'access arguments' => array('administer flexslider'),
     'type' => MENU_LOCAL_ACTION,
     'weight' => 1,
-    'file' => 'includes/flexslider.admin.inc',
+    'file' => 'flexslider.admin.inc',
   );
   $items['admin/config/media/flexslider/edit/%flexslider_optionset'] = array(
     'title' => 'Edit option set',
     'description' => 'Configure an option set.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('flexslider_form_optionset_edit', 5),
-    'access arguments' => array('administer site configuration', 'administer flexslider'),
-    'file' => 'includes/flexslider.admin.inc',
+    'access arguments' => array('administer flexslider'),
+    'file' => 'flexslider.admin.inc',
   );
   $items['admin/config/media/flexslider/delete/%flexslider_optionset'] = array(
     'title' => 'Delete option set',
     'description' => 'Delete an option set.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('flexslider_optionset_form_delete', 5),
-    'access arguments' => array('administer site configuration', 'administer flexslider'),
-    'file' => 'includes/flexslider.admin.inc',
+    'access arguments' => array('administer flexslider'),
+    'file' => 'flexslider.admin.inc',
   );
   $items['admin/config/media/flexslider/advanced'] = array(
     'title' => 'Advanced settings',
     'description' => 'Configure the advanced flexslider module settings.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('flexslider_form_settings'),
-    'access arguments' => array('administer site configuration', 'administer flexslider'),
+    'access arguments' => array('administer flexslider'),
     'type' => MENU_LOCAL_TASK,
     'weight' => 2,
-    'file' => 'includes/flexslider.admin.inc',
+    'file' => 'flexslider.admin.inc',
   );
 
   return $items;
@@ -167,7 +167,7 @@ function flexslider_image_default_styles() {
     'effects' => array(
       array(
         'name' => 'image_scale',
-        'data' => array('width' => 960, 'upscale' => 1),
+        'data' => array('width' => 960, 'height' => '', 'upscale' => TRUE),
         'weight' => 0,
       ),
     )
@@ -285,7 +285,7 @@ function flexslider_add($id, $optionset) {
 
   // JavaScript settings
   $js_settings = array(
-    'themepath' => file_create_url($cache['theme']),
+    //'themepath' => file_create_url($cache['theme']),
     'optionsets' => array(
       $optionset['name'] => $optionset['options'],
     ),
