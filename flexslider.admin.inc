@@ -524,7 +524,7 @@ function flexslider_form_optionset_edit_submit($form, &$form_state) {
   $optionset['title'] = $form_state['values']['title'];
   //$optionset['theme'] = $form_state['values']['theme'];
   //$optionset['imagestyle_thumb']  = $form_state['values']['image_styles']['thumb'];
-  //$optionset['imagestyle_normal'] = $form_state['values']['image_styles']['normal'];
+  $optionset['imagestyle_normal'] = $form_state['values']['image_style']['normal'];
   //$optionset['imagestyle_big']    = $form_state['values']['image_styles']['big'];
 
   if (isset($form_state['values']['options'])) {
