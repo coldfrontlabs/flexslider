@@ -134,10 +134,18 @@ function flexslider_option_elements() {
         'slide'  => t('slide'),
       ),
       '#default_value' => 'fade',
+      // @todo add states to enable/disable the direction
+    ),
+    'animationDuration' => array(
+      '#type' => 'textfield',
+      '#title' => t('Animation speed'),
+      '#description' => t('Set the speed of animations, in milliseconds'),
+      '#element_validate' => array('_flexslider_validate_integer'),
+      '#default_value' => 600,
     ),
     'slideDirection' => array(
       '#type' => 'checkbox',
-      '#title' => t('Thumbnail Carousel'),
+      '#title' => t('Slide Direction'),
       '#description' => t('Select the sliding direction, "horizontal" or "vertical"'),
       '#options' => array(
         'horizontal'   => t('horizontal'),
@@ -147,8 +155,8 @@ function flexslider_option_elements() {
     ),
     'slideshow' => array(
       '#type' => 'checkbox',
-      '#title' => t('Auto slide show'),
-      '#description' => t('Animate slider automatically'),
+      '#title' => t('Slideshow Playback'),
+      '#description' => t('Animate the slides automatically'),
       '#default_value' => TRUE,
     ),
     'slideshowSpeed' => array(
@@ -158,101 +166,100 @@ function flexslider_option_elements() {
       '#element_validate' => array('_flexslider_validate_integer'),
       '#default_value' => 7000,
     ),
-    'animationDuration' => array(
-      '#type' => 'textfield',
-      '#title' => t('Animation speed'),
-      '#description' => t('Set the speed of animations, in milliseconds'),
-      '#element_validate' => array('_flexslider_validate_integer'),
-      '#default_value' => 600,
+
+    'animationLoop' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Loop Slideshow'),
+      '#description' => t('Loop the slideshow once it reaches the last slide.'),
+      '#default_value' => TRUE,
     ),
+
+    'randomize' => array(
+      '#type' => 'checkbox',
+      '#title' => t('Randomize Slide Order'),
+      '#description' => t('Randomize the order the slides play back.'),
+      '#default_value' => FALSE,
+    ),
+    'slideToStart' => array(
+      '#type' => 'textfield',
+      '#title' => t('Starting Slide'),
+      '#description' => t('The slide that the slider should start on. Ex: For the first slide enter "0", for the second enter "1", etc. If you enter a value which is greater than the number of slides, the slider will default to the first slide.'),
+      '#element_validate' => array('_flexslider_validate_integer_auto'),
+      '#default_value' => 0,
+      // @todo add states to disable if randomize is set
+    ),
+
     'directionNav' => array(
       '#type' => 'checkbox',
-      '#title' => t('Navigation'),
-      '#description' => t('Create navigation for previous/next navigation?'),
+      '#title' => t('Next/Previous Controls'),
+      '#description' => t('Add controls for previous/next navigation'),
       '#default_value' => TRUE,
     ),
     'controlNav' => array(
       '#type' => 'checkbox',
-      '#title' => t('Paging control'),
-      '#description' => t('Create navigation for paging control of each slide? Note: Leave checked for manualControls usage'),
+      '#title' => t('Paging Controls'),
+      '#description' => t('Add controls to jump to individual slides.'),
       '#default_value' => TRUE,
+      // @todo add states options for manualControls
     ),
     'keyboardNav' => array(
       '#type' => 'checkbox',
-      '#title' => t('Keyboard navigation'),
+      '#title' => t('Keyboard Navigation'),
       '#description' => t('Allow slider navigating via keyboard left/right keys'),
       '#default_value' => TRUE,
     ),
     'mousewheel' => array(
       '#type' => 'checkbox',
-      '#title' => t('Mousewheel navigation'),
+      '#title' => t('Mousewheel Navigation'),
       '#description' => t('Allow slider navigating via mousewheel'),
       '#default_value' => TRUE,
     ),
     'prevText' => array(
       '#type' => 'textfield',
-      '#title' => t('Previous text'),
-      '#description' => t('Set the text for the "previous" directionNav item'),
+      '#title' => t('Previous Link Text'),
+      '#description' => t('Set the text for the "previous" control item. <em>Text translation can be controlled using the <a href="http://drupal.org/project/stringoverrides">String Overrides module</a>.</em>'),
       '#default_value' => 'Previous',
     ),
     'nextText' => array(
       '#type' => 'textfield',
-      '#title' => t('Next text'),
-      '#description' => t('Set the text for the "next" directionNav item'),
+      '#title' => t('Next Link Text'),
+      '#description' => t('Set the text for the "next" control item. <em>Text translation can be controlled using the <a href="http://drupal.org/project/stringoverrides">String Overrides module</a>.</em>'),
       '#default_value' => 'Next',
     ),
     'pausePlay' => array(
       '#type' => 'checkbox',
-      '#title' => t('Pause/Play'),
-      '#description' => t('Create pause/play dynamic element'),
+      '#title' => t('Add Pause/Play Indicator'),
+      '#description' => t('Have FlexSlider add an element indicating the current state of the slideshow (i.e. "pause" or "play").'),
       '#default_value' => FALSE,
+      // @todo add states value for pause/play text
     ),
     'pauseText' => array(
       '#type' => 'textfield',
-      '#title' => t('Pause text'),
-      '#description' => t('Set the text for the "pause" pausePlay item'),
+      '#title' => t('Pause State Text'),
+      '#description' => t('Set the text for the "pause" state indicator. <em>Text translation can be controlled using the <a href="http://drupal.org/project/stringoverrides">String Overrides module</a>.</em>'),
       '#default_value' => 'Pause',
     ),
     'playText' => array(
       '#type' => 'textfield',
-      '#title' => t('Play text'),
-      '#description' => t('Set the text for the "play" pausePlay item'),
+      '#title' => t('Play State Text'),
+      '#description' => t('Set the text for the "play" state indicator. <em>Text translation can be controlled using the <a href="http://drupal.org/project/stringoverrides">String Overrides module</a>.</em>'),
       '#default_value' => 'Play',
-    ),
-    'randomize' => array(
-      '#type' => 'checkbox',
-      '#title' => t('Randomize'),
-      '#description' => t('Randomize slide order'),
-      '#default_value' => FALSE,
-    ),
-    'slideToStart' => array(
-      '#type' => 'textfield',
-      '#title' => t('Start slide'),
-      '#description' => t('The slide that the slider should start on. Array notation (0 = first slide)'),
-      '#element_validate' => array('_flexslider_validate_integer_auto'),
-      '#default_value' => 0,
-    ),
-    'animationLoop' => array(
-      '#type' => 'checkbox',
-      '#title' => t('Loop animation'),
-      '#description' => t('Should the animation loop? If false, directionNav will received "disable" classes at either end'),
-      '#default_value' => TRUE,
     ),
     'pauseOnAction' => array(
       '#type' => 'checkbox',
-      '#title' => t('Pause on action'),
-      '#description' => t('Pause the slideshow when interacting with control elements, highly recommended.'),
+      '#title' => t('Pause On Controls'),
+      '#description' => t('Pause the slideshow when interacting with control elements.'),
       '#default_value' => TRUE,
     ),
     'controlsContainer' => array(
       '#type' => 'textfield',
-      '#title' => t('Controls container'),
+      '#title' => t('Controls container (Advanced)'),
       '#description' => t('Declare which container the navigation elements should be appended too. Default container is the flexSlider element. Example use would be ".flexslider-container", "#container", etc. If the given element is not found, the default action will be taken.'),
       '#default_value' => '',
     ),
     'manualControls' => array(
       '#type' => 'textfield',
-      '#title' => t('Manual controls'),
+      '#title' => t('Manual controls (Advanced)'),
       '#description' => t('Declare custom control navigation. Example would be ".flex-control-nav li" or "#tabs-nav li img", etc. The number of elements in your controlNav should match the number of slides/tabs.'),
       '#default_value' => '',
     ),
@@ -441,7 +448,7 @@ function _flexslider_validate_integer($element, &$form_state) {
 function _flexslider_validate_integer_auto($element, &$form_state) {
   $value = $element['#value'];
   if ($value !== '' && $value !== 'auto' && (!is_numeric($value) || intval($value) != $value || $value < 0)) {
-    form_error($element, t('%name must be a positive integer or the special value \'auto\'.', array('%name' => $element['#title'])));
+    form_error($element, t('%name must be a positive integer.', array('%name' => $element['#title'])));
   }
 }
 
