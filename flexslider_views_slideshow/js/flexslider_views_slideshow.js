@@ -59,22 +59,22 @@
     // Ensure the slider isn't already loaded
     if (!settings.loaded) {
       $(settings.targetId + " .flexslider").flexslider(settings.opts);
-      console.log(settings.targetId + " .flexslider");
+      //console.log(settings.targetId + " .flexslider");
       settings.loaded = true;
     }
   }
 
   // Pause mapping from Views Slideshow to FlexSlider
   Drupal.flexsliderViews.pause = function (options) {
-    console.log('pause called');
-    console.log(options);
+    //console.log('pause called');
+    //console.log(options);
     $('#flexslider_views_slideshow_main_' + options.slideshowID + ' .flexslider').pause();
   }
 
   // Play mapping from Views Slideshow to FlexSlider
   Drupal.flexsliderViews.play = function (options) {
     $('#flexslider_views_slideshow_main_' + options.slideshowID + ' .flexslider').play();
-    console.log('play called');
+    //console.log('play called');
   }
   // @todo add support for jquery mobile page init
 })(jQuery);
