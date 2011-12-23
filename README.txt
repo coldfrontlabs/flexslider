@@ -54,3 +54,8 @@ Usage
 =====
 
 You can load the library using drupal_add_library('flexslider', 'flexslider') in your theme or module. For any integrated functionality, the library will be loaded automatically.
+
+Export API
+==========
+
+You can export your Flexslider option presets using CTools exportables. So either using the Bulk Export module or Features.
