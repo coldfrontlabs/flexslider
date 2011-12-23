@@ -149,10 +149,6 @@ function flexslider_theme() {
       'template' => 'theme/flexslider-container',
       'file' => 'theme/theme.inc',
     ),
-    'flexslider_form_table' => array(
-      'render element' => 'form',
-      'file' => 'flexslider.admin.inc',
-    ),
   );
 }
 

@@ -18,10 +18,7 @@ function flexslider_flexslider_default_presets() {
   $preset->title = 'Default';
   $preset->theme = 'classic';
   $preset->imagestyle_normal = 'flexslider_full';
-  $preset->options = array(
-    'height' => 300,
-    'width' => 450,
-  );
+  $preset->options = array();
   $presets['default'] = $preset;
 
   return $presets;
