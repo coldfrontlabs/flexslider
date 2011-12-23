@@ -4,5 +4,3 @@ core = 7.x
 package = Flexslider
 
 dependencies[] = flexslider
-
-configure = admin/config/media/flexslider
