@@ -30,7 +30,7 @@
           animation:settings.animation,
           slideDirection:settings.slidedirection,
           slideshow:settings.slideshow,
-          slideshowSpeed:settings.slideshowSpeed,
+          slideshowSpeed:settings.slideshowspeed,
           animationDuration:settings.animationduration,
           directionNav:settings.directionnav,
           controlNav:settings.controlnav,
