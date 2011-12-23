@@ -15,10 +15,10 @@ function flexslider_schema() {
     'export' => array(
       'key' => 'name',
       'identifier' => 'preset',
-      'default hook' => 'default_flexslider_preset',
+      'default hook' => 'flexslider_default_presets',
       'api' => array(
         'owner' => 'flexslider',
-        'api' => 'default_flexslider_presets',
+        'api' => 'flexslider_default_preset',
         'minimum_version' => 1,
         'current_version' => 1,
       ),

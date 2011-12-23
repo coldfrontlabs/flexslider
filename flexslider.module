@@ -177,6 +177,15 @@ function flexslider_image_default_styles() {
 }
 
 /**
+ * Implements hook_ctools_plugin_api().
+ */
+function flexslider_ctools_plugin_api($owner, $api) {
+  if ($owner == 'flexslider' && $api == 'flexslider_default_preset') {
+    return array('version' => 1);
+  }
+}
+
+/**
  * Fetches all option sets from the database and returns them as an associative array.
  */
 function flexslider_optionsets() {
@@ -297,32 +306,4 @@ function flexslider_add($id, $optionset) {
   
   // Loader JavaScript
   drupal_add_js(drupal_get_path('module', 'flexslider') . '/assets/js/flexslider.load.js');
-}
-
-/**
- * Implements hook_ctools_plugin_api().
- */
-function flexslider_ctools_plugin_api($owner, $api) {
-  if ($owner == 'flexslider' && $api == 'default_flexslider_presets') {
-    return array('version' => 1);
-  }
-}
-
-/**
- * Implements hook_default_flexslider_preset().
- */
-function flexslider_default_flexslider_preset() {
-  $preset = new stdClass;
-  $preset->api_version = 1;
-  $preset->name = 'default';
-  $preset->title = 'Default';
-  $preset->imagestyle_normal = 'flexslider_full';
-  $preset->theme = 'classic';
-  $preset->options = array(
-    'width' => 450,
-    'height' => 300,
-  );
-  $export['default'] = $preset;
-
-  return $export;
 }

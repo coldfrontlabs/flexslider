@@ -6,9 +6,9 @@
  */
 
 /**
- * Implementation of hook_default_flexslider_preset()
+ * Implementation of hook_flexslider_default_presets()
  */
-function flexslider_default_flexslider_preset() {
+function flexslider_flexslider_default_presets() {
   $presets = array();
 
   $preset = new stdClass;
