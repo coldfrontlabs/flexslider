@@ -68,8 +68,8 @@ function flexslider_menu() {
   $items = array();
 
   $items['admin/config/media/flexslider'] = array(
-    'title' => 'Flexslider',
-    'description' => 'Configure Flexslider presets and display settings.',
+    'title' => 'FlexSlider',
+    'description' => 'Configure FlexSlider presets and display settings.',
     'page callback' => 'flexslider_page_optionset_list',
     'access arguments' => array('administer flexslider'),
     'file' => 'flexslider.admin.inc',
