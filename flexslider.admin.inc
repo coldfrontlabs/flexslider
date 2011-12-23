@@ -664,8 +664,5 @@ function flexslider_form_settings_submit_clearcache($form, &$form_state) {
  * Submit handler for the advanced module settings.
  */
 function flexslider_form_settings_submit($form, &$form_state) {
-  drupal_set_message(t('NYI: Nothing done.'));
-  
-  // Set the debug mode
-  variable_set($form_state['values']['flexslider_debug'], FALSE);
+  // Do nothing for now
 }
