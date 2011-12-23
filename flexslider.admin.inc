@@ -612,7 +612,7 @@ function flexslider_form_settings() {
     '#title' => 'Library',
   );
 
-  $form['library']['themes_title'] = array(
+/*  $form['library']['themes_title'] = array(
     '#type' => 'item',
     '#title' => t('Themes'),
     '#description' => t('The following themes are currently known to the module. Clear the cache to search for new ones.'),
@@ -632,14 +632,14 @@ function flexslider_form_settings() {
       ),
     );
   }
-  
-  $form['library']['button_clearcache'] = array(
+*/  
+/*  $form['library']['button_clearcache'] = array(
     '#type' => 'submit',
     '#name' => 'button_clearcache',
     '#value' => t('Clear cache'),
     '#submit' => array('flexslider_form_settings_submit_clearcache'),
   );
-
+*/
   // Debug mode toggle
   $form['library']['flexslider_debug'] = array(
     '#type' => 'checkbox',
@@ -648,8 +648,8 @@ function flexslider_form_settings() {
     '#default_value' => variable_get('flexslider_debug', FALSE),
     '#access' => user_access('administer flexslider'),
   );
-
-  return $form;
+  
+  return system_settings_form($form);
 }
 
 /**
