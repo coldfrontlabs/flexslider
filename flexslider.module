@@ -188,13 +188,11 @@ function flexslider_optionsets() {
 }
 
 /**
- * Fetches the given option set and returns it as an associative array or FALSE, if no set could be found.
+ * Fetches the given option set and returns it as an object or NULL, if no set could be found.
  */
 function flexslider_optionset_load($optionset_name) {
-  $optionset = db_query("SELECT * FROM {flexslider_optionset} WHERE name = :name", array(':name' => $optionset_name))->fetchAssoc();
-  if ($optionset !== FALSE) {
-    $optionset['options'] = empty($optionset['options']) ? array() : unserialize($optionset['options']);
-  }
+  ctools_include('export');
+  $optionset = ctools_export_crud_load('flexslider_optionset', $optionset_name);
   return $optionset;
 }
 
@@ -202,7 +200,8 @@ function flexslider_optionset_load($optionset_name) {
  * Checks whether an option set with the given name already exists.
  */
 function flexslider_optionset_exists($optionset_name) {
-  return (flexslider_optionset_load($optionset_name) !== FALSE);
+  ctools_include('export');
+  return (ctools_export_crud_load('flexslider_optionset', $optionset_name) !== NULL);
 }
 
 /**
@@ -287,10 +286,10 @@ function flexslider_add($id, $optionset) {
   $js_settings = array(
     //'themepath' => file_create_url($cache['theme']),
     'optionsets' => array(
-      $optionset['name'] => $optionset['options'],
+      $optionset->name => $optionset->options,
     ),
     'instances' => array(
-      'flexslider-' . $id => $optionset['name'],
+      'flexslider-' . $id => $optionset->name,
     ),
   );
 
@@ -298,4 +297,32 @@ function flexslider_add($id, $optionset) {
   
   // Loader JavaScript
   drupal_add_js(drupal_get_path('module', 'flexslider') . '/assets/js/flexslider.load.js');
+}
+
+/**
+ * Implements hook_ctools_plugin_api().
+ */
+function flexslider_ctools_plugin_api($owner, $api) {
+  if ($owner == 'flexslider' && $api == 'default_flexslider_presets') {
+    return array('version' => 1);
+  }
+}
+
+/**
+ * Implements hook_default_flexslider_preset().
+ */
+function flexslider_default_flexslider_preset() {
+  $preset = new stdClass;
+  $preset->api_version = 1;
+  $preset->name = 'default';
+  $preset->title = 'Default';
+  $preset->imagestyle_normal = 'flexslider_full';
+  $preset->theme = 'classic';
+  $preset->options = array(
+    'width' => 450,
+    'height' => 300,
+  );
+  $export['default'] = $preset;
+
+  return $export;
 }

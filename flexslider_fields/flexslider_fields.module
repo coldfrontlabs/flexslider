@@ -41,8 +41,9 @@ function flexslider_fields_field_formatter_settings_form($field, $instance, $vie
 
   // Show select box for the option set
   $optionsets = array();
-  foreach (flexslider_optionsets() as $name => $optionset) {
-    $optionsets[$name] = check_plain($optionset['title']);
+  ctools_include('export');
+  foreach (ctools_export_crud_load_all('flexslider_optionset') as $name => $optionset) {
+    $optionsets[$name] = check_plain($optionset->title);
   }
   $form['flexslider_optionset'] = array(
     '#title' => t('Option set'),
@@ -103,15 +104,16 @@ function flexslider_fields_field_formatter_settings_summary($field, $instance, $
   $summary = array();
 
   // Load option set
+  ctools_include('export');
   if (!empty($settings['flexslider_optionset'])) {
-    $o = flexslider_optionset_load($settings['flexslider_optionset']);
-    if ($o !== FALSE) {
+    $o = ctools_export_crud_load('flexslider_optionset', $settings['flexslider_optionset']);
+    if ($o !== NULL) {
       $optionset = $o;
     }
   }
 
   // Build settings summary
-  $optionset = isset($optionset) ? $optionset['title'] : t('Default settings');
+  $optionset = isset($optionset) ? $optionset->title : t('Default settings');
   $summary[] = t('Option set: %optionset', array('%optionset' => $optionset));
 
   if (isset($settings['flexslider_reference_img_src'])) {

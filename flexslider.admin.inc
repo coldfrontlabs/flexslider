@@ -9,16 +9,18 @@
  * Menu callback; Listing of all current option sets.
  */
 function flexslider_page_optionset_list() {
-  $optionsets = flexslider_optionsets();
-
+  ctools_include('export');
+  $optionsets = ctools_export_crud_load_all('flexslider_optionset');
   $header = array(t('Option Set Name'), array('data' => t('Operations'), 'colspan' => 2));
   $rows = array();
   foreach ($optionsets as $name => $optionset) {
+    $is_overridden = ($optionset->export_type & EXPORT_IN_CODE) ? TRUE : FALSE;
+
     $rows[] = array(
-      l($optionset['title'], 'admin/config/media/flexslider/edit/' . $name),
+      l($optionset->title, 'admin/config/media/flexslider/edit/' . $name),
       l(t('edit'), 'admin/config/media/flexslider/edit/' . $name),
-      // Hide the delete link for the 'default' set
-      ($name == 'default') ? '' : l(t('delete'), 'admin/config/media/flexslider/delete/' . $name),
+      // Only print revert/delete links if we have something in the db to delete
+      (!isset($optionset->in_code_only)) ? l(t($is_overridden ? 'revert' : 'delete'), 'admin/config/media/flexslider/delete/' . $name) : '',
     );
   }
 
@@ -71,17 +73,21 @@ function flexslider_form_optionset_add($form, &$form_state) {
  * Submit handler for adding a new option set.
  */
 function flexslider_form_optionset_add_submit($form, &$form_state) {
-  $optionset = array(
-    'name' => $form_state['values']['name'],
-    'title' => $form_state['values']['title'],
-    'options' => array(
-      'height' => 300,
-      'width' => 450,
-    ),
+  ctools_include('export');
+
+  $optionset = ctools_export_crud_new('flexslider_optionset');
+
+  $optionset->name = $form_state['values']['name'];
+  $optionset->title = $form_state['values']['title'];
+  $optionset->options = array(
+    'width' => 450,
+    'height' => 300,
   );
-  $optionset = flexslider_optionset_save($optionset, TRUE);
-  drupal_set_message(t('Option set %name was created.', array('%name' => $optionset['name'])));
-  $form_state['redirect'] = 'admin/config/media/flexslider/edit/' . $optionset['name'];
+  
+  $saved = ctools_export_crud_save('flexslider_optionset', $optionset);
+
+  drupal_set_message(t('Option set %name was created.', array('%name' => $optionset->name)));
+  $form_state['redirect'] = 'admin/config/media/flexslider/edit/' . $optionset->name;
 }
 
 
@@ -276,7 +282,8 @@ function flexslider_option_element($option, $value) {
 /**
  * Form  builder; Form to edit a given option set.
  */
-function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
+function flexslider_form_optionset_edit($form, &$form_state, $optionset) { 
+
   if (empty($form_state['optionset'])) {
     $form_state['optionset'] = $optionset;
   }
@@ -286,7 +293,7 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
 
   // Print a warning if there's no height and/or width option in the set.
   foreach (array('height', 'width') as $dimension) {
-    if (!array_key_exists($dimension, $optionset['options'])) {
+    if (!array_key_exists($dimension, $optionset->options)) {
       drupal_set_message(t('You should add a %dimension option if you don\'t plan to set it manually via CSS.', array('%dimension' => $dimension)), 'warning');
     }
   }
@@ -296,7 +303,7 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
     '#type' => 'textfield',
     '#maxlength' => '255',
     '#title' => t('Title'),
-    '#default_value' => $optionset['title'],
+    '#default_value' => $optionset->title,
     '#description' => t('A human-readable title for this option set.'),
     '#required' => TRUE,
   );
@@ -317,7 +324,7 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
       '#title' => t('Theme'),
       '#description' => t('As you have more than one flexslider theme installed, please select the one to use.'),
       '#options' => array_combine($themes, $themes),
-      '#default_value' => $optionset['theme'],
+      '#default_value' => $optionset->theme,
     );
   }
 
@@ -334,7 +341,7 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
     '#description' => t('Image style for the main stage images.'),
     '#empty_option' => t('None (original image)'),
     '#options' => $image_style,
-    '#default_value' => $optionset['imagestyle_normal'],
+    '#default_value' => $optionset->imagestyle_normal,
   );
 
   // Option table
@@ -345,7 +352,7 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
   );
 
   $i = 0;
-  foreach ($optionset['options'] as $key => $value) {
+  foreach ($optionset->options as $key => $value) {
     $option_element = flexslider_option_element($key, $value);
 
     $form['options'][] = array(
@@ -369,7 +376,7 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
   }
 
   // 'Add option' row at the end of the table
-  $options = array_diff(array_keys(flexslider_option_elements()), array_keys($optionset['options']));
+  $options = array_diff(array_keys(flexslider_option_elements()), array_keys($optionset->options));
   $options = empty($options) ? array() : array_combine($options, $options);
   $form['options'][] = array(
     'add_option_row' => array(
@@ -485,9 +492,9 @@ function flexslider_form_optionset_edit_submit_add($form, &$form_state) {
 
   if (isset($new_option_element)) {
     $new_option = $form_state['values'][$new_option_element];
-    if (!array_key_exists($new_option, $optionset['options'])) {
+    if (!array_key_exists($new_option, $optionset->options)) {
       // Add the new option with a NULL value. The input element cares for a default value.
-      $optionset['options'][$new_option] = NULL;
+      $optionset->options[$new_option] = NULL;
       // Reset the input field
       $form_state['input'][$new_option_element] = '';
       drupal_set_message(t('Option %name added.', array('%name' => $new_option)));
@@ -509,7 +516,7 @@ function flexslider_form_optionset_edit_submit_delete($form, &$form_state) {
   $rowindex = $form_state['triggering_element']['#parents'][1];
   $option = $form['options'][$rowindex]['value']['#option_name'];
 
-  unset($optionset['options'][$option]);
+  unset($optionset->options[$option]);
   drupal_set_message(t('Option %name removed.', array('%name' => $option)));
 
   $form_state['rebuild'] = TRUE;
@@ -521,10 +528,10 @@ function flexslider_form_optionset_edit_submit_delete($form, &$form_state) {
 function flexslider_form_optionset_edit_submit($form, &$form_state) {
   $optionset = &$form_state['optionset'];
 
-  $optionset['title'] = $form_state['values']['title'];
+  $optionset->title = $form_state['values']['title'];
   //$optionset['theme'] = $form_state['values']['theme'];
   //$optionset['imagestyle_thumb']  = $form_state['values']['image_styles']['thumb'];
-  $optionset['imagestyle_normal'] = $form_state['values']['image_style']['normal'];
+  $optionset->imagestyle_normal = $form_state['values']['image_style']['normal'];
   //$optionset['imagestyle_big']    = $form_state['values']['image_styles']['big'];
 
   if (isset($form_state['values']['options'])) {
@@ -549,12 +556,14 @@ function flexslider_form_optionset_edit_submit($form, &$form_state) {
       }
   
       $option = $element['#option_name'];
-      $optionset['options'][$option] = $value;
+      $optionset->options[$option] = $value;
     }
   }
 
-  flexslider_optionset_save($optionset);
-  drupal_set_message(t('Option set %name changed.', array('%name' => $optionset['name'])));
+  ctools_include('export');
+  ctools_export_crud_save('flexslider_optionset', $optionset);
+
+  drupal_set_message(t('Option set %name changed.', array('%name' => $optionset->name)));
   $form_state['redirect'] = 'admin/config/media/flexslider';
 }
 
@@ -565,12 +574,15 @@ function flexslider_form_optionset_edit_submit($form, &$form_state) {
 function flexslider_optionset_form_delete($form, &$form_state, $optionset) {
   $form_state['optionset'] = &$optionset;
 
+  // Deleting an export in code will revert it.
+  $op = ($optionset->export_type & EXPORT_IN_CODE) ? 'Revert' : 'Delete';
+
   return confirm_form(
     $form,
-    t('Are you sure you want to delete the option set %name?', array('%name' => $optionset['name'])),
+    t('Are you sure you want to ' . strtolower($op) . ' the option set %name?', array('%name' => $optionset->name)),
     'admin/config/media/flexslider',
     NULL,
-    t('Delete'),  t('Cancel')
+    t($op),  t('Cancel')
   );
 }
 
@@ -579,16 +591,12 @@ function flexslider_optionset_form_delete($form, &$form_state, $optionset) {
  */
 function flexslider_optionset_form_delete_submit($form, &$form_state) {
   $optionset = &$form_state['optionset'];
+  $op = ($optionset->export_type & EXPORT_IN_CODE) ? 'reverted' : 'deleted';
 
-  if ($optionset['name'] == 'default') {
-    // Prevent deletion of the default set so we can fall back to it.
-    drupal_set_message(t('The default option set may not be deleted!', 'error'));
-  }
-  else {
-    flexslider_optionset_delete($optionset);
-    drupal_set_message(t('Option set %name was deleted.', array('%name' => $optionset['name'])));
-  }
+  ctools_include('export');
+  ctools_export_crud_delete('flexslider_optionset', $optionset);
 
+  drupal_set_message(t('Option set %name was ' . $op . '.', array('%name' => $optionset->name)));
   $form_state['redirect'] = 'admin/config/media/flexslider';
 }
 

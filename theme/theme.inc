@@ -30,20 +30,20 @@ function template_preprocess_flexslider_container(&$vars) {
   // Prepare image elements
   $items = $vars['items'];
   $vars['items'] = array();
-  $thumb_style = empty($optionset['imagestyle_thumb']) ? 'flexslider_thumb' : $optionset['imagestyle_thumb'];
+  $thumb_style = empty($optionset->imagestyle_thumb) ? 'flexslider_thumb' : $optionset->imagestyle_thumb;
   foreach ($items as $delta => $item) {
     // Get URL for "normal" image
-    if (empty($optionset['imagestyle_normal'])) {
+    if (empty($optionset->imagestyle_normal)) {
        $normal_url = file_create_url($item['uri']);
     }
     else {
-       $normal_url = image_style_url($optionset['imagestyle_normal'], $item['uri']);
+       $normal_url = image_style_url($optionset->imagestyle_normal, $item['uri']);
     }
 
     $vars['items'][$delta] = array(
       '#theme' => 'image_formatter',
       '#item' => $item,
-      '#image_style' => $optionset['imagestyle_normal'],
+      '#image_style' => $optionset->imagestyle_normal,
 //      '#path' => array(
 //         'path' => $normal_url,
 //         'options' => array(),

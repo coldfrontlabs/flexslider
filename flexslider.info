@@ -8,7 +8,6 @@ files[] = flexslider.install
 files[] = flexslider.module
 
 dependencies[] = libraries
+dependencies[] = ctools
 
 stylesheets[screen][] = assets/css/flexslider_img.css
-
-configure = admin/config/media/flexslider
