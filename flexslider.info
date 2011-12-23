@@ -3,13 +3,12 @@ description = Integrate the FlexSlider library with Drupal
 core = 7.x
 package = Flexslider
 
-
-files[] = flexslider.install
-files[] = flexslider.module
-
+;Dependencies
 dependencies[] = libraries
 dependencies[] = ctools
 
+; Required default styles
 stylesheets[screen][] = assets/css/flexslider_img.css
 
+; Configuration link
 configure = admin/config/media/flexslider
