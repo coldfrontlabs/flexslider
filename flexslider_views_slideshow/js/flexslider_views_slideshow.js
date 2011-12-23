@@ -5,13 +5,11 @@
   // Register callback to save references to flexslider instances. Allows
   // Views Slideshow controls to affect the slider
   function flexslider_views_slideshow_register(fullId, slider) {
-    if (null == Drupal.flexsliderViews.active) {
-      Drupal.flexsliderViews.active = new Array();
-    }
-    Drupal.flexsliderViews.active[fullId] = slider;
+    Drupal.flexsliderViewsSlideshow.active = Drupal.flexsliderViewsSlideshow.active || {};
+    Drupal.flexsliderViewsSlideshow.active[fullId] = slider;
   }
 
-  Drupal.behaviors.flexslider_views_slideshow = {
+  Drupal.behaviors.flexsliderViewsSlideshow = {
     attach: function (context) {
       $('.flexslider_views_slideshow_main:not(.flexslider_views_slideshow-processed)', context).addClass('flexslider_views_slideshow-processed').each(function() {
         // Get the ID of the slideshow
@@ -55,17 +53,17 @@
           }
         };
 
-        Drupal.flexsliderViews.load(fullId);
+        Drupal.flexsliderViewsSlideshow.load(fullId);
       });
     }
   };
 
 
   // Initialize the flexslider object
-  Drupal.flexsliderViews = Drupal.flexsliderViews || {};
+  Drupal.flexsliderViewsSlideshow = Drupal.flexsliderViewsSlideshow || {};
 
   // Load mapping from Views Slideshow to FlexSlider
-  Drupal.flexsliderViews.load = function(fullId) {
+  Drupal.flexsliderViewsSlideshow.load = function(fullId) {
     var settings = Drupal.settings.flexslider_views_slideshow[fullId];
 
     // Ensure the slider isn't already loaded
@@ -76,18 +74,22 @@
   }
 
   // Pause mapping from Views Slideshow to FlexSlider
-  Drupal.flexsliderViews.pause = function (options) {
-    console.log('pause called');
-    //console.log(options);
-    Drupal.flexsliderViews.active['#flexslider_views_slideshow_main_' + options.slideshowID].pause();
-    //$('#flexslider_views_slideshow_main_' + options.slideshowID + ' .flexslider').pause();
+  Drupal.flexsliderViewsSlideshow.pause = function (options) {
+    Drupal.flexsliderViewsSlideshow.active['#flexslider_views_slideshow_main_' + options.slideshowID].pause();
+    Drupal.flexsliderViewsSlideshow.active['#flexslider_views_slideshow_main_' + options.slideshowID].manualPause = true;
   }
 
   // Play mapping from Views Slideshow to FlexSlider
-  Drupal.flexsliderViews.play = function (options) {
-    Drupal.flexsliderViews.active['#flexslider_views_slideshow_main_' + options.slideshowID].play();
-    //$('#flexslider_views_slideshow_main_' + options.slideshowID + ' .flexslider').play();
-    console.log('play called');
+  Drupal.flexsliderViewsSlideshow.play = function (options) {
+    Drupal.flexsliderViewsSlideshow.active['#flexslider_views_slideshow_main_' + options.slideshowID].resume();
+    Drupal.flexsliderViewsSlideshow.active['#flexslider_views_slideshow_main_' + options.slideshowID].manualPause = false;
+  }
+  
+  Drupal.flexsliderViewsSlideshow.nextSlide = function (options) {
+    //Drupal.flexsliderViewsSlideshow.active['#flexslider_views_slideshow_main_' + options.slideshowID].resume();
+  }
+  Drupal.flexsliderViewsSlideshow.previousSlide = function (options) {
+    //Drupal.flexsliderViewsSlideshow.active['#flexslider_views_slideshow_main_' + options.slideshowID].resume();
   }
   // @todo add support for jquery mobile page init
 })(jQuery);

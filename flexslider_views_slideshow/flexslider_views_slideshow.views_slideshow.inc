@@ -15,16 +15,16 @@ function flexslider_views_slideshow_views_slideshow_slideshow_info() {
     'flexslider_views_slideshow' => array(
       'name' => t('FlexSlider'),
       'accepts' => array(
-        'goToSlide',
+//        'goToSlide',
         'nextSlide',
         'pause',
         'play',
         'previousSlide',
       ),
       'calls' => array(
-        'transitionBegin',
-        'transitionEnd',
-        'goToSlide',
+//        'transitionBegin',
+//        'transitionEnd',
+//        'goToSlide',
         'pause',
         'play',
         'nextSlide',
