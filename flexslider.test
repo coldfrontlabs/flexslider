@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * Test cases for Flexslider
+ *
+ * @author Mathew Winstone <mwinstone@coldfrontlabs.ca>
+ */
+
+
+class FlexsliderTestCase extends DrupalWebTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => t('Flexslider tests'),
+      'description' => t('Test the Flexslider presets, configuration options and permission controls.'),
+      'group' => t('Flexslider'),
+    );
+  }
+
+  function setUp() {
+    parent::setUp('libraires', 'ctools', 'flexslider');
+    
+  }
+
+  // @todo add test cases
+  
+}
