@@ -179,8 +179,8 @@ function flexslider_views_slideshow_views_slideshow_slideshow_type_form(&$form, 
     // Pause/Play Element
     $form['flexslider_views_slideshow']['pauseplay'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Mousewheel Navigation'),
-      '#description' => t('Create pause/play dynamic element.'),
+      '#title' => t('Pause/Play Controls'),
+      '#description' => t('Create pause/play dynamic element. <em>These are separate from the standard Views Slideshow controls and will only work with Flexslider.</em>'),
       '#default_value' => $view->options['flexslider_views_slideshow']['pauseplay'],
     );
 
