@@ -120,7 +120,7 @@ function flexslider_option_elements($options = array()) {
     '#type' => 'textfield',
     '#title' => t('Animation speed'),
     '#description' => t('Set the speed of animations, in milliseconds'),
-    '#element_validate' => array('_flexslider_validate_integer'),
+    '#element_validate' => array('_flexslider_validate_positive_integer'),
     '#default_value' => 600,
     '#size' => 30,
   );
@@ -147,7 +147,7 @@ function flexslider_option_elements($options = array()) {
     '#type' => 'textfield',
     '#title' => t('Slideshow speed'),
     '#description' => t('Set the speed of the slideshow cycling, in milliseconds'),
-    '#element_validate' => array('_flexslider_validate_integer'),
+    '#element_validate' => array('_flexslider_validate_positive_integer'),
     '#default_value' => 7000,
     '#size' => 30,
   );
@@ -169,7 +169,7 @@ function flexslider_option_elements($options = array()) {
     '#type' => 'textfield',
     '#title' => t('Starting Slide'),
     '#description' => t('The slide that the slider should start on. Ex: For the first slide enter "0", for the second enter "1", etc. If you enter a value which is greater than the number of slides, the slider will default to the first slide.'),
-    '#element_validate' => array('_flexslider_validate_integer_auto'),
+    '#element_validate' => array('_flexslider_validate_positive_integer'),
     '#default_value' => 0,
     '#size' => 30,
     // @todo add states to disable if randomize is set
@@ -286,7 +286,10 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
     '#required' => TRUE,
   );
 
-  // Show the theme select box if there is more than one theme
+// @todo decide if we should remove the themes controls entirely
+// seems like something that should be controlled via CSS in the theme
+// as FlexSlider doesn't have "themes" functionality
+/*  // Show the theme select box if there is more than one theme
   $themes = array_keys(flexslider_get_themes(TRUE));
   if (count($themes) == 1) {
     $form['theme'] = array(
@@ -305,7 +308,7 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
       '#default_value' => $optionset->theme,
     );
   }
-
+*/
   // Show select boxes for the various image styles (thumbnail, normal, big)
   $image_style = image_style_options(FALSE);
   $form['image_style'] = array(
@@ -357,7 +360,7 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
 /**
  * Validate a form element that should have an integer value.
  */
-function _flexslider_validate_integer($element, &$form_state) {
+function _flexslider_validate_positive_integer($element, &$form_state) {
   $value = $element['#value'];
   if ($value !== '' && (!is_numeric($value) || intval($value) != $value || $value < 0)) {
     form_error($element, t('%name must be a positive integer.', array('%name' => $element['#title'])));
