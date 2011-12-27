@@ -331,8 +331,6 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
   );
 
   $default_options = flexslider_option_elements($optionset->options);
-  dpm($default_options);
-  dpm($optionset);
   // Add the options to the vertical tabs section
   foreach($default_options as $key => $value) {
     $form['options'][] = $value;
@@ -384,38 +382,33 @@ function _flexslider_validate_number($element, &$form_state) {
  */
 function flexslider_form_optionset_edit_submit($form, &$form_state) {
   $optionset = &$form_state['optionset'];
-
   $optionset->title = $form_state['values']['title'];
   //$optionset['theme'] = $form_state['values']['theme'];
   //$optionset['imagestyle_thumb']  = $form_state['values']['image_styles']['thumb'];
   $optionset->imagestyle_normal = $form_state['values']['image_style']['normal'];
   //$optionset['imagestyle_big']    = $form_state['values']['image_styles']['big'];
 
-  if (isset($form_state['values']['options'])) {
-    foreach ($form_state['values']['options'] as $index => $values) {
-      $element = $form['options'][$index]['value'];
-      $value  = $values['value'];
-  
-      if ($value !== '') {
-        // Do some typeguessing here...
-        if ($element['#type'] == 'checkbox') {
-          $value = (bool) $value;
-        }
-        elseif (is_numeric($value)) { // || intval($value) != $value || $value < 0)
-          $value = (float) $value;
-        }
-        elseif (strcasecmp($value, 'true') == 0) {
-          $value = TRUE;
-        }
-        elseif (strcasecmp($value, 'false') == 0) {
-          $value = FALSE;
-        }
-      }
-  
-      $option = $element['#option_name'];
-      $optionset->options[$option] = $value;
-    }
-  }
+  // Assign the values to the option set
+  $optionset->options['animation'] = $form_state['values']['animation'];
+  $optionset->options['animationDuration'] = $form_state['values']['animationDuration'];
+  $optionset->options['slideDirection'] = $form_state['values']['slideDirection'];
+  $optionset->options['slideshow'] = $form_state['values']['slideshow'];
+  $optionset->options['slideshowSpeed'] = $form_state['values']['slideshowSpeed'];
+  $optionset->options['animationLoop'] = $form_state['values']['animationLoop'];
+  $optionset->options['randomize'] = $form_state['values']['randomize'];
+  $optionset->options['slideToStart'] = $form_state['values']['slideToStart'];
+  $optionset->options['directionNav'] = $form_state['values']['directionNav'];
+  $optionset->options['controlNav'] = $form_state['values']['controlNav'];
+  $optionset->options['keyboardNav'] = $form_state['values']['keyboardNav'];
+  $optionset->options['mousewheel'] = $form_state['values']['mousewheel'];
+  $optionset->options['prevText'] = $form_state['values']['prevText'];
+  $optionset->options['nextText'] = $form_state['values']['nextText'];
+  $optionset->options['pausePlay'] = $form_state['values']['pausePlay'];
+  $optionset->options['pauseText'] = $form_state['values']['pauseText'];
+  $optionset->options['playText'] = $form_state['values']['playText'];
+  $optionset->options['pauseOnAction'] = $form_state['values']['pauseOnAction'];
+  $optionset->options['controlsContainer'] = $form_state['values']['controlsContainer'];
+  $optionset->options['manualControls'] = $form_state['values']['manualControls'];
 
   ctools_include('export');
   ctools_export_crud_save('flexslider_optionset', $optionset);
