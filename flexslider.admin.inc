@@ -286,29 +286,6 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
     '#required' => TRUE,
   );
 
-// @todo decide if we should remove the themes controls entirely
-// seems like something that should be controlled via CSS in the theme
-// as FlexSlider doesn't have "themes" functionality
-/*  // Show the theme select box if there is more than one theme
-  $themes = array_keys(flexslider_get_themes(TRUE));
-  if (count($themes) == 1) {
-    $form['theme'] = array(
-      '#type' => 'hidden',
-      '#value' => $themes[0],
-    );
-  }
-  elseif (count($themes) > 1) {
-    asort($themes);
-
-    $form['theme'] = array(
-      '#type' => 'select',
-      '#title' => t('Theme'),
-      '#description' => t('As you have more than one flexslider theme installed, please select the one to use.'),
-      '#options' => array_combine($themes, $themes),
-      '#default_value' => $optionset->theme,
-    );
-  }
-*/
   // Show select boxes for the various image styles (thumbnail, normal, big)
   $image_style = image_style_options(FALSE);
   $form['image_style'] = array(
@@ -429,7 +406,7 @@ function flexslider_optionset_form_delete($form, &$form_state, $optionset) {
 
   return confirm_form(
     $form,
-    t('Are you sure you want to ' . strtolower($op) . ' the option set %name?', array('%name' => $optionset->name)),
+    t('Are you sure you want to @action the option set %name?', array('@action' => t(drupal_strtolower($op)), '%name' => $optionset->name)),
     'admin/config/media/flexslider',
     NULL,
     t($op),  t('Cancel')
@@ -462,13 +439,6 @@ function flexslider_form_settings() {
     '#title' => 'Library',
   );
 
-/*  $form['library']['button_clearcache'] = array(
-    '#type' => 'submit',
-    '#name' => 'button_clearcache',
-    '#value' => t('Clear cache'),
-    '#submit' => array('flexslider_form_settings_submit_clearcache'),
-  );
-*/
   // Debug mode toggle
   $form['library']['flexslider_debug'] = array(
     '#type' => 'checkbox',
