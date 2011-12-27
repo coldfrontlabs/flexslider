@@ -112,7 +112,7 @@ function flexslider_option_elements($options = array()) {
       'fade'   => t('Fade'),
       'slide'  => t('Slide'),
     ),
-    '#default_value' => $options['animation'] ? $options['animation'] : 'fade',
+    '#default_value' => isset($options['animation']) ? $options['animation'] : 'fade',
     // @todo add states to enable/disable the direction
   );
   
@@ -121,7 +121,7 @@ function flexslider_option_elements($options = array()) {
     '#title' => t('Animation speed'),
     '#description' => t('Set the speed of animations, in milliseconds'),
     '#element_validate' => array('_flexslider_validate_positive_integer'),
-    '#default_value' => 600,
+    '#default_value' => isset($options['animationDuration']) ? $options['animationDuration'] : 600,
     '#size' => 30,
   );
   
@@ -133,14 +133,14 @@ function flexslider_option_elements($options = array()) {
       'horizontal'   => t('Horizontal'),
       'vertical'  => t('Vertical'),
     ),
-    '#default_value' => 'horizontal',
+    '#default_value' =>  isset($options['slideDirection']) ? $options['slideDirection'] : 'horizontal',
   );
 
   $form['animation_slideshow']['slideshow'] = array(
     '#type' => 'checkbox',
     '#title' => t('Slideshow Playback'),
     '#description' => t('Animate the slides automatically'),
-    '#default_value' => TRUE,
+    '#default_value' => isset($options['slideshow']) ? $options['slideshow'] : TRUE,
   );
   
   $form['animation_slideshow']['slideshowSpeed'] = array(
@@ -148,7 +148,7 @@ function flexslider_option_elements($options = array()) {
     '#title' => t('Slideshow speed'),
     '#description' => t('Set the speed of the slideshow cycling, in milliseconds'),
     '#element_validate' => array('_flexslider_validate_positive_integer'),
-    '#default_value' => 7000,
+    '#default_value' => isset($options['slideshowSpeed']) ? $options['slideshowSpeed'] : 7000,
     '#size' => 30,
   );
 
@@ -156,21 +156,21 @@ function flexslider_option_elements($options = array()) {
     '#type' => 'checkbox',
     '#title' => t('Loop Slideshow'),
     '#description' => t('Loop the slideshow once it reaches the last slide.'),
-    '#default_value' => TRUE,
+    '#default_value' => isset($options['animationLoop']) ? $options['animationLoop'] : TRUE,
   );
 
   $form['animation_slideshow']['randomize'] = array(
     '#type' => 'checkbox',
     '#title' => t('Randomize Slide Order'),
     '#description' => t('Randomize the order the slides play back.'),
-    '#default_value' => FALSE,
+    '#default_value' => isset($options['randomize']) ? $options['randomize'] : FALSE,
   );
   $form['animation_slideshow']['slideToStart'] = array(
     '#type' => 'textfield',
     '#title' => t('Starting Slide'),
     '#description' => t('The slide that the slider should start on. Ex: For the first slide enter "0", for the second enter "1", etc. If you enter a value which is greater than the number of slides, the slider will default to the first slide.'),
     '#element_validate' => array('_flexslider_validate_positive_integer'),
-    '#default_value' => 0,
+    '#default_value' => isset($options['slideToStart']) ? $options['slideToStart'] : 0,
     '#size' => 30,
     // @todo add states to disable if randomize is set
   );
@@ -184,38 +184,38 @@ function flexslider_option_elements($options = array()) {
     '#type' => 'checkbox',
     '#title' => t('Next/Previous Controls'),
     '#description' => t('Add controls for previous/next navigation'),
-    '#default_value' => TRUE,
+    '#default_value' => isset($options['directionNav']) ? $options['directionNav'] : TRUE,
   );
   $form['nav_controls']['controlNav'] = array(
     '#type' => 'checkbox',
     '#title' => t('Paging Controls'),
     '#description' => t('Add controls to jump to individual slides.'),
-    '#default_value' => TRUE,
+    '#default_value' => isset($options['controlNav']) ? $options['controlNav'] : TRUE,
     // @todo add states options for manualControls
   );
   $form['nav_controls']['keyboardNav'] = array(
     '#type' => 'checkbox',
     '#title' => t('Keyboard Navigation'),
     '#description' => t('Allow slider navigating via keyboard left/right keys'),
-    '#default_value' => TRUE,
+    '#default_value' => isset($options['keyboardNav']) ? $options['keyboardNav'] : TRUE,
   );
   $form['nav_controls']['mousewheel'] = array(
     '#type' => 'checkbox',
     '#title' => t('Mousewheel Navigation'),
     '#description' => t('Allow slider navigating via mousewheel'),
-    '#default_value' => TRUE,
+    '#default_value' => isset($options['mousewheel']) ? $options['mousewheel'] : TRUE,
   );
   $form['nav_controls']['prevText'] = array(
     '#type' => 'textfield',
     '#title' => t('Previous Link Text'),
     '#description' => t('Set the text for the "previous" control item. <em>Text translation can be controlled using the <a href="http://drupal.org/project/stringoverrides">String Overrides module</a>.</em>'),
-    '#default_value' => 'Previous',
+    '#default_value' => isset($options['prevText']) ? $options['prevText'] : 'Previous',
   );
   $form['nav_controls']['nextText'] = array(
     '#type' => 'textfield',
     '#title' => t('Next Link Text'),
     '#description' => t('Set the text for the "next" control item. <em>Text translation can be controlled using the <a href="http://drupal.org/project/stringoverrides">String Overrides module</a>.</em>'),
-    '#default_value' => 'Next',
+    '#default_value' => isset($options['nextText']) ? $options['nextText'] : 'Next',
   );
 
   // Advanced Options
@@ -227,38 +227,38 @@ function flexslider_option_elements($options = array()) {
     '#type' => 'checkbox',
     '#title' => t('Add Pause/Play Indicator'),
     '#description' => t('Have FlexSlider add an element indicating the current state of the slideshow (i.e. "pause" or "play").'),
-    '#default_value' => FALSE,
+    '#default_value' => isset($options['pausePlay']) ? $options['pausePlay'] : FALSE,
     // @todo add states value for pause/play text
   );
   $form['advanced']['pauseText'] = array(
     '#type' => 'textfield',
     '#title' => t('Pause State Text'),
     '#description' => t('Set the text for the "pause" state indicator. <em>Text translation can be controlled using the <a href="http://drupal.org/project/stringoverrides">String Overrides module</a>.</em>'),
-    '#default_value' => 'Pause',
+    '#default_value' => isset($options['pauseText']) ? $options['pauseText'] : 'Pause',
   );
   $form['advanced']['playText'] = array(
     '#type' => 'textfield',
     '#title' => t('Play State Text'),
     '#description' => t('Set the text for the "play" state indicator. <em>Text translation can be controlled using the <a href="http://drupal.org/project/stringoverrides">String Overrides module</a>.</em>'),
-    '#default_value' => 'Play',
+    '#default_value' => isset($options['playText']) ? $options['playText'] : 'Play',
   );
   $form['advanced']['pauseOnAction'] = array(
     '#type' => 'checkbox',
     '#title' => t('Pause On Controls'),
     '#description' => t('Pause the slideshow when interacting with control elements.'),
-    '#default_value' => TRUE,
+    '#default_value' => isset($options['pauseOnAction']) ? $options['pauseOnAction'] : TRUE,
   );
   $form['advanced']['controlsContainer'] = array(
     '#type' => 'textfield',
     '#title' => t('Controls container (Advanced)'),
     '#description' => t('Declare which container the navigation elements should be appended too. Default container is the flexSlider element. Example use would be ".flexslider-container", "#container", etc. If the given element is not found, the default action will be taken.'),
-    '#default_value' => '',
+    '#default_value' => isset($options['controlsContainer']) ? $options['controlsContainer'] : '',
   );
   $form['advanced']['manualControls'] = array(
     '#type' => 'textfield',
     '#title' => t('Manual controls (Advanced)'),
     '#description' => t('Declare custom control navigation. Example would be ".flex-control-nav li" or "#tabs-nav li img", etc. The number of elements in your controlNav should match the number of slides/tabs.'),
-    '#default_value' => '',
+    '#default_value' => isset($options['manualControls']) ? $options['manualControls'] : '',
   );
   
   return $form;
@@ -330,7 +330,9 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
     '#type' => 'vertical_tabs',
   );
 
-  $default_options = flexslider_option_elements();
+  $default_options = flexslider_option_elements($optionset->options);
+  dpm($default_options);
+  dpm($optionset);
   // Add the options to the vertical tabs section
   foreach($default_options as $key => $value) {
     $form['options'][] = $value;
