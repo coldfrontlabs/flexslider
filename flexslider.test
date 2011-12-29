@@ -9,6 +9,9 @@
 
 
 class FlexsliderTestCase extends DrupalWebTestCase {
+  protected $admin_user;
+  protected $any_user;
+  
   public static function getInfo() {
     return array(
       'name' => t('Flexslider tests'),
@@ -20,8 +23,49 @@ class FlexsliderTestCase extends DrupalWebTestCase {
   function setUp() {
     parent::setUp('libraires', 'ctools', 'flexslider');
     
+    // Create users
+    $this->admin_user = $this->drupalCreateUser(array('administer flexslider'));
+    $this->any_user = $this->drupalCreateuser(array('access administration pages'));
   }
 
-  // @todo add test cases
+  function testAdminAccess() {
+
+    // Login as the admin user
+    $this->drupalLogin($this->admin_user);
+    
+    // Load admin page
+    $this->drupalGet('admin/config/media/flexslider');
+    $this->assertResponse(200, t('Administrative permission allows access to administration page.'));
+    
+    // Logout as admin user
+    $this->drupalLogout();
+    
+    // Login as any user
+    $this->drupalLogin($this->any_user);
+
+    // Attempt to load admin page
+    $this->drupalGet('admin/config/media/flexslider');
+    $this->assertResponse(403, t('Regular users do not have access to administrative pages.'));
+  }
+  
+  function testOptionSet() {
+    // @todo
+    
+    // Login with admin user
+    // ------------ Test Option Set Add ------------ //
+    // Load create form
+    // Save new optionset
+    // Attempt to save option set of the same name again
+
+    // ------------ Test Option Set Edit ------------ //
+    // Load option set edit form
+    // Attempt to save each option value
+    // Test saved values
+    // 
+    
+    // ------------ Test Option Set Delete ------------ //
+    // Attempt to delete an option set that exists
+    // Attemp to delete an option set that doesn't exist
+  }
   
 }

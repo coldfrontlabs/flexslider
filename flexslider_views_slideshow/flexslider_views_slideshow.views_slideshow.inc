@@ -73,6 +73,7 @@ function flexslider_views_slideshow_views_slideshow_option_definition() {
     ),
   );
   // @todo figure out which options to define
+  // @todo integrate with "optionsets"
 
   return $options;
 }
