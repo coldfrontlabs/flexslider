@@ -21,7 +21,7 @@ class FlexsliderTestCase extends DrupalWebTestCase {
   }
 
   function setUp() {
-    parent::setUp('libraires', 'ctools', 'flexslider');
+    parent::setUp('libraries', 'ctools', 'flexslider');
     
     // Create users
     $this->admin_user = $this->drupalCreateUser(array('administer flexslider'));
@@ -49,12 +49,23 @@ class FlexsliderTestCase extends DrupalWebTestCase {
   }
   
   function testOptionSet() {
-    // @todo
     
     // Login with admin user
+    $this->drupalLogin($this->admin_user);
+
     // ------------ Test Option Set Add ------------ //
     // Load create form
+    $this->drupalGet('admin/config/media/flexslider/add');
+    $this->assertResponse(200, t('Administrative user can reach the "Add" form.'));
+    
     // Save new optionset
+    $optionset = array();
+    $optionset['title'] = 'testset';
+    $optionset['name'] = 'testset';
+    $this->drupalPost('admin/config/media/flexslider/add', $optionset, t('Create new option set'));
+    $this->assertResponse(200);
+    $this->assertText('Option set testset was created.', t('Successfully saved the new optionset "testset"'));
+
     // Attempt to save option set of the same name again
 
     // ------------ Test Option Set Edit ------------ //
