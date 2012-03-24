@@ -20,6 +20,10 @@ function  _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main
   $view = $vars['view'];
   $vss_id = $vars['vss_id'];
 
+  // Load the option set data
+  $settings = flexslider_optionset_load($settings['optionset']);
+  $settings = $settings->options;
+  
   // Cast the strings into int or bool as necessary
   $new_settings = array();
   foreach ($settings as $key => $value) {

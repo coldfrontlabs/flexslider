@@ -45,7 +45,7 @@ function flexslider_views_slideshow_views_slideshow_option_definition() {
   // Default options for FlexSlider
   $options['flexslider_views_slideshow'] = array(
     'contains' => array(
-      'optionset' => 'default',
+      'optionset' => array('default' => 'default'),
     ),
   );
   // @todo figure out which options to define
@@ -69,13 +69,17 @@ function flexslider_views_slideshow_views_slideshow_slideshow_type_form(&$form, 
     }
     
     // Add a select field
-    $form['option_set'] = array(
+    $form['flexslider_views_slideshow']['optionset'] = array(
       '#type' => 'select',
       '#title' => t('Option Set'),
       '#multiple' => FALSE,
       '#description' => t('Select a configured option set to use with Flex Slider.'),
       '#options' => $options,
-      '#default_value' => 'default',
+      '#default_value' => $view->options['flexslider_views_slideshow']['optionset'],
     );
     
+}
+
+function flexslider_views_slideshow_views_slideshow_slideshow_type_form_validate(&$form, &$form_state, &$view) {
+  // @todo add validation for any fields in the settings form
 }
