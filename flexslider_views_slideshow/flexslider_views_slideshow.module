@@ -47,7 +47,7 @@ function flexslider_views_slideshow_theme($existing, $type, $theme, $path) {
  * Implements hook_views_pre_render().
  **/
 function flexslider_views_slideshow_views_pre_render(&$view) {
-  if (get_class($view->style_plugin) == 'views_slideshow_plugin_style_slideshow' and $view->style_options['slideshow_type'] == 'flexslider_views_slideshow') {
+  if (get_class($view->style_plugin) == 'views_slideshow_plugin_style_slideshow' and isset($view->style_options['slideshow_type']) and $view->style_options['slideshow_type'] == 'flexslider_views_slideshow') {
 
     $fieldname = $view->style_plugin->options['flexslider_views_slideshow']['caption_field'];
     if ($fieldname == 'none' or !isset($view->field[$fieldname])) {
