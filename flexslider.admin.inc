@@ -9,8 +9,7 @@
  * Menu callback; Listing of all current option sets.
  */
 function flexslider_page_optionset_list() {
-  ctools_include('export');
-  $optionsets = ctools_export_crud_load_all('flexslider_optionset');
+  $optionsets = flexslider_optionsets_get();
   $header = array(t('Option Set Name'), array('data' => t('Operations'), 'colspan' => 2));
   $rows = array();
   foreach ($optionsets as $name => $optionset) {
