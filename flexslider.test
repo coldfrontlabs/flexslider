@@ -100,6 +100,26 @@ function _flexslider_test_options() {
     'set1' => array(
       'edit-animation' => 'slide',
       'edit-animationduration' => 500,
+      'edit-slidedirection' => 'horizontal',
+      'edit-slideshow' => TRUE,
+      'edit-slideshowspeed' => 7000,
+      'edit-directionnav' => TRUE,
+      'edit-controlnav' => TRUE,
+      'edit-keyboardnav' => TRUE,
+      'edit-mousewheel' => FALSE,
+      'edit-prevtext' => 'Previous',
+      'edit-nexttext' => 'Next',
+      'edit-pauseplay' => FALSE,
+      'edit-pausetext' => 'Pause',
+      'edit-playtext' => 'Play',
+      'edit-randomize' => FALSE,
+      'edit-slidetostart' => 0, // integer value, not boolean
+      'edit-animationloop' => TRUE,
+      'edit-pauseonaction' => TRUE,
+      'edit-pauseonhover' => TRUE,
+      'edit-controlscontainer' => '',
+      'edit-manualcontrols' => '',
+
     ),
     'set2' => array(
       'edit-animation' => 'fade',
