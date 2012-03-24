@@ -42,7 +42,7 @@ function flexslider_fields_field_formatter_settings_form($field, $instance, $vie
   // Show select box for the option set
   $optionsets = array();
   ctools_include('export');
-  foreach (ctools_export_crud_load_all('flexslider_optionset') as $name => $optionset) {
+  foreach (flexslider_optionsets_get() as $name => $optionset) {
     $optionsets[$name] = check_plain($optionset->title);
   }
   $form['flexslider_optionset'] = array(
