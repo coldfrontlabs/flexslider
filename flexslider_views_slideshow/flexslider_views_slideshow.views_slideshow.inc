@@ -62,7 +62,7 @@ function flexslider_views_slideshow_views_slideshow_slideshow_type_form(&$form, 
     // @see http://flex.madebymufffin.com/
 
     // Load the list of option sets
-    $optionsets = flexslider_optionsets_get();
+    $optionsets = flexslider_optionset_load_all();
     // Parse out into key/value pairs
     foreach($optionsets as $key => $optionset) {
       $options[$key] = $optionset->title;
