@@ -1,11 +1,10 @@
-; Flexslider
+; Flex Slider
 ;
 
 core = 7.x
 api = 2
 
-libraries[ckeditor][download][type] = "get"
-libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%203.6.2/ckeditor_3.6.2.tar.gz"
-libraries[ckeditor][directory_name] = ""
-libraries[ckeditor][type] = "library"
-
+libraries[flexslider][download][type] = "get"
+libraries[flexslider][download][url] = "https://github.com/woothemes/FlexSlider/zipball/master"
+libraries[flexslider][directory_name] = "flexslider"
+libraries[flexslider][type] = "library"
