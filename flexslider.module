@@ -58,6 +58,26 @@ function flexslider_permission() {
     'administer flexslider' =>  array(
       'title' => t('Administer the FlexSlider module'),
     ),
+    'create flexslider optionset' => array(
+      'title' => t('Create Flex Slider option sets'),
+      'description' => t('Allow users to create new option sets'),
+    ),
+    'edit own flexslider optionset' => array(
+      'title' => t('Create Flex Slider option sets'),
+      'description' => t('Allow users to create new option sets'),
+    ),
+    'edit any flexslider optionset' => array(
+      'title' => t('Create Flex Slider option sets'),
+      'description' => t('Allow users to create new option sets'),
+    ),
+    'delete own flexslider optionset' => array(
+      'title' => t('Create Flex Slider option sets'),
+      'description' => t('Allow users to create new option sets'),
+    ),
+    'delete any flexslider optionset' => array(
+      'title' => t('Create Flex Slider option sets'),
+      'description' => t('Allow users to create new option sets'),
+    ),
   );
 }
 
@@ -114,6 +134,24 @@ function flexslider_menu() {
     'access arguments' => array('administer flexslider'),
     'type' => MENU_LOCAL_TASK,
     'weight' => 2,
+    'file' => 'flexslider.admin.inc',
+  );
+  $items['admin/config/media/flexslider/import'] = array(
+    'title' => 'Import',
+    'description' => 'Import Flex Slider option sets',
+    'page callback' => 'flexslider_form_optionset_import',
+    'access arguments' => array('administer flexslider'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 3,
+    'file' => 'flexslider.admin.inc',
+  );
+  $items['admin/config/media/flexslider/export'] = array(
+    'title' => 'Export',
+    'description' => 'Export Flex Slider option sets',
+    'page callback' => 'flexslider_form_optionset_export',
+    'access arguments' => array('administer flexslider'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 4,
     'file' => 'flexslider.admin.inc',
   );
 
@@ -186,6 +224,7 @@ function flexslider_ctools_plugin_api($owner, $api) {
  */
 function flexslider_optionsets() {
   $optionsets = db_query("SELECT * FROM {flexslider_optionset}")->fetchAllAssoc('name', PDO::FETCH_ASSOC);
+
   foreach ($optionsets as &$optionset) {
     $optionset['options'] = empty($optionset['options']) ? array() : unserialize($optionset['options']);
   }
