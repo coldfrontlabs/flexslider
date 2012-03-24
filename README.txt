@@ -45,15 +45,19 @@ Installation
 
 That's it!
 
+Usage
+======
+
+No matter how you want to use Flex Slider (with fields, views or views slideshow) you need to define "option sets" to tell Flex Slider how you want it to display. 
+
+Go to admin/config/media/flexslider
+
+From there you can edit the default option set and define new ones. These will be listed as options in the various forms where you setup Flex Slider to display.
+
 Debugging
 ---------
 
 You can toggle the development version of the library in the administrative settings page. This will load the unminified version of the library.
-
-Usage
-=====
-
-You can load the library using drupal_add_library('flexslider', 'flexslider') in your theme or module. For any integrated functionality, the library will be loaded automatically.
 
 Export API
 ==========

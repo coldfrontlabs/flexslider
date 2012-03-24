@@ -13,7 +13,7 @@
 function flexslider_views_slideshow_views_slideshow_slideshow_info() {
   $options = array(
     'flexslider_views_slideshow' => array(
-      'name' => t('FlexSlider'),
+      'name' => t('Flex Slider'),
       'accepts' => array(
 //        'goToSlide',
         'nextSlide',

@@ -68,7 +68,7 @@ function flexslider_menu() {
   $items = array();
 
   $items['admin/config/media/flexslider'] = array(
-    'title' => 'FlexSlider',
+    'title' => 'Flex Slider',
     'description' => 'Configure FlexSlider presets and display settings.',
     'page callback' => 'flexslider_page_optionset_list',
     'access arguments' => array('administer flexslider'),
@@ -147,13 +147,9 @@ function flexslider_help($path, $arg) {
       return
           '<p>'
         . t('An <em>option set</em> defines exactly how a flexslider image gallery looks like on your site. '
-          . 'It is s a combination of <a href="@styles">image styles</a> for the various image sizes, flexslider theme and options.', array('@styles' => url('admin/config/media/image-styles'))). '<br />'
-        . t('For a full documentation of all options, refer to the official <a href="@docs">flexslider documentation</a>.', array('@docs' => url('http://flex.madebymufffin.com/')))
+          . 'It is s a combination of <a href="@styles">image styles</a> for the various image sizes and Flex Slider library options.', array('@styles' => url('admin/config/media/image-styles'))). '<br />'
+        . t('For a full documentation of all options, refer to the official <a href="@docs">Flex Slider documentation</a>.', array('@docs' => url('http://flex.madebymufffin.com/')))
         . '</p>';
-
-    case 'admin/config/media/flexslider/advanced':
-      return '<p>' . t('This page lists some automatically detected files and folders. To improve performance, they are cached until the files get deleted.<br />'
-                   . 'If the module behaves strangely, try to clear the cached values below.') . '</p>';
   }
 }
 
@@ -325,30 +321,30 @@ function flexslider_add($id, $optionset) {
  */
 function _flexslider_optionset_defaults() {
   return array(
-    'animation' => array('default' => 'fade'),
-    'animationduration' => array('default' => 6000),
-    'slidedirection' => array('default' => 'horizontal'),
-    'slideshow' => array('default' => TRUE),
-    'slideshowspeed' => array('default' => 7000),
-    'directionnav' => array('default' => TRUE),
-    'controlnav' => array('default' => TRUE),
-    'keyboardnav' => array('default' => TRUE),
-    'mousewheel' => array('default' => FALSE),
-    'prevtext' => array('default' => t('Previous')),
-    'nexttext' => array('default' => t('Next')),
-    'pauseplay' => array('default' => FALSE),
-    'pausetext' => array('default' => t('Pause')),
-    'playtext' => array('default' => t('Play')),
-    'randomize' => array('default' => FALSE),
-    'slidetostart' => array('default' => 0), // integer value, not boolean
-    'animationloop' => array('default' => TRUE),
-    'pauseonaction' => array('default' => TRUE),
-    'pauseonhover' => array('default' => TRUE),
-    'controlscontainer' => array('default' => ''),
-    'manualcontrols' => array('default' => ''),
-    'startcallback' => array('default' => 'function() {}'),
-    'beforecallback' => array('default' => 'function() {}'),
-    'aftercallback' => array('default' => 'function() {}'),
-    'endcallback' => array('default' => 'function() {}'),
+    'animation' => 'fade',
+    'animationduration' => 6000,
+    'slidedirection' => 'horizontal',
+    'slideshow' => TRUE,
+    'slideshowspeed' => 7000,
+    'directionnav' => TRUE,
+    'controlnav' => TRUE,
+    'keyboardnav' => TRUE,
+    'mousewheel' => FALSE,
+    'prevtext' => t('Previous'),
+    'nexttext' => t('Next'),
+    'pauseplay' => FALSE,
+    'pausetext' => t('Pause'),
+    'playtext' => t('Play'),
+    'randomize' => FALSE,
+    'slidetostart' => 0, // integer value, not boolean
+    'animationloop' => TRUE,
+    'pauseonaction' => TRUE,
+    'pauseonhover' => TRUE,
+    'controlscontainer' => '',
+    'manualcontrols' => '',
+    'startcallback' => 'function() {}',
+    'beforecallback' => 'function() {}',
+    'aftercallback' => 'function() {}',
+    'endcallback' => 'function() {}',
   );
 }
