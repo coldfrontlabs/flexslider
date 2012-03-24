@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Test cases for Flexslider
+ * Test cases for Flex Slider
  *
  * @author Mathew Winstone <mwinstone@coldfrontlabs.ca>
  */
@@ -71,10 +71,12 @@ class FlexsliderTestCase extends DrupalWebTestCase {
 
     // ------------ Test Option Set Edit ------------ //
     // Attempt to save each option value
+    $options = _flexslider_test_options();
     
     foreach($options['valid'] as $testset) {
       $this->drupalPost('admin/config/media/flexslider/edit/default', $testset, t('Save option set'));      
-
+      $thid->assertResponse(200);
+      
       // Test saved values
       // @todo
     }
@@ -98,14 +100,34 @@ function _flexslider_test_options() {
   // Valid option set data
   $valid = array(
     'set1' => array(
-      'edit-animation' => 'slide',
-      'edit-animationduration' => 500,
+      'animation' => 'slide',
+      'animationduration' => 500,
+      'slidedirection' => 'horizontal',
+      'slideshow' => TRUE,
+      'slideshowspeed' => 7000,
+      'directionnav' => TRUE,
+      'controlnav' => TRUE,
+      'keyboardnav' => TRUE,
+      'mousewheel' => FALSE,
+      'prevtext' => 'Previous',
+      'nexttext' => 'Next',
+      'pauseplay' => FALSE,
+      'pausetext' => 'Pause',
+      'playtext' => 'Play',
+      'randomize' => FALSE,
+      'slidetostart' => 0, // integer value, not boolean
+      'animationloop' => TRUE,
+      'pauseonaction' => TRUE,
+      'pauseonhover' => TRUE,
+      'controlscontainer' => '',
+      'manualcontrols' => '',
+
     ),
     'set2' => array(
-      'edit-animation' => 'fade',
+      'animation' => 'fade',
     ),
     'set3' => array(
-      'edit-animation' => 'slide',
+      'animation' => 'slide',
     ),
   );
   
@@ -114,4 +136,3 @@ function _flexslider_test_options() {
   
   return array('valid' => $valid, 'error' => $error);
 }
-
