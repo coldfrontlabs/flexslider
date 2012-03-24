@@ -74,7 +74,8 @@ class FlexsliderTestCase extends DrupalWebTestCase {
     $options = _flexslider_test_options();
     foreach($options['valid'] as $testset) {
       $this->drupalPost('admin/config/media/flexslider/edit/default', $testset, t('Save option set'));      
-
+      $thid->assertResponse(200);
+      
       // Test saved values
       // @todo
     }
@@ -98,34 +99,34 @@ function _flexslider_test_options() {
   // Valid option set data
   $valid = array(
     'set1' => array(
-      'edit-animation' => 'slide',
-      'edit-animationduration' => 500,
-      'edit-slidedirection' => 'horizontal',
-      'edit-slideshow' => TRUE,
-      'edit-slideshowspeed' => 7000,
-      'edit-directionnav' => TRUE,
-      'edit-controlnav' => TRUE,
-      'edit-keyboardnav' => TRUE,
-      'edit-mousewheel' => FALSE,
-      'edit-prevtext' => 'Previous',
-      'edit-nexttext' => 'Next',
-      'edit-pauseplay' => FALSE,
-      'edit-pausetext' => 'Pause',
-      'edit-playtext' => 'Play',
-      'edit-randomize' => FALSE,
-      'edit-slidetostart' => 0, // integer value, not boolean
-      'edit-animationloop' => TRUE,
-      'edit-pauseonaction' => TRUE,
-      'edit-pauseonhover' => TRUE,
-      'edit-controlscontainer' => '',
-      'edit-manualcontrols' => '',
+      'animation' => 'slide',
+      'animationduration' => 500,
+      'slidedirection' => 'horizontal',
+      'slideshow' => TRUE,
+      'slideshowspeed' => 7000,
+      'directionnav' => TRUE,
+      'controlnav' => TRUE,
+      'keyboardnav' => TRUE,
+      'mousewheel' => FALSE,
+      'prevtext' => 'Previous',
+      'nexttext' => 'Next',
+      'pauseplay' => FALSE,
+      'pausetext' => 'Pause',
+      'playtext' => 'Play',
+      'randomize' => FALSE,
+      'slidetostart' => 0, // integer value, not boolean
+      'animationloop' => TRUE,
+      'pauseonaction' => TRUE,
+      'pauseonhover' => TRUE,
+      'controlscontainer' => '',
+      'manualcontrols' => '',
 
     ),
     'set2' => array(
-      'edit-animation' => 'fade',
+      'animation' => 'fade',
     ),
     'set3' => array(
-      'edit-animation' => 'slide',
+      'animation' => 'slide',
     ),
   );
   
