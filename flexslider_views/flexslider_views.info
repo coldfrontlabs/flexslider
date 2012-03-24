@@ -1,7 +1,7 @@
-name = FlexSlider Views
+name = Flex Slider Views
 description = Adds a Views display plugin for FlexSlider
 core = 7.x
-package = Flexslider
+package = Flex Slider
 
 dependencies[] = views
 dependencies[] = flexslider

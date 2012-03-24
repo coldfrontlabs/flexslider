@@ -67,6 +67,7 @@ class FlexsliderTestCase extends DrupalWebTestCase {
     $this->assertText('Option set testset was created.', t('Successfully saved the new optionset "testset"'));
 
     // Attempt to save option set of the same name again
+    // @todo
 
     // ------------ Test Option Set Edit ------------ //
     // Load option set edit form
@@ -80,3 +81,6 @@ class FlexsliderTestCase extends DrupalWebTestCase {
   }
   
 }
+
+
+
