@@ -99,7 +99,7 @@ function flexslider_requirements($phase) {
   $t = get_t();
 
   // Check to see if the flexslider library is available
-  if ($phase == 'runtime' || $phase == 'install') {
+  if ($phase == 'runtime') {
     $requirements['flexslider'] = array(
       'title' => $t('FlexSlider'),
       // @todo have the version automatically detected

@@ -200,11 +200,11 @@ function flexslider_image_default_styles() {
   $styles['flexslider_full'] = array(
     'effects' => array(
       array(
-        'name' => 'image_scale',
-        'data' => array('width' => 960, 'height' => '', 'upscale' => TRUE),
+        'name' => 'image_scale_and_crop',
+        'data' => array('width' => 800, 'height' => 500, 'upscale' => 1),
         'weight' => 0,
       ),
-    )
+    ),
   );
 
   return $styles;
@@ -342,3 +342,4 @@ function flexslider_add($id, $optionset) {
   // Loader JavaScript
   drupal_add_js(drupal_get_path('module', 'flexslider') . '/assets/js/flexslider.load.js');
 }
+
