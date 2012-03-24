@@ -14,9 +14,9 @@ class FlexsliderTestCase extends DrupalWebTestCase {
   
   public static function getInfo() {
     return array(
-      'name' => t('Flexslider tests'),
-      'description' => t('Test the Flexslider presets, configuration options and permission controls.'),
-      'group' => t('Flexslider'),
+      'name' => t('Flex Slider tests'),
+      'description' => t('Test the Flex Slider presets, configuration options and permission controls.'),
+      'group' => t('Flex Slider'),
     );
   }
 

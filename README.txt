@@ -58,4 +58,4 @@ You can load the library using drupal_add_library('flexslider', 'flexslider') in
 Export API
 ==========
 
-You can export your Flexslider option presets using CTools exportables. So either using the Bulk Export module or Features.
+You can export your Flex Slider option presets using CTools exportables. So either using the Bulk Export module or Features.
