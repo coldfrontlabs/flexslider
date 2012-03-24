@@ -235,7 +235,7 @@ function flexslider_optionset_exists($optionset_name) {
 function flexslider_optionset_save($optionset, $new = FALSE) {
   $optionset += array(
     'title' => $optionset['name'],
-    'options' => array(),
+    'options' => _flexslider_optionset_defaults(),
   );
 
   if ($new) {
@@ -323,3 +323,35 @@ function flexslider_add($id, $optionset) {
   drupal_add_js(drupal_get_path('module', 'flexslider') . '/assets/js/flexslider.load.js');
 }
 
+/**
+ * Default settings for a newly created option set
+ */
+function _flexslider_optionset_defaults() {
+  return array(
+    'animation' => array('default' => 'fade'),
+    'animationduration' => array('default' => 6000),
+    'slidedirection' => array('default' => 'horizontal'),
+    'slideshow' => array('default' => TRUE),
+    'slideshowspeed' => array('default' => 7000),
+    'directionnav' => array('default' => TRUE),
+    'controlnav' => array('default' => TRUE),
+    'keyboardnav' => array('default' => TRUE),
+    'mousewheel' => array('default' => FALSE),
+    'prevtext' => array('default' => t('Previous')),
+    'nexttext' => array('default' => t('Next')),
+    'pauseplay' => array('default' => FALSE),
+    'pausetext' => array('default' => t('Pause')),
+    'playtext' => array('default' => t('Play')),
+    'randomize' => array('default' => FALSE),
+    'slidetostart' => array('default' => 0), // integer value, not boolean
+    'animationloop' => array('default' => TRUE),
+    'pauseonaction' => array('default' => TRUE),
+    'pauseonhover' => array('default' => TRUE),
+    'controlscontainer' => array('default' => ''),
+    'manualcontrols' => array('default' => ''),
+    'startcallback' => array('default' => 'function() {}'),
+    'beforecallback' => array('default' => 'function() {}'),
+    'aftercallback' => array('default' => 'function() {}'),
+    'endcallback' => array('default' => 'function() {}'),
+  );
+}
