@@ -260,6 +260,13 @@ function flexslider_option_elements($options = array()) {
     '#description' => t('Declare custom control navigation. Example would be ".flex-control-nav li" or "#tabs-nav li img", etc. The number of elements in your controlNav should match the number of slides/tabs.'),
     '#default_value' => isset($options['manualControls']) ? $options['manualControls'] : '',
   );
+
+  
+  if (module_exists('bulk_export')) {
+  }
+  else {
+    
+  }
   
   return $form;
 }
@@ -464,4 +471,30 @@ function flexslider_form_settings_submit_clearcache($form, &$form_state) {
  */
 function flexslider_form_settings_submit($form, &$form_state) {
   // Do nothing for now
+}
+
+/**
+ * Export option sets
+ */
+function flexslider_form_optionset_export() {
+  $output = '';
+  
+  // Check for an appropriate export tool
+  if (module_exists('bulk_export') || module_exists('features')) {
+    $output .= 'Use any of the following to export your option sets.';
+    $output .= '<ul>';
+    if (module_exists('bulk_export')) {
+      $output .= '<li>' . l('Bulk Export', 'admin/structure/bulk-export') . '</li>';
+    }
+    if (module_exists('features')) {
+      $output .= '<li>' . l('Features', 'admin/structure/features') . '</li>';
+    }
+    $output .= '</ul>';
+  }
+  // Advise the user on tools available to them
+  else {
+    $output .= t('Enable the <a href="http://drupal.org/project/ctools">Bulk Export module</a> or the <a href="http://drupal.org/project/features">Features module</a> to export your option sets.');
+  }
+
+  return $output;
 }
