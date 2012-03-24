@@ -163,7 +163,7 @@ function flexslider_image_default_styles() {
     'effects' => array(
       array(
         'name' => 'image_scale_and_crop',
-        'data' => array('width' => 800, 'height' => 500, 'upscale' => 1),
+        'data' => array('width' => 800, 'height' => 500),
         'weight' => 0,
       ),
     ),
