@@ -202,7 +202,7 @@ function flexslider_ctools_plugin_api($owner, $api) {
 /**
  * Fetches all option sets from the database and returns them as an associative array.
  */
-function flexslider_optionsets_get() {
+function flexslider_optionset_load_all() {
   ctools_include('export');
   $optionsets = ctools_export_crud_load_all('flexslider_optionset');
   return $optionsets;
