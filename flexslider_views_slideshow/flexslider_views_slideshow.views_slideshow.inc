@@ -65,7 +65,7 @@ function flexslider_views_slideshow_views_slideshow_slideshow_type_form(&$form, 
     $optionsets = flexslider_optionsets_get();
     // Parse out into key/value pairs
     foreach($optionsets as $key => $optionset) {
-      $options[$key] = $optionset['title'];
+      $options[$key] = $optionset->title;
     }
     
     // Add a select field

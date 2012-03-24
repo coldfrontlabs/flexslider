@@ -36,7 +36,7 @@ class views_plugin_style_flexslider extends views_plugin_style {
 
     $optionsets = array();
     foreach (flexslider_optionsets_get() as $name => $optionset) {
-      $optionsets[$name] = check_plain($optionset['title']);
+      $optionsets[$name] = check_plain($optionset->title);
     }
     $form['flexslider']['flexslider_optionset'] = array(
       '#title' => t('Option set'),
