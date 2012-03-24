@@ -498,3 +498,12 @@ function flexslider_form_optionset_export() {
 
   return $output;
 }
+
+/**
+ * Import option set form
+ */
+function flexslider_form_optionset_import() {
+  $output = '<p>' . t('At present, the only method of importing option sets is by including the preset in a module. The Features module can simplify this process.') . '</p>';
+  $output .= '<p>' . t('A form based import/export mechanism will be added in the future.') . '</p>';
+  return $output;
+}

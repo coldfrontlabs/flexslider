@@ -136,6 +136,15 @@ function flexslider_menu() {
     'weight' => 2,
     'file' => 'flexslider.admin.inc',
   );
+  $items['admin/config/media/flexslider/import'] = array(
+    'title' => 'Import',
+    'description' => 'Import Flex Slider option sets',
+    'page callback' => 'flexslider_form_optionset_import',
+    'access arguments' => array('administer flexslider'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 3,
+    'file' => 'flexslider.admin.inc',
+  );
   $items['admin/config/media/flexslider/export'] = array(
     'title' => 'Export',
     'description' => 'Export Flex Slider option sets',
