@@ -70,10 +70,16 @@ class FlexsliderTestCase extends DrupalWebTestCase {
     // @todo
 
     // ------------ Test Option Set Edit ------------ //
-    // Load option set edit form
     // Attempt to save each option value
-    // Test saved values
-    // 
+    
+    foreach($options['valid'] as $testset) {
+      $this->drupalPost('admin/config/media/flexslider/edit/default', $testset, t('Save option set'));      
+
+      // Test saved values
+      // @todo
+    }
+
+
     
     // ------------ Test Option Set Delete ------------ //
     // Attempt to delete an option set that exists
@@ -82,5 +88,30 @@ class FlexsliderTestCase extends DrupalWebTestCase {
   
 }
 
-
+/**
+ * Test configuration options
+ *
+ * @return array
+ *  Returns an array of options to test saving.
+ */
+function _flexslider_test_options() {
+  // Valid option set data
+  $valid = array(
+    'set1' => array(
+      'edit-animation' => 'slide',
+      'edit-animationduration' => 500,
+    ),
+    'set2' => array(
+      'edit-animation' => 'fade',
+    ),
+    'set3' => array(
+      'edit-animation' => 'slide',
+    ),
+  );
+  
+  // Invalid edge cases
+  $error = array();
+  
+  return array('valid' => $valid, 'error' => $error);
+}
 
