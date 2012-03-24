@@ -71,7 +71,7 @@ class FlexsliderTestCase extends DrupalWebTestCase {
 
     // ------------ Test Option Set Edit ------------ //
     // Attempt to save each option value
-    
+    $options = _flexslider_test_options();
     foreach($options['valid'] as $testset) {
       $this->drupalPost('admin/config/media/flexslider/edit/default', $testset, t('Save option set'));      
 
