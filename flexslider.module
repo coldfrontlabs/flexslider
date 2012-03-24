@@ -58,26 +58,6 @@ function flexslider_permission() {
     'administer flexslider' =>  array(
       'title' => t('Administer the FlexSlider module'),
     ),
-    'create flexslider optionset' => array(
-      'title' => t('Create Flex Slider option sets'),
-      'description' => t('Allow users to create new option sets'),
-    ),
-    'edit own flexslider optionset' => array(
-      'title' => t('Create Flex Slider option sets'),
-      'description' => t('Allow users to create new option sets'),
-    ),
-    'edit any flexslider optionset' => array(
-      'title' => t('Create Flex Slider option sets'),
-      'description' => t('Allow users to create new option sets'),
-    ),
-    'delete own flexslider optionset' => array(
-      'title' => t('Create Flex Slider option sets'),
-      'description' => t('Allow users to create new option sets'),
-    ),
-    'delete any flexslider optionset' => array(
-      'title' => t('Create Flex Slider option sets'),
-      'description' => t('Allow users to create new option sets'),
-    ),
   );
 }
 
