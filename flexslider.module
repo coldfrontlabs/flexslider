@@ -147,13 +147,9 @@ function flexslider_help($path, $arg) {
       return
           '<p>'
         . t('An <em>option set</em> defines exactly how a flexslider image gallery looks like on your site. '
-          . 'It is s a combination of <a href="@styles">image styles</a> for the various image sizes, flexslider theme and options.', array('@styles' => url('admin/config/media/image-styles'))). '<br />'
-        . t('For a full documentation of all options, refer to the official <a href="@docs">flexslider documentation</a>.', array('@docs' => url('http://flex.madebymufffin.com/')))
+          . 'It is s a combination of <a href="@styles">image styles</a> for the various image sizes and Flex Slider library options.', array('@styles' => url('admin/config/media/image-styles'))). '<br />'
+        . t('For a full documentation of all options, refer to the official <a href="@docs">Flex Slider documentation</a>.', array('@docs' => url('http://flex.madebymufffin.com/')))
         . '</p>';
-
-    case 'admin/config/media/flexslider/advanced':
-      return '<p>' . t('This page lists some automatically detected files and folders. To improve performance, they are cached until the files get deleted.<br />'
-                   . 'If the module behaves strangely, try to clear the cached values below.') . '</p>';
   }
 }
 
