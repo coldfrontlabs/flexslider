@@ -12,7 +12,7 @@
  *
  * @ingroup themeable
  */
-function  _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_frame(&$vars) {
+function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_frame(&$vars) {
   // Load the settings, row information, view data and views slideshow ID into
   // more conveniently named variables.
   $settings = $vars['settings'];
@@ -23,6 +23,7 @@ function  _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main
   // Load the option set data
   $settings = flexslider_optionset_load($settings['optionset']);
   $settings = $settings->options;
+
   
   // Cast the strings into int or bool as necessary
   $new_settings = array();
