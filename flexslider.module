@@ -21,6 +21,10 @@ function flexslider_library() {
         'type' => 'file',
         'media' => 'screen',
       ),
+      drupal_get_path('module', 'flexslider') . '/assets/css/flexslider_img.css' => array(
+        'type' => 'file',
+        'media' => 'screen',
+      ),
     ),
   );
   return $libraries;
