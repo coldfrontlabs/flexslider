@@ -9,6 +9,7 @@ dependencies[] = ctools
 
 ; Files
 files[] = flexslider.module
+files[] = theme/theme.inc
 files[] = flexslider.test
 
 ; Required default styles

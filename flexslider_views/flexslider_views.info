@@ -6,4 +6,6 @@ package = Flex Slider
 dependencies[] = views
 dependencies[] = flexslider
 
+files[] = flexslider_views.module
 files[] = flexslider_views.views.inc
+files[] = flexslider_views_plugin_style_flexslider.inc
