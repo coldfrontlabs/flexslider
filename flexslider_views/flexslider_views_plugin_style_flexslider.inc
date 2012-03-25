@@ -17,7 +17,6 @@ class views_plugin_style_flexslider extends views_plugin_style {
 
     $options += array(
       'flexslider_optionset' => array('default' => 'default'),
-      'flexslider_theme' => array('default' => 'classic'),
     );
 
     return $options;
@@ -31,7 +30,7 @@ class views_plugin_style_flexslider extends views_plugin_style {
 
     $form['flexslider'] = array(
       '#type' => 'fieldset',
-      '#title' => 'flexslider',
+      '#title' => t('Flex Slider'),
     );
 
     $optionsets = array();
