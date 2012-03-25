@@ -2,19 +2,15 @@
 
 /**
  * @file
- * Adds Views plugins for FlexSlider
+ * Adds Views plugins for Flex Slider
  *
  * @author Mathew Winstone <mwinstone@coldfrontlabs.ca>
  */
 
 /**
  * Implements hook_views_api().
- *
- * This tells drupal that there is Views integration file named
- * flexslider.views.inc
- * @author jepedo
  */
-function flexslider_views_api() {
+function flexslider_views_views_api() {
   return array(
     'api' => 3,
   );
