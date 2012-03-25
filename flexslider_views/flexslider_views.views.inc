@@ -17,7 +17,7 @@ function flexslider_views_views_plugins() {
       'flexslider' => array(
         'title' => t('Flex Slider'),
         'help' => t('Display the results in a Flex Slider widget.'),
-        'handler' => 'views_plugin_style_flexslider',
+        'handler' => 'flexslider_views_plugin_style_flexslider',
         'theme' => 'views_view_flexslider',
         'theme file' => 'theme.inc',
         'theme path' => drupal_get_path('module', 'flexslider') . '/theme',
