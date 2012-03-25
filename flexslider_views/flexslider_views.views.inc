@@ -19,7 +19,7 @@ function flexslider_views_views_plugins() {
         'help' => t('Display the results in a Flex Slider widget.'),
         'handler' => 'flexslider_views_plugin_style_flexslider',
         'theme' => 'views_view_flexslider',
-        'theme file' => 'theme.inc',
+        'theme file' => 'flexslider.theme.inc',
         'theme path' => drupal_get_path('module', 'flexslider') . '/theme',
         'uses row plugin' => FALSE,
         'uses fields' => TRUE,
