@@ -11,7 +11,6 @@
  */
 function flexslider_views_views_plugins() {
   return array(
-    'module' => 'flexslider_views', // This just tells our themes are elsewhere.
     'style' => array(
       // Style plugin for the navigation.
       'flexslider' => array(
@@ -19,8 +18,8 @@ function flexslider_views_views_plugins() {
         'help' => t('Display the results in a Flex Slider widget.'),
         'handler' => 'flexslider_views_plugin_style_flexslider',
         'theme' => 'views_view_flexslider',
-        'theme file' => 'flexslider.theme.inc',
-        'theme path' => drupal_get_path('module', 'flexslider') . '/theme',
+        'theme file' => 'flexslider_views.theme.inc',
+        'theme path' => drupal_get_path('module', 'flexslider_views') . '/theme',
         'uses row plugin' => FALSE,
         'uses fields' => TRUE,
         'uses options' => TRUE,

@@ -165,7 +165,7 @@ function flexslider_theme() {
    'flexslider_container' => array(
       'variables' => array('items' => array(), 'settings' => array()),
       'template' => 'theme/flexslider-container',
-      'file' => 'theme/theme.inc',
+      'file' => 'theme/flexslider.theme.inc',
     ),
   );
 }
