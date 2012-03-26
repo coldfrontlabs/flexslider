@@ -131,6 +131,16 @@ function flexslider_update_7001(&$sandbox) {
 }
 
 /**
+ * Implements hook_update_N().
+ *
+ * Enables the Image module since it is now explicitly listed as a
+ * dependency.
+ */
+function flexslider_update_7002(&$sandbox) {
+  module_enable(array('image'));
+}
+
+/**
  * Check if the library is available
  *
  * @param array $requirements

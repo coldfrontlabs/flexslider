@@ -6,6 +6,7 @@ package = Flex Slider
 ; Dependencies
 dependencies[] = libraries
 dependencies[] = ctools
+dependencies[] = image
 
 ; Files
 files[] = flexslider.module
