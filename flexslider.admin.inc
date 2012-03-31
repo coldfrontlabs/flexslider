@@ -251,7 +251,7 @@ function flexslider_option_elements($options = array()) {
     '#type' => 'textfield',
     '#title' => t('Controls container (Advanced)'),
     '#description' => t('Declare which container the navigation elements should be appended too. Default container is the flexSlider element. Example use would be ".flexslider-container", "#container", etc. If the given element is not found, the default action will be taken.'),
-    '#default_value' => isset($options['controlsContainer']) ? $options['controlsContainer'] : '',
+    '#default_value' => isset($options['controlsContainer']) ? $options['controlsContainer'] : '.flex-nav-container',
   );
   $form['advanced']['manualControls'] = array(
     '#type' => 'textfield',
