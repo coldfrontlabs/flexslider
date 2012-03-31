@@ -373,13 +373,13 @@ function flexslider_form_optionset_edit_submit($form, &$form_state) {
 
   // Assign the values to the option set
   $optionset->options['animation'] = $form_state['values']['animation'];
-  $optionset->options['animationDuration'] = $form_state['values']['animationDuration'];
+  $optionset->options['animationDuration'] = (int)$form_state['values']['animationDuration'];
   $optionset->options['slideDirection'] = $form_state['values']['slideDirection'];
   $optionset->options['slideshow'] = $form_state['values']['slideshow'];
-  $optionset->options['slideshowSpeed'] = $form_state['values']['slideshowSpeed'];
+  $optionset->options['slideshowSpeed'] = (int)$form_state['values']['slideshowSpeed'];
   $optionset->options['animationLoop'] = $form_state['values']['animationLoop'];
   $optionset->options['randomize'] = $form_state['values']['randomize'];
-  $optionset->options['slideToStart'] = $form_state['values']['slideToStart'];
+  $optionset->options['slideToStart'] = (int)$form_state['values']['slideToStart'];
   $optionset->options['directionNav'] = $form_state['values']['directionNav'];
   $optionset->options['controlNav'] = $form_state['values']['controlNav'];
   $optionset->options['keyboardNav'] = $form_state['values']['keyboardNav'];
