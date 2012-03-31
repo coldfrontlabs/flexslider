@@ -256,8 +256,13 @@ function flexslider_optionset_delete($optionset) {
 /*
  * This function loads the required JavaScripts and settings for a flexslider
  * instance.
+ *
+ * @param string $id [optional]
+ *  ID Attribute for Flex Slider container
+ * @param string $optionset [optional]
+ *  Option set to load
  */
-function flexslider_add($id, $optionset) {
+function flexslider_add($id = NULL, $optionset = NULL) {
   // Static array to remember which scripts are already attached.
   // @todo not currently in use
   $cache = &drupal_static(__FUNCTION__, array());
@@ -267,19 +272,20 @@ function flexslider_add($id, $optionset) {
 
   // Moved theme configuration into hook_library_alter().
 
-  // JavaScript settings
-  $js_settings = array(
-    //'themepath' => file_create_url($cache['theme']),
-    'optionsets' => array(
-      $optionset->name => $optionset->options,
-    ),
-    'instances' => array(
-      'flexslider-' . $id => $optionset->name,
-    ),
-  );
-
-  drupal_add_js(array('flexslider' => $js_settings), 'setting');
-  
+  // If the ID or optionset aren't set, it is assumed the settings will be set
+  // manually via the calling module/theme
+  if (!empty($id) && !empty($optionset)) {
+    // JavaScript settings
+    $js_settings = array(
+      'optionsets' => array(
+        $optionset->name => $optionset->options,
+      ),
+      'instances' => array(
+        'flexslider-' . $id => $optionset->name,
+      ),
+    );
+    drupal_add_js(array('flexslider' => $js_settings), 'setting');
+  }
   // Loader JavaScript
   drupal_add_js(drupal_get_path('module', 'flexslider') . '/assets/js/flexslider.load.js');
 }

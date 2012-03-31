@@ -101,6 +101,7 @@ function flexslider_fields_field_formatter_view($entity_type, $entity, $field, $
         $image_items[] = $file;
       }
     }
+    dpm($items);
     $items = $image_items;
   }
 

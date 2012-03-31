@@ -21,6 +21,7 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
   $vss_id = $vars['vss_id'];
 
   // Load the option set data
+  $optionset = $settings['optionset'];
   $settings = flexslider_optionset_load($settings['optionset']);
   $settings = $settings->options;
 
@@ -81,7 +82,7 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
   }
   
   // Load the FlexSlider library for use
-  drupal_add_library('flexslider', 'flexslider');
+  flexslider_add();
 
   // Create the settings container
   // Due to a limitation inside of views_slideshow, the ID for the settings container
