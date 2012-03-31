@@ -7,7 +7,7 @@
 /**
   * Implements a style type plugin for the Views module.
   */
-class views_plugin_style_flexslider extends views_plugin_style {
+class flexslider_views_plugin_style_flexslider extends views_plugin_style {
 
   /**
    * Set default options.
