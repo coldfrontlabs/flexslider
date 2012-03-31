@@ -253,42 +253,6 @@ function flexslider_optionset_delete($optionset) {
   return TRUE;
 }
 
-/**
- * Searches for available themes inside the flexslider folder.
- * The list of themes
- */
-function flexslider_get_themes($nocache = FALSE) {
-  if (!$nocache && (($themes = cache_get('flexslider_themes')) !== FALSE))
-    return $themes->data;
-
-  $themes = array();
-
-  // Search for theme folders
-  $path = libraries_get_path('flexslider') . '/themes/';
-  
-  if (is_dir($path) && (($path_handle = opendir($path)) !== FALSE)) {
-    while (($theme = readdir($path_handle)) !== FALSE) {
-     
-      if (!is_dir($path . $theme) || $theme[0] == '.')
-        continue;
-
-      // Search for the theme JavaScript file, minified version first
-      $css = glob($path . $theme . '/*.css');
-
-      // Sort by filename to (hopefully) get the newest version.
-      if (count($css) > 0) {
-        rsort($css);
-        $themes[$theme] = $css[0];
-      }
-    }
-    closedir($path_handle);
-
-    cache_set('flexslider_themes', $themes);
-  }
-
-  return $themes;
-}
-
 /*
  * This function loads the required JavaScripts and settings for a flexslider
  * instance.
