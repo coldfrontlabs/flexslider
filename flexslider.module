@@ -314,7 +314,7 @@ function _flexslider_optionset_defaults() {
     'animationloop' => TRUE,
     'pauseonaction' => TRUE,
     'pauseonhover' => TRUE,
-    'controlscontainer' => '',
+    'controlscontainer' => '.flex-nav-container',
     'manualcontrols' => '',
     'startcallback' => 'function() {}',
     'beforecallback' => 'function() {}',
