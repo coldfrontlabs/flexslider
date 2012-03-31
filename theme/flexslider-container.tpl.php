@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Default output for a FlexSlider node.
+ * Default output for a Flex Slider node.
 */
 ?>
 <div class="flexslider-content flexslider clearfix" id="flexslider-<?php print $id; ?>">
