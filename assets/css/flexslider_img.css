@@ -5,6 +5,11 @@
   margin-bottom: 30px;
 }
 
+.flex-nav-container ul,
+.flex-nav-container ol {
+  list-style: none;
+}
+
 .flexslider ul.slides,
 .flex-nav-container ol.flex-control-nav,
 .flex-nav-container ul.flex-direction-nav,
