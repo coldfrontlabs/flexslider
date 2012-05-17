@@ -20,7 +20,7 @@ Future Plans
 About FlexSlider
 ----------------
 
-Library created and maintained by <a href="http://drupal.org/user/1491960">mbmuffin</a> at http://http://flex.madebymufffin.com/
+Library available at https://github.com/woothemes/FlexSlider
 
 - Simple, semantic markup
 - Supported in all major browsers
@@ -36,7 +36,7 @@ Library created and maintained by <a href="http://drupal.org/user/1491960">mbmuf
 Installation
 ============
 
-1. Download the FlexSlider library from http://flex.madebymufffin.com/
+1. Download the FlexSlider library from https://github.com/woothemes/FlexSlider
 2. Unzip the file and rename the folder to "flexslider" (pay attention to the case of the letters)
 3. Put the folder in a libraries directory
     - Ex: sites/all/libraries
