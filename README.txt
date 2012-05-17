@@ -40,7 +40,11 @@ Installation
 2. Unzip the file and rename the folder to "flexslider" (pay attention to the case of the letters)
 3. Put the folder in a libraries directory
     - Ex: sites/all/libraries
-4. Ensure you have a valid path similar to this one
+4. The first two files are required and the last is optional (required for javascript debugging)
+    - jquery.flexslider-min.js
+    - flexslider.css
+    - jquery.flexslider.js
+4. Ensure you have a valid path similar to this one for all files
     - Ex: sites/all/libraries/flexslider/jquery.flexslider-min.js
 
 That's it!
