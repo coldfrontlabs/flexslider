@@ -10,7 +10,9 @@
   list-style: none;
 }
 
-.flexslider .slides li {
+.flexslider .slides li,
+.flexslider .flex-control-nav li,
+.flexslider .flex-direction-nav li {
   list-style: none;
   list-style-image: none;
 }
