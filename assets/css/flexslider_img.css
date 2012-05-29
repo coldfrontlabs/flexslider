@@ -10,6 +10,11 @@
   list-style: none;
 }
 
+.flexslider .slides li {
+  list-style: none;
+  list-style-image: none;
+}
+
 .flexslider ul.slides,
 .flex-nav-container ol.flex-control-nav,
 .flex-nav-container ul.flex-direction-nav,
