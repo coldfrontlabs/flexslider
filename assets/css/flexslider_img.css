@@ -17,3 +17,8 @@
   padding: 0px;
   margin: 0px;
 }
+
+.flexslider .slides li {
+  list-style: none;
+  list-style-image: none;
+}
