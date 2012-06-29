@@ -17,6 +17,8 @@ class flexslider_views_plugin_style_flexslider extends views_plugin_style {
 
     $options += array(
       'flexslider_optionset' => array('default' => 'default'),
+      'caption_field' => array('' => t('None')),
+      'text_field' => array('' => t('None')),
     );
 
     return $options;
@@ -42,6 +44,29 @@ class flexslider_views_plugin_style_flexslider extends views_plugin_style {
       '#type' => 'select',
       '#options' => $optionsets,
       '#default_value' => $this->options['flexslider_optionset'],
+    );
+
+    $link_options = array('' => t('None'));
+    foreach ($this->view->display_handler->get_handlers('field') as $field => $handler) {
+      $link_options[$field] = $handler->ui_name();
+    }
+
+    $form['flexslider']['caption_field'] = array(
+      '#type' => 'select',
+      '#title' => t('Caption Field'),
+      '#multiple' => FALSE,
+      '#description' => t('Select a field to be used as a caption. This is typically the name of the image and can be used to link to the source content.'),
+      '#options' => $link_options,
+      '#default_value' => $this->options['caption_field'],
+    );
+
+    $form['flexslider']['text_field'] = array(
+      '#type' => 'select',
+      '#title' => t('Description Field'),
+      '#multiple' => FALSE,
+      '#description' => t('Select a field to be used as a description of the image or extra information for the viewer.'),
+      '#options' => $link_options,
+      '#default_value' => $this->options['text_field'],
     );
   }
 
