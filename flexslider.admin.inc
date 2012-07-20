@@ -261,12 +261,6 @@ function flexslider_option_elements($options = array()) {
   );
 
   
-  if (module_exists('bulk_export')) {
-  }
-  else {
-    
-  }
-  
   return $form;
 }
 
@@ -318,9 +312,6 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
   foreach($default_options as $key => $value) {
     $form['options'][] = $value;
   }
-
-  // Map current settings to form elements
-  // @todo
   
   // Add form actions
   $form['actions'] = array(
