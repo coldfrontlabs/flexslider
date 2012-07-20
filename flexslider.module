@@ -9,15 +9,15 @@
  * @author minorOffense <mwinstone@coldfrontlabs.ca>
  */
 function flexslider_library() {
-  $libraries['flexslider'] = array(
-    'title' => 'FlexSlider',
-    'website' => 'http://flex.madebymufffin.com/',
-    'version' => '1.8',
+  $libraries['flexslider2'] = array(
+    'title' => 'FlexSlider2',
+    'website' => 'http://flexslider.woothemes.com',
+    'version' => '2.0',
     'js' => array(
-      libraries_get_path('flexslider') . '/jquery.flexslider-min.js' => array(),
+      libraries_get_path('flexslider2') . '/jquery.flexslider-min.js' => array(),
     ),
     'css' => array(
-      libraries_get_path('flexslider') . '/flexslider.css' => array(
+      libraries_get_path('flexslider2') . '/flexslider.css' => array(
         'type' => 'file',
         'media' => 'screen',
       ),
