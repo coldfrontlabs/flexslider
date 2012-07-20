@@ -1,7 +1,7 @@
-name = Flex Slider
-description = Integrate the Flex Slider 2 library with Drupal
+name = FlexSlider
+description = Integrate the FlexSlider 2 library with Drupal
 core = 7.x
-package = Flex Slider
+package = FlexSlider
 
 ; Dependencies
 dependencies[] = libraries

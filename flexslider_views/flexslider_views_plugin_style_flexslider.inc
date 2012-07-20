@@ -32,7 +32,7 @@ class flexslider_views_plugin_style_flexslider extends views_plugin_style {
 
     $form['flexslider'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Flex Slider'),
+      '#title' => t('FlexSlider'),
     );
 
     $optionsets = array();

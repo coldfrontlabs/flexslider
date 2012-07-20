@@ -47,11 +47,11 @@ That's it!
 Usage
 ======
 
-No matter how you want to use Flex Slider (with fields, views or views slideshow) you need to define "option sets" to tell Flex Slider how you want it to display. 
+No matter how you want to use FlexSlider (with fields, views or views slideshow) you need to define "option sets" to tell FlexSlider how you want it to display. 
 
 Go to admin/config/media/flexslider
 
-From there you can edit the default option set and define new ones. These will be listed as options in the various forms where you setup Flex Slider to display.
+From there you can edit the default option set and define new ones. These will be listed as options in the various forms where you setup FlexSlider to display.
 
 Debugging
 ---------
@@ -61,4 +61,4 @@ You can toggle the development version of the library in the administrative sett
 Export API
 ==========
 
-You can export your Flex Slider option presets using CTools exportables. So either using the Bulk Export module or Features.
+You can export your FlexSlider option presets using CTools exportables. So either using the Bulk Export module or Features.

@@ -121,7 +121,7 @@ function flexslider_menu() {
   );
   $items['admin/config/media/flexslider/import'] = array(
     'title' => 'Import',
-    'description' => 'Import Flex Slider option sets',
+    'description' => 'Import FlexSlider option sets',
     'page callback' => 'flexslider_form_optionset_import',
     'access arguments' => array('administer flexslider'),
     'type' => MENU_LOCAL_TASK,
@@ -130,7 +130,7 @@ function flexslider_menu() {
   );
   $items['admin/config/media/flexslider/export'] = array(
     'title' => 'Export',
-    'description' => 'Export Flex Slider option sets',
+    'description' => 'Export FlexSlider option sets',
     'page callback' => 'flexslider_form_optionset_export',
     'access arguments' => array('administer flexslider'),
     'type' => MENU_LOCAL_TASK,
@@ -150,8 +150,8 @@ function flexslider_help($path, $arg) {
       return
           '<p>'
         . t('An <em>option set</em> defines exactly how a flexslider image gallery looks like on your site. '
-          . 'It is s a combination of <a href="@styles">image styles</a> for the various image sizes and Flex Slider library options.', array('@styles' => url('admin/config/media/image-styles'))). '<br />'
-        . t('For a full documentation of all options, refer to the official <a href="@docs">Flex Slider documentation</a>.', array('@docs' => url('http://flex.madebymufffin.com/')))
+          . 'It is s a combination of <a href="@styles">image styles</a> for the various image sizes and FlexSlider library options.', array('@styles' => url('admin/config/media/image-styles'))). '<br />'
+        . t('For a full documentation of all options, refer to the official <a href="@docs">FlexSlider documentation</a>.', array('@docs' => url('http://flex.madebymufffin.com/')))
         . '</p>';
   }
 }
@@ -257,7 +257,7 @@ function flexslider_optionset_delete($optionset) {
  * instance.
  *
  * @param string $id [optional]
- *  ID Attribute for Flex Slider container
+ *  ID Attribute for FlexSlider container
  * @param string $optionset [optional]
  *  Option set to load
  */
