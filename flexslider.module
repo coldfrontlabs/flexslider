@@ -292,13 +292,16 @@ function flexslider_add($id = NULL, $optionset = NULL) {
 /**
  * Default settings for a newly created option set
  *
+ * @param string $key [optional]
+ *  Get specific default value
+ *
  * @see https://github.com/woothemes/FlexSlider/blob/master/README.mdown
  */
-function _flexslider_optionset_defaults() {
-  return array(
+function _flexslider_optionset_defaults($key = NULL) {
+  $defaults = array(
     // v2.x options
     'namespace' => 'flex',
-    'easing' => '', // @todo add default value
+    'easing' => 'linear', // @todo add default value
     'direction' => 'horizontal',
     'reverse' => FALSE,  // @todo verify data value
     'smoothHeight' => TRUE, // @todo verify data value
@@ -327,26 +330,34 @@ function _flexslider_optionset_defaults() {
     //'animationDuration' => 6000, -- replaced by 'animationSpeed'
     //'slidedirection' => 'horizontal', -- replaced by "direction" 
     'slideshow' => TRUE,
-    'slideshowspeed' => 7000,
-    'directionnav' => TRUE,
-    'controlnav' => TRUE,
+    'slideshowSpeed' => 7000,
+    'directionNav' => TRUE,
+    'controlNav' => TRUE,
     //'keyboardnav' => TRUE, --  replaced by 'keyboard'
     'mousewheel' => FALSE,
-    'prevtext' => t('Previous'),
-    'nexttext' => t('Next'),
-    'pauseplay' => FALSE,
-    'pausetext' => t('Pause'),
-    'playtext' => t('Play'),
+    'prevText' => t('Previous'),
+    'nextText' => t('Next'),
+    'pausePlay' => FALSE,
+    'pauseText' => t('Pause'),
+    'playText' => t('Play'),
     'randomize' => FALSE,
     //'slidetostart' => 0, // integer value, not boolean --  replace by "startAt"
-    'animationloop' => TRUE,
-    'pauseonaction' => TRUE,
-    'pauseonhover' => TRUE,
+    'animationLoop' => TRUE,
+    'pauseOnAction' => TRUE,
+    'pauseOnHover' => TRUE,
     //'controlscontainer' => '.flex-nav-container', -- updated in v2
-    'manualcontrols' => '',
-    'startcallback' => 'function() {}',
-    'beforecallback' => 'function() {}',
-    'aftercallback' => 'function() {}',
-    'endcallback' => 'function() {}',
+    'manualControls' => '',
+    'startCallback' => 'function() {}',
+    'beforeCallback' => 'function() {}',
+    'afterCallback' => 'function() {}',
+    'endCallback' => 'function() {}',
   );
+  
+  // Return the specific item
+  if (!isset($key) and array_key_exists($key, $defaults)) {
+    return $defaults[$key];
+  }
+  
+  // Return all items
+  return $defaults;
 }
