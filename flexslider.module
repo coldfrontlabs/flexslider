@@ -354,7 +354,7 @@ function _flexslider_optionset_defaults($key = NULL) {
   );
   
   // Return the specific item
-  if (!isset($key) and array_key_exists($key, $defaults)) {
+  if (isset($key) and array_key_exists($key, $defaults)) {
     return $defaults[$key];
   }
   

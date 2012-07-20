@@ -23,13 +23,15 @@ function flexslider_page_optionset_list() {
     );
   }
 
-  return theme('table', array(
-      'header' => $header,
-      'rows' => $rows,
-      'empty' => t('There are currently no option sets. <a href="!url">Add a new one</a>.', array('!url' => url('admin/config/media/flexslider/add'))),
-  ));
-}
+  $table_element = array(
+    '#theme' => 'table',
+    '#header' => $header,
+    '#rows' => $rows,
+    '#empty' => t('There are currently no option sets. <a href="!url">Add a new one</a>.', array('!url' => url('admin/config/media/flexslider/add'))),
+  );
 
+  return drupal_render($table_element);
+}
 
 /**
  * Form builder; Form for adding a new option set.
@@ -102,7 +104,7 @@ function flexslider_option_elements($options = array()) {
     '#type' => 'fieldset',
     '#title' => t('General Slideshow and Animation Settings'),
   );
-  
+
   $form['animation_slideshow']['animation'] = array(
     '#type' => 'select',
     '#title' => t('Animation'),
@@ -331,9 +333,6 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
   foreach($default_options as $key => $value) {
     $form['options'][] = $value;
   }
-
-  // Map current settings to form elements
-  // @todo
   
   // Add form actions
   $form['actions'] = array(
@@ -341,7 +340,7 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
     'submit' => array(
       '#type' => 'submit',
       '#name' => 'submit',
-      '#value' => t('Save option set')
+      '#value' => t('Save Option Set')
     ),
     'cancel' => array(
       '#type' => 'link',
@@ -379,32 +378,17 @@ function _flexslider_validate_number($element, &$form_state) {
 function flexslider_form_optionset_edit_submit($form, &$form_state) {
   $optionset = &$form_state['optionset'];
   $optionset->title = $form_state['values']['title'];
-  //$optionset['theme'] = $form_state['values']['theme'];
-  //$optionset['imagestyle_thumb']  = $form_state['values']['image_styles']['thumb'];
   $optionset->imagestyle_normal = $form_state['values']['image_style']['normal'];
-  //$optionset['imagestyle_big']    = $form_state['values']['image_styles']['big'];
 
   // Assign the values to the option set
-  $optionset->options['animation'] = $form_state['values']['animation'];
-  $optionset->options['animationDuration'] = (int)$form_state['values']['animationDuration'];
-  $optionset->options['slideDirection'] = $form_state['values']['slideDirection'];
-  $optionset->options['slideshow'] = $form_state['values']['slideshow'];
-  $optionset->options['slideshowSpeed'] = (int)$form_state['values']['slideshowSpeed'];
-  $optionset->options['animationLoop'] = $form_state['values']['animationLoop'];
-  $optionset->options['randomize'] = $form_state['values']['randomize'];
-  $optionset->options['slideToStart'] = (int)$form_state['values']['slideToStart'];
-  $optionset->options['directionNav'] = $form_state['values']['directionNav'];
-  $optionset->options['controlNav'] = $form_state['values']['controlNav'];
-  $optionset->options['keyboardNav'] = $form_state['values']['keyboardNav'];
-  $optionset->options['mousewheel'] = $form_state['values']['mousewheel'];
-  $optionset->options['prevText'] = $form_state['values']['prevText'];
-  $optionset->options['nextText'] = $form_state['values']['nextText'];
-  $optionset->options['pausePlay'] = $form_state['values']['pausePlay'];
-  $optionset->options['pauseText'] = $form_state['values']['pauseText'];
-  $optionset->options['playText'] = $form_state['values']['playText'];
-  $optionset->options['pauseOnAction'] = $form_state['values']['pauseOnAction'];
-  $optionset->options['controlsContainer'] = $form_state['values']['controlsContainer'];
-  $optionset->options['manualControls'] = $form_state['values']['manualControls'];
+  $optionset->options = _flexslider_optionset_defaults();
+
+  // Save all the values for the optionset
+  foreach($optionset->options as $key => $value) {
+    if (array_key_exists($key, $form_state['values'])) {
+      $optionset->options[$key] = $form_state['values'][$key];
+    }
+  }
 
   ctools_include('export');
   ctools_export_crud_save('flexslider_optionset', $optionset);
@@ -468,14 +452,6 @@ function flexslider_form_settings() {
   );
   
   return system_settings_form($form);
-}
-
-/**
- * Submit handler for the advanced module settings form button 'Clear cache'.
- */
-function flexslider_form_settings_submit_clearcache($form, &$form_state) {
-  cache_clear_all('flexslider_', 'cache', TRUE);
-  drupal_set_message(t('Cache cleared.'));
 }
 
 /**

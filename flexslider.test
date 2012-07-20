@@ -74,8 +74,8 @@ class FlexsliderTestCase extends DrupalWebTestCase {
     $options = _flexslider_test_options();
     
     foreach($options['valid'] as $testset) {
-      $this->drupalPost('admin/config/media/flexslider/edit/default', $testset, t('Save option set'));      
-      $thid->assertResponse(200);
+      $this->drupalPost('admin/config/media/flexslider/edit/default', $testset, t('Save Option Set'));      
+      $this->assertResponse(200);
       
       // Test saved values
       // @todo
@@ -100,31 +100,63 @@ function _flexslider_test_options() {
   // Valid option set data
   $valid = array(
     'set1' => array(
-      'animation' => 'slide',
-      'animationduration' => 500,
-      'slidedirection' => 'horizontal',
+      // v2.x options
+      'namespace' => 'flex',
+      'easing' => 'linear', // @todo add default value
+      'direction' => 'horizontal',
+      'reverse' => FALSE,  // @todo verify data value
+      'smoothHeight' => TRUE, // @todo verify data value
+      'startAt' => 0,
+      'animationSpeed' => 6000,
+      'initDelay' => 0,
+      'useCSS' => FALSE,
+      'touch' => TRUE,
+      'keyboard' => TRUE,
+      'multipleKeyboard' => FALSE, // @todo verify data value
+      'mousewheel' => FALSE, // requires https://github.com/brandonaaron/jquery-mousewheel @todo add to make file
+      'controlsContainer' => '.flex-nav-container', // @todo verify data value
+      'sync' => '', // @todo verify data value
+      'asNavFor' => '', // @todo verify data value
+      'itemWidth' => '', // @todo verify data value
+      'itemMargin' => '', // @todo verify data value
+      'minItems' => 1, // @todo verify data value
+      'maxItems' => 1, // @todo verify data value
+      'move' => 0, // @todo verify data value
+      'added' => 'function() {}', // @todo verify data value
+      'removed' => 'function() {}', // @todo verify data value
+
+      // @todo verify the 1.x options are still valid
+      // v1.x options
+      'animation' => 'fade',
+      //'animationDuration' => 6000, -- replaced by 'animationSpeed'
+      //'slidedirection' => 'horizontal', -- replaced by "direction" 
       'slideshow' => TRUE,
-      'slideshowspeed' => 7000,
-      'directionnav' => TRUE,
-      'controlnav' => TRUE,
-      'keyboardnav' => TRUE,
+      'slideshowSpeed' => 7000,
+      'directionNav' => TRUE,
+      'controlNav' => TRUE,
+      //'keyboardnav' => TRUE, --  replaced by 'keyboard'
       'mousewheel' => FALSE,
-      'prevtext' => 'Previous',
-      'nexttext' => 'Next',
-      'pauseplay' => FALSE,
-      'pausetext' => 'Pause',
-      'playtext' => 'Play',
+      'prevText' => t('Previous'),
+      'nextText' => t('Next'),
+      'pausePlay' => FALSE,
+      'pauseText' => t('Pause'),
+      'playText' => t('Play'),
       'randomize' => FALSE,
-      'slidetostart' => 0, // integer value, not boolean
-      'animationloop' => TRUE,
-      'pauseonaction' => TRUE,
-      'pauseonhover' => TRUE,
-      'controlscontainer' => '',
-      'manualcontrols' => '',
+      //'slidetostart' => 0, // integer value, not boolean --  replace by "startAt"
+      'animationLoop' => TRUE,
+      'pauseOnAction' => TRUE,
+      'pauseOnHover' => TRUE,
+      //'controlscontainer' => '.flex-nav-container', -- updated in v2
+      'manualControls' => '',
+      'startCallback' => 'function() {}',
+      'beforeCallback' => 'function() {}',
+      'afterCallback' => 'function() {}',
+      'endCallback' => 'function() {}',
 
     ),
     'set2' => array(
       'animation' => 'fade',
+      // @todo add more option tests
     ),
     'set3' => array(
       'animation' => 'slide',
