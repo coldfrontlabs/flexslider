@@ -103,7 +103,7 @@ function flexslider_requirements($phase) {
     $requirements['flexslider'] = array(
       'title' => $t('Flex Slider'),
       // @todo have the version automatically detected
-      'description' => $t('Version 1.8 installed'),
+      'description' => $t('Version 2.0 installed'),
       'severity' => REQUIREMENT_OK,
     );
     _flexslider_requirements_library_installed($requirements);
@@ -164,8 +164,8 @@ function _flexslider_requirements_library_installed(&$requirements) {
   $header = fread($js, 64);
   $matches = array();
   if (preg_match("/ v([0-9]+)\.([0-9]+)/", $header, $matches)) {
-    if (!($matches[1] == 1 and $matches[2] >= 8)) {
-      $requirements['flexslider']['description'] = $t('Flex Slider must be version 1.8 or higher, but lower than version 2.0.  Please consult the README.txt for installation instructions.');
+    if (!($matches[1] == 2 and $matches[2] >= 0)) {
+      $requirements['flexslider']['description'] = $t('Flex Slider must be version 2.0 or higher, but lower than version 3.0.  Please consult the README.txt for installation instructions.');
       $requirements['flexslider']['severity'] = REQUIREMENT_WARNING;
       $requirements['flexslider']['value'] = $t('Incorrect version detected.');
       return;
@@ -180,3 +180,5 @@ function _flexslider_requirements_library_installed(&$requirements) {
     $requirements['flexslider']['value'] = $t('Unable to detect version.');
   }
 }
+
+// @todo add hook_update_N function to migrate old option set data to new values

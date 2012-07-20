@@ -9,7 +9,7 @@
  * @author minorOffense <mwinstone@coldfrontlabs.ca>
  */
 function flexslider_library() {
-  $libraries['flexslider2'] = array(
+  $libraries['flexslider'] = array(
     'title' => 'FlexSlider',
     'website' => 'http://flexslider.woothemes.com',
     'version' => '2.0',
@@ -71,7 +71,7 @@ function flexslider_menu() {
   $items = array();
 
   $items['admin/config/media/flexslider'] = array(
-    'title' => 'Flex Slider',
+    'title' => 'FlexSlider',
     'description' => 'Configure FlexSlider presets and display settings.',
     'page callback' => 'flexslider_page_optionset_list',
     'access arguments' => array('administer flexslider'),
@@ -291,17 +291,46 @@ function flexslider_add($id = NULL, $optionset = NULL) {
 
 /**
  * Default settings for a newly created option set
+ *
+ * @see https://github.com/woothemes/FlexSlider/blob/master/README.mdown
  */
 function _flexslider_optionset_defaults() {
   return array(
+    // v2.x options
+    'namespace' => 'flex',
+    'easing' => '', // @todo add default value
+    'direction' => 'horizontal',
+    'reverse' => FALSE,  // @todo verify data value
+    'smoothHeight' => TRUE, // @todo verify data value
+    'startAt' => 0,
+    'animationSpeed' => 6000,
+    'initDelay' => 0,
+    'useCSS' => FALSE,
+    'touch' => TRUE,
+    'keyboard' => TRUE,
+    'multipleKeyboard' => FALSE, // @todo verify data value
+    'mousewheel' => FALSE, // requires https://github.com/brandonaaron/jquery-mousewheel @todo add to make file
+    'controlsContainer' => '.flex-nav-container', // @todo verify data value
+    'sync' => '', // @todo verify data value
+    'asNavFor' => '', // @todo verify data value
+    'itemWidth' => '', // @todo verify data value
+    'itemMargin' => '', // @todo verify data value
+    'minItems' => 1, // @todo verify data value
+    'maxItems' => 1, // @todo verify data value
+    'move' => 0, // @todo verify data value
+    'added' => 'function() {}', // @todo verify data value
+    'removed' => 'function() {}', // @todo verify data value
+
+    // @todo verify the 1.x options are still valid
+    // v1.x options
     'animation' => 'fade',
-    'animationduration' => 6000,
-    'slidedirection' => 'horizontal',
+    //'animationDuration' => 6000, -- replaced by 'animationSpeed'
+    //'slidedirection' => 'horizontal', -- replaced by "direction" 
     'slideshow' => TRUE,
     'slideshowspeed' => 7000,
     'directionnav' => TRUE,
     'controlnav' => TRUE,
-    'keyboardnav' => TRUE,
+    //'keyboardnav' => TRUE, --  replaced by 'keyboard'
     'mousewheel' => FALSE,
     'prevtext' => t('Previous'),
     'nexttext' => t('Next'),
@@ -309,11 +338,11 @@ function _flexslider_optionset_defaults() {
     'pausetext' => t('Pause'),
     'playtext' => t('Play'),
     'randomize' => FALSE,
-    'slidetostart' => 0, // integer value, not boolean
+    //'slidetostart' => 0, // integer value, not boolean --  replace by "startAt"
     'animationloop' => TRUE,
     'pauseonaction' => TRUE,
     'pauseonhover' => TRUE,
-    'controlscontainer' => '.flex-nav-container',
+    //'controlscontainer' => '.flex-nav-container', -- updated in v2
     'manualcontrols' => '',
     'startcallback' => 'function() {}',
     'beforecallback' => 'function() {}',

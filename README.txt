@@ -12,11 +12,6 @@ Allows you to use FlexSlider in a few different ways
 - Integrates with Fields (flexslider_fields)
 - Adds a Views display mode (flexslider_views)
 
-Future Plans
-------------
-
-- Add support for Views jQFX
-
 About FlexSlider
 ----------------
 
