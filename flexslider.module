@@ -292,9 +292,14 @@ function flexslider_add($id = NULL, $optionset = NULL) {
 
 /**
  * Default settings for a newly created option set
+ *
+ * @param string $key [optional]
+ *  Specific key to retrieve
+ * @return array|string
+ *  Returns an array of values or the specified value
  */
-function _flexslider_optionset_defaults() {
-  return array(
+function _flexslider_optionset_defaults($key = NULL) {
+  $defaults = array(
     'animation' => 'fade',
     'animationduration' => 6000,
     'slidedirection' => 'horizontal',
@@ -321,4 +326,10 @@ function _flexslider_optionset_defaults() {
     'aftercallback' => 'function() {}',
     'endcallback' => 'function() {}',
   );
+  
+  if (isset($key) and array_key_exists($key, $defaults)) {
+    return $defaults[$key];
+  }
+  
+  return $defaults;
 }
