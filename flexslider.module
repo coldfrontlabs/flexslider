@@ -10,14 +10,14 @@
  */
 function flexslider_library() {
   $libraries['flexslider2'] = array(
-    'title' => 'FlexSlider2',
+    'title' => 'FlexSlider',
     'website' => 'http://flexslider.woothemes.com',
     'version' => '2.0',
     'js' => array(
-      libraries_get_path('flexslider2') . '/jquery.flexslider-min.js' => array(),
+      libraries_get_path('flexslider') . '/jquery.flexslider-min.js' => array(),
     ),
     'css' => array(
-      libraries_get_path('flexslider2') . '/flexslider.css' => array(
+      libraries_get_path('flexslider') . '/flexslider.css' => array(
         'type' => 'file',
         'media' => 'screen',
       ),
@@ -32,7 +32,6 @@ function flexslider_library() {
 
 /**
  * Implements hook_library_alter().
- * @author minorOffense <mwinstone@coldfrontlabs.ca>
  */
 function flexslider_library_alter(&$libraries, $module) {
   $debug = variable_get('flexslider_debug', FALSE);
