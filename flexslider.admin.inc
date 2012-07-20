@@ -6,7 +6,7 @@
 
 
 /**
- * Menu callback; Listing of all current option sets.
+ * List all available option sets
  */
 function flexslider_page_optionset_list() {
   $optionsets = flexslider_optionset_load_all();
@@ -34,7 +34,7 @@ function flexslider_page_optionset_list() {
 }
 
 /**
- * Form builder; Form for adding a new option set.
+ * Create new option set form
  */
 function flexslider_form_optionset_add($form, &$form_state) {
   $form['title'] = array(
@@ -89,7 +89,7 @@ function flexslider_form_optionset_add_submit($form, &$form_state) {
 }
 
 /**
- * This function returns an array defining the form elements used to edit the different options.
+ * Defines the form elements used to edit the FlexSlider library options
  *
  * @param array $options [optional]
  *  Pass in a set of default values for the options
