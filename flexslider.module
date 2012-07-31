@@ -296,6 +296,7 @@ function flexslider_add($id = NULL, $optionset = NULL) {
  *  Get specific default value
  *
  * @see https://github.com/woothemes/FlexSlider/blob/master/README.mdown
+ * @see https://github.com/woothemes/FlexSlider/wiki/FlexSlider-Properties
  */
 function _flexslider_optionset_defaults($key = NULL) {
   $defaults = array(

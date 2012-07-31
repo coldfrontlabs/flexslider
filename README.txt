@@ -62,3 +62,8 @@ Export API
 ==========
 
 You can export your FlexSlider option presets using CTools exportables. So either using the Bulk Export module or Features.
+
+External Links
+==============
+
+- [Wiki Documentation for FlexSlider 2](https://github.com/woothemes/FlexSlider/wiki/FlexSlider-Properties)
