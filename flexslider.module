@@ -283,6 +283,7 @@ function flexslider_add($id = NULL, $optionset = NULL) {
         'flexslider-' . $id => $optionset->name,
       ),
     );
+    // @todo add alter hook for optionset
     drupal_add_js(array('flexslider' => $js_settings), 'setting');
   }
   // Loader JavaScript
@@ -301,29 +302,35 @@ function flexslider_add($id = NULL, $optionset = NULL) {
 function _flexslider_optionset_defaults($key = NULL) {
   $defaults = array(
     // v2.x options
-    'namespace' => 'flex',
-    'easing' => 'linear', // @todo add default value
+    'namespace' => 'flex-',
+    'selector' => '.slides > li',
+    'easing' => 'swing',
     'direction' => 'horizontal',
     'reverse' => FALSE,  // @todo verify data value
     'smoothHeight' => TRUE, // @todo verify data value
     'startAt' => 0,
-    'animationSpeed' => 6000,
+    'animationSpeed' => 600,
     'initDelay' => 0,
-    'useCSS' => FALSE,
+    'useCSS' => TRUE,
     'touch' => TRUE,
+    'video' => FALSE,
     'keyboard' => TRUE,
-    'multipleKeyboard' => FALSE, // @todo verify data value
+    'multipleKeyboard' => FALSE,
     'mousewheel' => FALSE, // requires https://github.com/brandonaaron/jquery-mousewheel @todo add to make file
-    'controlsContainer' => '.flex-nav-container', // @todo verify data value
-    'sync' => '', // @todo verify data value
-    'asNavFor' => '', // @todo verify data value
-    'itemWidth' => '', // @todo verify data value
-    'itemMargin' => '', // @todo verify data value
-    'minItems' => 1, // @todo verify data value
-    'maxItems' => 1, // @todo verify data value
-    'move' => 0, // @todo verify data value
-    'added' => 'function() {}', // @todo verify data value
-    'removed' => 'function() {}', // @todo verify data value
+    'controlsContainer' => '',
+    'sync' => '',
+    'asNavFor' => '',
+    'itemWidth' => 0,
+    'itemMargin' => 0,
+    'minItems' => 0,
+    'maxItems' => 0,
+    'move' => 0,
+    'start' => '',
+    'before' => '',
+    'after' => '',
+    'end' => '',
+    'added' => '',
+    'removed' => '',
 
     // @todo verify the 1.x options are still valid
     // v1.x options
@@ -345,13 +352,13 @@ function _flexslider_optionset_defaults($key = NULL) {
     //'slidetostart' => 0, // integer value, not boolean --  replace by "startAt"
     'animationLoop' => TRUE,
     'pauseOnAction' => TRUE,
-    'pauseOnHover' => TRUE,
+    'pauseOnHover' => FALSE,
     //'controlscontainer' => '.flex-nav-container', -- updated in v2
     'manualControls' => '',
-    'startCallback' => 'function() {}',
-    'beforeCallback' => 'function() {}',
-    'afterCallback' => 'function() {}',
-    'endCallback' => 'function() {}',
+    //'startCallback' => 'function() {}', -- replace by 'start'
+    //'beforeCallback' => 'function() {}', -- replaced by 'before'
+    //'afterCallback' => 'function() {}', -- replaced by 'after'
+    //'endCallback' => 'function() {}', -- replaced by 'end'
   );
   
   // Return the specific item
