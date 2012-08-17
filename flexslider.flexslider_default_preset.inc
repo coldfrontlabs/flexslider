@@ -11,14 +11,12 @@
 function flexslider_flexslider_default_presets() {
   $presets = array();
 
-  $preset = new stdClass;
+  $preset = flexslider_optionset_create();
   $preset->disabled = FALSE; /* Edit this to true to make a default preset disabled initially */
   $preset->api_version = 1;
   $preset->name = 'default';
   $preset->title = 'Default';
-  $preset->theme = 'classic';
   $preset->imagestyle_normal = 'flexslider_full';
-  $preset->options = array();
   $presets['default'] = $preset;
 
   return $presets;
