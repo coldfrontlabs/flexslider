@@ -468,32 +468,6 @@ function _flexslider_validate_number($element, &$form_state) {
 }
 
 /**
- * Submit handler for 'Save option set' button; Save the changed option set.
- */
-function flexslider_form_optionset_edit_submit($form, &$form_state) {
-  $optionset = &$form_state['optionset'];
-  $optionset->title = $form_state['values']['title'];
-  $optionset->imagestyle_normal = $form_state['values']['image_style']['normal'];
-
-  // Assign the values to the option set
-  $optionset->options = _flexslider_optionset_defaults();
-
-  // Save all the values for the optionset
-  foreach($optionset->options as $key => $value) {
-    if (array_key_exists($key, $form_state['values'])) {
-      $optionset->options[$key] = $form_state['values'][$key];
-    }
-  }
-
-  ctools_include('export');
-  ctools_export_crud_save('flexslider_optionset', $optionset);
-
-  drupal_set_message(t('Option set %name changed.', array('%name' => $optionset->name)));
-  $form_state['redirect'] = 'admin/config/media/flexslider';
-}
-
-
-/**
  * Form builder; Form to delete a given option set.
  */
 function flexslider_optionset_form_delete($form, &$form_state, $optionset) {

@@ -62,5 +62,19 @@ function flexslider_ctools_export_ui_form_validate(&$form, &$form_state) {
  * Submit handler
  */
 function flexslider_ctools_export_ui_form_submit(&$form, &$form_state) {
-  // Put the optionset into the 'item' form_state key so CTools can find it
+  // Edit the reference to $form_state['optionset'] which will in turn
+  // reference $form_state['item'] which is what CTools is looking for.
+  $optionset = &$form_state['optionset'];
+  $optionset->title = $form_state['values']['title'];
+  $optionset->imagestyle_normal = $form_state['values']['image_style']['normal'];
+
+  // Assign the values to the option set
+  $optionset->options = _flexslider_optionset_defaults();
+
+  // Save all the values for the optionset
+  foreach($optionset->options as $key => $value) {
+    if (array_key_exists($key, $form_state['values'])) {
+      $optionset->options[$key] = $form_state['values'][$key];
+    }
+  }
 }
