@@ -44,6 +44,11 @@ Installation
 
 That's it!
 
+Drush Make
+----------
+
+You can also use Drush Make to download the library automatically. Simply copy/paste the 'flexslider.make.example' to 'flexslider.make' or copy the contents of the make file into your own make file.
+
 Usage
 ======
 
