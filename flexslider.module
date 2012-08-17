@@ -306,11 +306,19 @@ function flexslider_optionset_save($optionset, $new = FALSE) {
 
 /**
  * Deletes the given option set from the database.
+ *
+ * @param object|string $optionset
+ *  Optionset object or machine name
  */
 function flexslider_optionset_delete($optionset) {
-  db_delete('flexslider_optionset')->condition('name', $optionset['name'])->execute();
+  if (isset($optionset->name)) {
+    $name = $optionset->name;
+  }
+  else {
+    $name = $optionset;
+  }
+  db_delete('flexslider_optionset')->condition('name', $name)->execute();
   // TODO: update formatters?
-  return TRUE;
 }
 
 /*
