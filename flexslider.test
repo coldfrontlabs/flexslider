@@ -101,7 +101,7 @@ class FlexsliderTestCase extends DrupalWebTestCase {
     
     // Save the updated values
     $optionset = flexslider_optionset_save($optionset);
-    $this->assertFalse(FALSE === $optionset, t('Saved updates to optionset to database.'));
+    $this->assertFalse(FALSE == $optionset, t('Saved updates to optionset to database.'));
     
     // Load the values from the database again
     $optionset = flexslider_optionset_load($testsets[0]);
@@ -114,12 +114,12 @@ class FlexsliderTestCase extends DrupalWebTestCase {
         $this->assertEqual($test_options['set2'][$key], $value, t('Saved value matches set value: @key', array('@key' => $key)));
       }
     }
-    
-    
+
     // Delete the optionset
     flexslider_optionset_delete($optionset);
     
     // Ensure the delete is successfull
+    $this->assertFalse(flexslider_optionset_exists($optionset->name), t('Optionset successfully deleted: @name', array('@name' => $optionset->name)));
   }
   
   function testOptionSetForm() {

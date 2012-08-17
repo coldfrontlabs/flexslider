@@ -318,7 +318,6 @@ function flexslider_optionset_delete($optionset) {
     $name = $optionset;
   }
   db_delete('flexslider_optionset')->condition('name', $name)->execute();
-  // TODO: update formatters?
 }
 
 /*
