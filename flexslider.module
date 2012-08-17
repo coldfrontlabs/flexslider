@@ -199,6 +199,36 @@ function flexslider_ctools_plugin_api($owner, $api) {
 }
 
 /**
+ * Create a new optionset object
+ *
+ * Note that this function does not save the optionset to the database.
+ * @see flexslider_optionset_save().
+ */
+function flexslider_optionset_create($values = array()) {
+  ctools_include('export');
+  $optionset = ctools_export_crud_new('flexslider_optionset');
+  
+  // Set the options to an array
+  $optionset->options = array();
+  
+  // Assign specified values
+  if (isset($values['name'])) {
+    $optionset->name = $values['name'];
+  }
+  if (isset($values['title'])) {
+    $optionset->title = $values['title'];
+  }
+  if (isset($values['options']) and is_array($values['options'])) {
+    $optionset->options = $values['options'];
+  }
+
+  // Merge in default settings
+  $optionset->options += _flexslider_optionset_defaults();
+
+  return $optionset;
+}
+
+/**
  * Fetches all option sets from the database and returns them as an associative array.
  */
 function flexslider_optionset_load_all() {
@@ -227,20 +257,51 @@ function flexslider_optionset_exists($optionset_name) {
 /**
  * Saves the given option set to the database.
  * Set the $new flag if this set has not been written before.
+ *
+ * @return object|boolean
+ *  Returns the newly saved object, FALSE otherwise.
  */
 function flexslider_optionset_save($optionset, $new = FALSE) {
-  $optionset += array(
-    'title' => $optionset['name'],
-    'options' => _flexslider_optionset_defaults(),
+  // If the machine name is missing or already in use, return an error.
+  if (empty($optionset->name) or FALSE != flexslider_optionset_exists($optionset->name)) {
+    return FALSE;
+  }
+
+  // Check for an invalid list of options
+  if (isset($optionset->options) and !is_array($optionset->options)) {
+    return FALSE;
+  }
+
+
+  // If the title is missing, default to the name
+  if (empty($optionset->title)) {
+    $optionset->title = $optionset->name;
+  }
+  
+  // Merge default settings with any given settings
+  $optionset->options += _flexslider_optionset_defaults();
+
+  // Prepare the database values.
+  $db_values = array(
+    'name' => $optionset->name,
+    'title' => $optionset->title,
+    'options' => $optionset->options,
   );
 
   if ($new) {
-    drupal_write_record('flexslider_optionset', $optionset);
+    $result = drupal_write_record('flexslider_optionset', $db_values);
   }
   else {
-    drupal_write_record('flexslider_optionset', $optionset, 'name');
+    $result = drupal_write_record('flexslider_optionset', $db_values, 'name');
   }
-  return $optionset;
+  
+  // Return the object if the values were saved successfully.
+  if (($new and SAVED_NEW == $result) or (!$new and SAVED_UPDATED == $result)) {
+    return $optionset;    
+  }
+
+  // Otherwise, an error occured
+  return FALSE;
 }
 
 /**

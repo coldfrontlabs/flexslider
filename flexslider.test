@@ -48,6 +48,41 @@ class FlexsliderTestCase extends DrupalWebTestCase {
     $this->assertResponse(403, t('Regular users do not have access to administrative pages.'));
   }
   
+  function testOptionSetCrud() {
+    // Login as the admin user
+    $this->drupalLogin($this->admin_user);
+    $testset1 = 'testset';
+    $testset2 = 'testset2';
+    
+    // Create a new optionset with default settings
+    $optionset = flexslider_optionset_create(array('name' => $testset1));
+    $this->assertTrue($optionset->name == $testset1, t('Optionset object created: @name', array('@name' => $optionset->name)));
+    $this->assertFalse(empty($optionset->options), t('Create optionset works.'));
+    
+    // Save the optionset to the database
+    $optionset = flexslider_optionset_save($optionset, TRUE);
+    $this->assertFalse(FALSE === $optionset, t('Optionset saved to database.'));
+    
+    // Read the values from the database
+    $optionset = flexslider_optionset_load($testset1);
+    
+    $this->assertTrue(is_object($optionset), t('Loaded option set.'));
+    $this->assertEqual($testset1, $optionset->name, t('Loaded name matches: @name', array('@name' => $optionset->name)));
+    
+    $default_optionset = flexslider_optionset_create();
+    foreach ($default_optionset->options as $key => $value) {
+      $this->assertEqual($value, $optionset->options[$key], t('Option @option matches saved value.', array('@option' => $key)));
+    }
+    
+    // Create a second option set
+    // Load all optionsets
+    // Ensure they all loaded correctly
+    // Update the optionset
+    // Validate the changes
+    // Delete the optionset
+    // Ensure the delete is successfull
+  }
+  
   function testOptionSet() {
     
     // Login with admin user
@@ -78,7 +113,14 @@ class FlexsliderTestCase extends DrupalWebTestCase {
       $this->assertResponse(200);
       
       // Test saved values
-      // @todo
+      $db_optionset = flexslider_optionset_load($optionset['name']);
+      $this->assertTrue(isset($db_optionset->name), t('Option set object loaded.'));
+      $this->assertTrue($db_optionset->name == $optionset['name'], t('Correct option set loaded: @optionset.', array('@optionset' => $optionset['name'])));
+      $this->assertTrue(is_array($db_optionset->options), t('Option set array found.'));
+      $this->assertFalse(empty($db_optionset->options), t('Option set is not empty.'));
+      foreach($testset as $key => $option) {
+        $this->assertEqual($option, $db_optionset->options[$key], t('Value for @key saved correctly.', array('@key' => $key)));
+      }
     }
 
 

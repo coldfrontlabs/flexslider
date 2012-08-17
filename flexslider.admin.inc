@@ -74,18 +74,17 @@ function flexslider_form_optionset_add($form, &$form_state) {
  * Submit handler for adding a new option set.
  */
 function flexslider_form_optionset_add_submit($form, &$form_state) {
-  ctools_include('export');
+  $optionset = flexslider_optionset_create(array('name' => $form_state['values']['name'], 'title' => $form_state['values']['title']));
+  
+  $saved = flexslider_optionset_save($optionset, TRUE);
 
-  $optionset = ctools_export_crud_new('flexslider_optionset');
-
-  $optionset->name = $form_state['values']['name'];
-  $optionset->title = $form_state['values']['title'];
-  $optionset->options = array();
-    
-  $saved = ctools_export_crud_save('flexslider_optionset', $optionset);
-
-  drupal_set_message(t('Option set %name was created.', array('%name' => $optionset->name)));
-  $form_state['redirect'] = 'admin/config/media/flexslider/edit/' . $optionset->name;
+  if ($saved) {
+    drupal_set_message(t('Option set %name was created.', array('%name' => $optionset->name)));
+    $form_state['redirect'] = 'admin/config/media/flexslider/edit/' . $optionset->name;    
+  }
+  else {
+    drupal_set_message(t('Failed to create option set. Please verify your settings.'), 'error');
+  }
 }
 
 /**
@@ -234,6 +233,14 @@ function flexslider_option_elements($options = array()) {
     '#maxlength' => 255,
     '#default_value' => isset($options['maxItems']) ? $options['maxItems'] : _flexslider_optionset_defaults('maxItems'),
   );  
+  $form['animation_slideshow']['move'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Move'),
+    '#description' => t('Number of carousel items that should move on animation. If 0, slider will move all visible items.'),
+    '#size' => 40,
+    '#maxlength' => 255,
+    '#default_value' => isset($options['move']) ? $options['move'] : _flexslider_optionset_defaults('move'),
+  );
   
   // Navigation and Control Settings
   $form['nav_controls'] = array(
@@ -377,6 +384,12 @@ function flexslider_option_elements($options = array()) {
     '#description' => t('Pause the slideshow when interacting with control elements.'),
     '#default_value' => isset($options['pauseOnAction']) ? $options['pauseOnAction'] : _flexslider_optionset_defaults('pauseOnAction'),
   );
+  $form['advanced']['pauseOnHover'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Pause On Hover'),
+    '#description' => t('Pause the slideshow when hovering over slider, then resume when no longer hovering.'),
+    '#default_value' => isset($options['pauseOnHover']) ? $options['pauseOnHover'] : _flexslider_optionset_defaults('pauseOnHover'),
+  );
   $form['advanced']['controlsContainer'] = array(
     '#type' => 'textfield',
     '#title' => t('Controls container (Advanced)'),
@@ -441,6 +454,9 @@ function flexslider_option_elements($options = array()) {
  */
 function flexslider_form_optionset_edit($form, &$form_state, $optionset) { 
 
+  if (empty($form_state['optionset']) and empty($optionset)) {
+    $optionset = flexslider_optionset_create();
+  }
   if (empty($form_state['optionset'])) {
     $form_state['optionset'] = $optionset;
   }
