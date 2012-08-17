@@ -134,7 +134,7 @@ class FlexsliderTestCase extends DrupalWebTestCase {
     $optionset['name'] = 'testset';
     $this->drupalPost('admin/config/media/flexslider/add', $optionset, t('Save'));
     $this->assertResponse(200);
-    $this->assertText('testset was created.', t('Successfully saved the new optionset "testset"'));
+    $this->assertText('testset has been created.', t('Successfully saved the new optionset "testset"'));
 
     // Attempt to save option set of the same name again
     $this->drupalPost('admin/config/media/flexslider/add', $optionset, t('Save'));
@@ -182,7 +182,8 @@ function _flexslider_test_options() {
   $valid = array(
     'set1' => _flexslider_optionset_defaults(),
     'set2' => array(
-      'animation' => 'fade',
+      'animation' => 'slide',
+      'startAt' => 4,
       // @todo add more option tests
     ),
   );

@@ -174,8 +174,9 @@ function flexslider_optionset_create($values = array()) {
     $optionset->options = $values['options'];
   }
 
-  // Merge in default settings
-  $optionset->options += _flexslider_optionset_defaults();
+  // Merge default settings with any given settings
+  $optionset_defaults = _flexslider_optionset_defaults();
+  $optionset->options = $optionset_defaults += $optionset->options;
 
   return $optionset;
 }
@@ -232,7 +233,8 @@ function flexslider_optionset_save($optionset, $new = FALSE) {
   }
   
   // Merge default settings with any given settings
-  $optionset->options += _flexslider_optionset_defaults();
+  $optionset_defaults = _flexslider_optionset_defaults();
+  $optionset->options = $optionset_defaults += $optionset->options;
 
   // Prepare the database values.
   $db_values = array(
