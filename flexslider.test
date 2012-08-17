@@ -86,7 +86,6 @@ class FlexsliderTestCase extends DrupalWebTestCase {
       $this->assertTrue(isset($optionset->name), t('Loaded optionsets have a defined machine name'));
       $this->assertTrue(isset($optionset->title), t('Loaded optionsets have a defined human readable name (title)'));
       $this->assertTrue(isset($optionset->options), t('Loaded optionsets have a defined array of options'));
-
     }
 
     // Update the optionset
@@ -112,6 +111,7 @@ class FlexsliderTestCase extends DrupalWebTestCase {
     }
 
     // Delete the optionset
+    $this->assertTrue(flexslider_optionset_exists($optionset->name), t('Optionset exists and is ready to be deleted.'));
     flexslider_optionset_delete($optionset->name);
 
     // Ensure the delete is successfull

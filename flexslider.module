@@ -251,7 +251,8 @@ function flexslider_optionset_load($optionset_name) {
  */
 function flexslider_optionset_exists($optionset_name) {
   ctools_include('export');
-  return (ctools_export_crud_load('flexslider_optionset', $optionset_name) !== NULL);
+  $optionset = ctools_export_crud_load('flexslider_optionset', $optionset_name);
+  return isset($optionset->name);
 }
 
 /**
