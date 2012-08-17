@@ -4,81 +4,6 @@
  * Administrative page callbacks for the flexslider module.
  */
 
-
-/**
- * List all available option sets
- */
-function flexslider_page_optionset_list() {
-  $optionsets = flexslider_optionset_load_all();
-  $header = array(t('Option Set Name'), array('data' => t('Operations'), 'colspan' => 2));
-  $rows = array();
-  foreach ($optionsets as $name => $optionset) {
-    $is_overridden = ($optionset->export_type & EXPORT_IN_CODE) ? TRUE : FALSE;
-
-    $rows[] = array(
-      l($optionset->title, 'admin/config/media/flexslider/edit/' . $name),
-      l(t('edit'), 'admin/config/media/flexslider/edit/' . $name),
-      // Only print revert/delete links if we have something in the db to delete
-      (!isset($optionset->in_code_only)) ? l(t($is_overridden ? 'revert' : 'delete'), 'admin/config/media/flexslider/delete/' . $name) : '',
-    );
-  }
-
-  $table_element = array(
-    '#theme' => 'table',
-    '#header' => $header,
-    '#rows' => $rows,
-    '#empty' => t('There are currently no option sets. <a href="!url">Add a new one</a>.', array('!url' => url('admin/config/media/flexslider/add'))),
-  );
-
-  return drupal_render($table_element);
-}
-
-/**
- * Create new option set form
- */
-function flexslider_form_optionset_add($form, &$form_state) {
-  $form['title'] = array(
-    '#type' => 'textfield',
-    '#maxlength' => '255',
-    '#title' => t('Title'),
-    '#description' => t('A human-readable title for this option set.'),
-    '#required' => TRUE,
-  );
-  $form['name'] = array(
-    '#type' => 'machine_name',
-    '#maxlength' => '255',
-    '#machine_name' => array(
-      'source' => array('title'),
-      'exists' => 'flexslider_optionset_exists',
-    ),
-    '#required' => TRUE,
-  );
-
-  $form['actions'] = array(
-    '#type' => 'actions',
-    'submit' => array(
-      '#type' => 'submit',
-      '#value' => t('Create new option set'),
-    ),
-    'cancel' => array(
-      '#type' => 'link',
-      '#title' => t('Cancel'),
-      '#href' => 'admin/config/media/flexslider',
-    )
-  );
-
-  return $form;
-}
-
-/**
- * Validation function for creating a new optionset
- */
-function flexslider_form_optionset_add_validate(&$form, &$form_state) {
-  if (flexslider_optionset_exists($form_state['values']['name'])) {
-    form_set_error('name', t('An optionset with the name @name already exists.', array('@name' => $form_state['values']['name'])));
-  }
-}
-
 /**
  * Submit handler for adding a new option set.
  */
@@ -354,7 +279,7 @@ function flexslider_option_elements($options = array()) {
     '#size' => 20,
     '#maxlength' => 255,
     '#default_value' => isset($options['initDelay']) ? $options['initDelay'] : _flexslider_optionset_defaults('initDelay'),
-    '#element_validate' => array('_flexslider_validate_initdelay'),
+    //'#element_validate' => add validate on zero or greater integer
   );
   $form['advanced']['useCSS'] = array(
     '#type' => 'checkbox',
@@ -461,13 +386,10 @@ function flexslider_option_elements($options = array()) {
 /**
  * Form builder; Form to edit a given option set.
  */
-function flexslider_form_optionset_edit($form, &$form_state, $optionset) { 
+function flexslider_form_optionset_edit($form, &$form_state) { 
 
-  if (empty($form_state['optionset']) and empty($optionset)) {
-    $optionset = flexslider_optionset_create();
-  }
   if (empty($form_state['optionset'])) {
-    $form_state['optionset'] = $optionset;
+    $optionset = flexslider_optionset_create();
   }
   else {
     $optionset = $form_state['optionset'];
@@ -478,9 +400,19 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
     '#type' => 'textfield',
     '#maxlength' => '255',
     '#title' => t('Title'),
-    '#default_value' => $optionset->title,
     '#description' => t('A human-readable title for this option set.'),
     '#required' => TRUE,
+    '#default_value' => $optionset->title,
+  );
+  $form['name'] = array(
+    '#type' => 'machine_name',
+    '#maxlength' => '255',
+    '#machine_name' => array(
+      'source' => array('title'),
+      'exists' => 'flexslider_optionset_exists',
+    ),
+    '#required' => TRUE,
+    '#default_value' => $optionset->name,
   );
 
   // Show select boxes for the various image styles (thumbnail, normal, big)
@@ -499,6 +431,8 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
     '#default_value' => $optionset->imagestyle_normal,
   );
 
+  // @todo add image styles for thumbnail images
+
   // Options Vertical Tab Group table
   $form['options'] = array(
     '#type' => 'vertical_tabs',
@@ -509,21 +443,6 @@ function flexslider_form_optionset_edit($form, &$form_state, $optionset) {
   foreach($default_options as $key => $value) {
     $form['options'][] = $value;
   }
-  
-  // Add form actions
-  $form['actions'] = array(
-    '#type' => 'actions',
-    'submit' => array(
-      '#type' => 'submit',
-      '#name' => 'submit',
-      '#value' => t('Save Option Set')
-    ),
-    'cancel' => array(
-      '#type' => 'link',
-      '#title' => t('Cancel'),
-      '#href' => 'admin/config/media/flexslider',
-    )
-  );
 
   return $form;
 }
@@ -638,41 +557,6 @@ function flexslider_form_settings_submit($form, &$form_state) {
 }
 
 /**
- * Export option sets
- */
-function flexslider_form_optionset_export() {
-  $output = '';
-  
-  // Check for an appropriate export tool
-  if (module_exists('bulk_export') || module_exists('features')) {
-    $output .= 'Use any of the following to export your option sets.';
-    $output .= '<ul>';
-    if (module_exists('bulk_export')) {
-      $output .= '<li>' . l('Bulk Export', 'admin/structure/bulk-export') . '</li>';
-    }
-    if (module_exists('features')) {
-      $output .= '<li>' . l('Features', 'admin/structure/features') . '</li>';
-    }
-    $output .= '</ul>';
-  }
-  // Advise the user on tools available to them
-  else {
-    $output .= t('Enable the <a href="http://drupal.org/project/ctools">Bulk Export module</a> or the <a href="http://drupal.org/project/features">Features module</a> to export your option sets.');
-  }
-
-  return $output;
-}
-
-/**
- * Import option set form
- */
-function flexslider_form_optionset_import() {
-  $output = '<p>' . t('At present, the only method of importing option sets is by including the preset in a module. The Features module can simplify this process.') . '</p>';
-  $output .= '<p>' . t('A form based import/export mechanism will be added in the future.') . '</p>';
-  return $output;
-}
-
-/**
  * Validation functions
  */
 function _flexslider_validate_namespace($element, &$form_state) {
@@ -682,12 +566,6 @@ function _flexslider_validate_namespace($element, &$form_state) {
 }
 
 function _flexslider_validate_selector($element, &$form_state) {
-  // @todo
-  // @see form_error().
-  return TRUE;
-}
-
-function _flexslider_validate_initdelay($element, &$form_state) {
   // @todo
   // @see form_error().
   return TRUE;

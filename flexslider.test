@@ -132,12 +132,12 @@ class FlexsliderTestCase extends DrupalWebTestCase {
     $optionset = array();
     $optionset['title'] = 'testset';
     $optionset['name'] = 'testset';
-    $this->drupalPost('admin/config/media/flexslider/add', $optionset, t('Create new option set'));
+    $this->drupalPost('admin/config/media/flexslider/add', $optionset, t('Save'));
     $this->assertResponse(200);
-    $this->assertText('Option set testset was created.', t('Successfully saved the new optionset "testset"'));
+    $this->assertText('testset was created.', t('Successfully saved the new optionset "testset"'));
 
     // Attempt to save option set of the same name again
-    $this->drupalPost('admin/config/media/flexslider/add', $optionset, t('Create new option set'));
+    $this->drupalPost('admin/config/media/flexslider/add', $optionset, t('Save'));
     $this->assertResponse(200);
     $this->assertText("The machine-readable name is already in use. It must be unique.", t("Blocked the creation of duplicate named optionset."));
 
@@ -146,11 +146,11 @@ class FlexsliderTestCase extends DrupalWebTestCase {
     $options = _flexslider_test_options();
 
     foreach($options['valid'] as $testset) {
-      $this->drupalPost('admin/config/media/flexslider/edit/default', $testset, t('Save Option Set'));
+      $this->drupalPost('admin/config/media/flexslider/list/default/edit', $testset, t('Save'));
       $this->assertResponse(200);
 
       // Test saved values loaded into form
-      $this->drupalGet('admin/config/media/flexslider/edit/default');
+      $this->drupalGet('admin/config/media/flexslider/list/default/edit');
       $this->assertResponse(200, t('Default optionset reloaded.'));
       foreach($testset as $key => $option) {
         $this->assertFieldByName($key, $option, t('Value for @key appears in form correctly.', array('@key' => $key)));
@@ -161,12 +161,12 @@ class FlexsliderTestCase extends DrupalWebTestCase {
     $testset = flexslider_optionset_load('testset');
 
     // Test the delete workflow
-    $this->drupalGet("admin/config/media/flexslider/delete/$testset->name");
+    $this->drupalGet("admin/config/media/flexslider/list/$testset->name/delete");
     $this->assertResponse(200);
-    $this->assertText("Are you sure you want to delete the option set $testset->name?", t('Delete confirmation form loaded.'));
-    $this->drupalPost("admin/config/media/flexslider/delete/$testset->name", '', 'Delete');
+    $this->assertText("Are you sure you want to delete $testset->name?", t('Delete confirmation form loaded.'));
+    $this->drupalPost("admin/config/media/flexslider/list/$testset->name/delete", '', 'Delete');
     $this->assertResponse(200);
-    $this->assertText("Option set $testset->name was deleted.", t('Deleted test set using form.'));
+    $this->assertText("The item has been deleted.", t('Deleted test set using form.'));
   }
 
 }
