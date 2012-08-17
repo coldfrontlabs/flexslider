@@ -263,7 +263,7 @@ function flexslider_optionset_exists($optionset_name) {
  */
 function flexslider_optionset_save($optionset, $new = FALSE) {
   // If the machine name is missing or already in use, return an error.
-  if (empty($optionset->name) or FALSE != flexslider_optionset_exists($optionset->name)) {
+  if (empty($optionset->name) or (FALSE != flexslider_optionset_exists($optionset->name) and $new)) {
     return FALSE;
   }
 

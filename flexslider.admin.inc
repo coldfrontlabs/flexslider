@@ -71,6 +71,15 @@ function flexslider_form_optionset_add($form, &$form_state) {
 }
 
 /**
+ * Validation function for creating a new optionset
+ */
+function flexslider_form_optionset_add_validate(&$form, &$form_state) {
+  if (flexslider_optionset_exists($form_state['values']['name'])) {
+    form_set_error('name', t('An optionset with the name @name already exists.', array('@name' => $form_state['values']['name'])));
+  }
+}
+
+/**
  * Submit handler for adding a new option set.
  */
 function flexslider_form_optionset_add_submit($form, &$form_state) {
