@@ -141,6 +141,44 @@ function flexslider_update_7002(&$sandbox) {
 }
 
 /**
+ * Implements hook_update_N().
+ *
+ * Migrate settings from FlexSlider v1 to v2
+ */
+function flexslider_update_7200(&$sandbox) {
+  $optionsets = flexslider_optionset_load_all();
+  
+  foreach ($optionsets as $optionset) {
+    // Map old options to new keys/values
+    $optionset->options['animationSpeed'] = $optionset->options['animationDuration'];
+    $optionset->options['direction'] = $optionset->options['slidedirection'];
+    $optionset->options['keyboard'] = $optionset->options['keyboardnav'];
+    $optionset->options['startAt'] = $optionset->options['slidetostart'];
+    $optionset->options['start'] = $optionset->options['startCallback'];
+    $optionset->options['before'] = $optionset->options['beforeCallback'];
+    $optionset->options['after'] = $optionset->options['afterCallback'];
+    $optionset->options['end'] = $optionset->options['endCallback'];
+    
+    // Delete any options which no longer exist
+    unset($optionset->options['animationDuration']);
+    unset($optionset->options['slidedirection']);
+    unset($optionset->options['keyboardnav']);
+    unset($optionset->options['startCallback']);
+    unset($optionset->options['beforeCallback']);
+    unset($optionset->options['afterCallback']);
+    unset($optionset->options['endCallback']);
+    unset($optionset->options['controlsContainer']); // This value changed in the new version. We have to reset it to the default value
+    
+    // Merge in defaults for new options
+    $optionset->options += _flexslider_optionset_defaults();
+    
+    // Save the updated optionset
+    flexslider_optionset_save($optionset);
+  }
+  drupal_set_message($t('Optionsets migrated. However it is recommended to go validate all your settings manually. Especially if you have callback functions defined. They may reference functions which no longer exist.'), 'warning');
+}
+
+/**
  * Check if the library is available
  *
  * @param array $requirements
