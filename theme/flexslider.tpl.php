@@ -3,8 +3,6 @@
  * @file
  * Default output for a Flex Slider node.
 */
-
-dpm($settings);
 ?>
 <div <?php print drupal_attributes($settings['attributes'])?>">
   <?php print theme('flexslider_list', array('items' => $items, 'settings' => $settings)); ?>
