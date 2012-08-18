@@ -20,7 +20,7 @@ function flexslider_fields_field_formatter_info() {
       'label' => t('flexslider'),
       'field types' => array('image', 'media'),
       'settings' => array(
-        'flexslider_optionset' => 'default',
+        'optionset' => 'default',
         'flexslider_reference_img_src' => NULL,
       ),
     ),
@@ -49,7 +49,7 @@ function flexslider_fields_field_formatter_settings_form($field, $instance, $vie
     '#title' => t('Option set'),
     '#type' => 'select',
     '#options' => $optionsets,
-    '#default_value' => $settings['flexslider_optionset'],
+    '#default_value' => $settings['optionset'],
   );
 
   return $form;
@@ -68,8 +68,8 @@ function flexslider_fields_field_formatter_settings_summary($field, $instance, $
 
   // Load option set
   ctools_include('export');
-  if (!empty($settings['flexslider_optionset'])) {
-    $o = ctools_export_crud_load('flexslider_optionset', $settings['flexslider_optionset']);
+  if (!empty($settings['optionset'])) {
+    $o = flexslider_optionset_load($settings['optionset']);
     if ($o !== NULL) {
       $optionset = $o;
     }

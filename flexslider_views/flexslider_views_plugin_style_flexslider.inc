@@ -16,7 +16,7 @@ class flexslider_views_plugin_style_flexslider extends views_plugin_style {
     $options = parent::option_definition();
 
     $options += array(
-      'flexslider_optionset' => array('default' => 'default'),
+      'optionset' => array('default' => 'default'),
       'caption_field' => array('' => t('None')),
       'text_field' => array('' => t('None')),
     );
@@ -39,11 +39,11 @@ class flexslider_views_plugin_style_flexslider extends views_plugin_style {
     foreach (flexslider_optionset_load_all() as $name => $optionset) {
       $optionsets[$name] = check_plain($optionset->title);
     }
-    $form['flexslider']['flexslider_optionset'] = array(
+    $form['flexslider']['optionset'] = array(
       '#title' => t('Option set'),
       '#type' => 'select',
       '#options' => $optionsets,
-      '#default_value' => $this->options['flexslider_optionset'],
+      '#default_value' => $this->options['optionset'],
     );
 
     $link_options = array('' => t('None'));

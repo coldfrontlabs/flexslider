@@ -106,16 +106,16 @@ function flexslider_theme() {
   return array(
     // Container for nav elements (arrows)
     'flexslider' => array(
-      'variables' => array('items' => array(), 'optionset' => array()),
+      'variables' => array('items' => array(), 'settings' => array()),
       'template' => 'theme/flexslider',
       'file' => 'theme/flexslider.theme.inc',
     ),
     'flexslider_list' => array(
-      'variables' => array('items' => array(), 'optionset' => array()),
+      'variables' => array('items' => array(), 'settings' => array()),
       'file' => 'theme/flexslider.theme.inc',
     ),
     'flexslider_list_item' => array(
-      'variables' => array('item' => array(), 'optionset' => array()),
+      'variables' => array('item' => array(), 'settings' => array()),
       'file' => 'theme/flexslider.theme.inc',
     ),
   );
