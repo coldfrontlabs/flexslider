@@ -3,12 +3,11 @@
  * @file
  * Default output for a Flex Slider node.
 */
+
+dpm($settings);
 ?>
-<?php // @todo add check for nav elements. Only add the container if required ?>
-<div class="flex-nav-container">
-  <div class="flexslider-content flexslider clearfix" id="flexslider-<?php print $id; ?>">
-    <?php print theme('flexslider_list', array('items' => $items, 'settings' => $settings)); ?>
-  </div>
+<div <?php print drupal_attributes($settings['attributes'])?>">
+  <?php print theme('flexslider_list', array('items' => $items, 'settings' => $settings)); ?>
 </div>
 <?php
 /*

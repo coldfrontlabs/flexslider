@@ -301,7 +301,7 @@ function flexslider_optionset_delete($optionset) {
  *
  * @param string $id [optional]
  *  ID Attribute for FlexSlider container
- * @param string $optionset [optional]
+ * @param object $optionset [optional]
  *  Option set to load
  */
 function flexslider_add($id = NULL, $optionset = NULL) {
@@ -323,7 +323,7 @@ function flexslider_add($id = NULL, $optionset = NULL) {
         $optionset->name => $optionset->options,
       ),
       'instances' => array(
-        'flexslider-' . $id => $optionset->name,
+        $id => $optionset->name,
       ),
     );
     // @todo add alter hook for optionset
