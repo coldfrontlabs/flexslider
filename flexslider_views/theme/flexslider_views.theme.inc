@@ -44,7 +44,7 @@ function theme_views_view_flexslider($vars) {
     $items[] = $item;
   }
 
-  return theme('flexslider_container', array(
+  return theme('flexslider', array(
     'items' => $items,
     'settings' => $options,
   ));

@@ -107,7 +107,7 @@ function flexslider_fields_field_formatter_view($entity_type, $entity, $field, $
   $element = array();
   if (count($items) > 0) {
     $element[] = array(
-      '#theme' => 'flexslider_container',
+      '#theme' => 'flexslider',
       '#items' => $items,
       '#settings' => $display['settings'],
     );

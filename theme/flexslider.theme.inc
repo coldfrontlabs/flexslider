@@ -11,7 +11,9 @@
  * Default theme implementation for flexslider_list
  */
 function theme_flexslider_list(&$vars) {
-  
+  // Reference configuration variables
+  $optionset = &$vars['optionset'];
+  $items = &$vars['items'];
 }
 
 /**
@@ -22,7 +24,7 @@ function theme_flexslider_list_item(&$vars) {
 }
 
 /**
- * Template preprocess handler for 'flexslider_container' theme.
+ * Template preprocess handler for 'flexslider' theme.
  */
 function template_preprocess_flexslider(&$vars) {
   // Each flexslider instance gets a unique id
