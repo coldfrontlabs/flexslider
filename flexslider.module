@@ -126,7 +126,18 @@ function flexslider_image_default_styles() {
         'data' => array('width' => 800, 'height' => 500),
         'weight' => 0,
       ),
-    ),
+    ),    
+  );
+
+  // Default image preset for FlexSlider thumbnails
+  $styles['flexslider_thumbnail'] = array(
+    'effects' => array(
+      array(
+        'name' => 'image_scale_and_crop',
+        'data' => array('width' => 160, 'height' => 100),
+        'weight' => 0,
+      ),
+    ),    
   );
 
   return $styles;
