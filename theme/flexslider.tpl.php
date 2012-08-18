@@ -4,6 +4,7 @@
  * Default output for a Flex Slider node.
 */
 ?>
+<?php // @todo add check for nav elements. Only add the container if required ?>
 <div class="flex-nav-container">
   <div class="flexslider-content flexslider clearfix" id="flexslider-<?php print $id; ?>">
     <ul class="slides">

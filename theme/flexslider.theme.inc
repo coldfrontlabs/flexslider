@@ -8,9 +8,23 @@
  */
 
 /**
+ * Default theme implementation for flexslider_list
+ */
+function theme_flexslider_list(&$vars) {
+  
+}
+
+/**
+ * Default theme implementation for flexslider_list_item
+ */
+function theme_flexslider_list_item(&$vars) {
+  
+}
+
+/**
  * Template preprocess handler for 'flexslider_container' theme.
  */
-function template_preprocess_flexslider_container(&$vars) {
+function template_preprocess_flexslider(&$vars) {
   // Each flexslider instance gets a unique id
   $flexslider_id = &drupal_static('flexslider_id', 0);
   $vars['id'] = ++$flexslider_id;

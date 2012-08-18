@@ -43,7 +43,7 @@ function flexslider_library_alter(&$libraries, $module) {
         );
     }
   }
-  
+
   // @todo configure the styles for the theme to be altered by admin configurations
 
   // As it's only possible to use one theme per page, use the first one we get for everything.
@@ -104,9 +104,18 @@ function flexslider_help($path, $arg) {
  */
 function flexslider_theme() {
   return array(
-   'flexslider_container' => array(
-      'variables' => array('items' => array(), 'settings' => array()),
-      'template' => 'theme/flexslider-container',
+    // Container for nav elements (arrows)
+    'flexslider' => array(
+      'variables' => array('items' => array(), 'optionset' => array()),
+      'template' => 'theme/flexslider',
+      'file' => 'theme/flexslider.theme.inc',
+    ),
+    'flexslider_list' => array(
+      'variables' => array('items' => array(), 'optionset' => array()),
+      'file' => 'theme/flexslider.theme.inc',
+    ),
+    'flexslider_list_item' => array(
+      'variables' => array('item' => array(), 'optionset' => array()),
       'file' => 'theme/flexslider.theme.inc',
     ),
   );
@@ -126,7 +135,7 @@ function flexslider_image_default_styles() {
         'data' => array('width' => 800, 'height' => 500),
         'weight' => 0,
       ),
-    ),    
+    ),
   );
 
   // Default image preset for FlexSlider thumbnails
@@ -137,7 +146,7 @@ function flexslider_image_default_styles() {
         'data' => array('width' => 160, 'height' => 100),
         'weight' => 0,
       ),
-    ),    
+    ),
   );
 
   return $styles;
@@ -170,10 +179,10 @@ function flexslider_ctools_plugin_directory($module, $type) {
 function flexslider_optionset_create($values = array()) {
   ctools_include('export');
   $optionset = ctools_export_crud_new('flexslider_optionset');
-  
+
   // Set the options to an array
   $optionset->options = array();
-  
+
   // Assign specified values
   if (isset($values['name'])) {
     $optionset->name = $values['name'];
@@ -242,7 +251,7 @@ function flexslider_optionset_save($optionset, $new = FALSE) {
   if (empty($optionset->title)) {
     $optionset->title = $optionset->name;
   }
-  
+
   // Merge default settings with any given settings
   $optionset_defaults = _flexslider_optionset_defaults();
   $optionset->options = $optionset_defaults += $optionset->options;
@@ -260,10 +269,10 @@ function flexslider_optionset_save($optionset, $new = FALSE) {
   else {
     $result = drupal_write_record('flexslider_optionset', $db_values, 'name');
   }
-  
+
   // Return the object if the values were saved successfully.
   if (($new and SAVED_NEW == $result) or (!$new and SAVED_UPDATED == $result)) {
-    return $optionset;    
+    return $optionset;
   }
 
   // Otherwise, an error occured
@@ -370,7 +379,7 @@ function _flexslider_optionset_defaults($key = NULL) {
     // v1.x options
     'animation' => 'fade',
     //'animationDuration' => 6000, -- replaced by 'animationSpeed'
-    //'slidedirection' => 'horizontal', -- replaced by "direction" 
+    //'slidedirection' => 'horizontal', -- replaced by "direction"
     'slideshow' => TRUE,
     'slideshowSpeed' => 7000,
     'directionNav' => TRUE,
@@ -394,12 +403,12 @@ function _flexslider_optionset_defaults($key = NULL) {
     //'afterCallback' => 'function() {}', -- replaced by 'after'
     //'endCallback' => 'function() {}', -- replaced by 'end'
   );
-  
+
   // Return the specific item
   if (isset($key) and array_key_exists($key, $defaults)) {
     return $defaults[$key];
   }
-  
+
   // Return all items
   return $defaults;
 }
