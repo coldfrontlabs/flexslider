@@ -301,18 +301,26 @@ function flexslider_optionset_delete($optionset) {
  *
  * @param string $id [optional]
  *  ID Attribute for FlexSlider container
- * @param object $optionset [optional]
- *  Option set to load
+ * @param object|strong $optionset [optional]
+ *  Option set to load or the machine name of an existing optionset
  */
 function flexslider_add($id = NULL, $optionset = NULL) {
+  // Check optionset value
+  if (is_string($optionset)) {
+    $name = $optionset;
+    $optionset = flexslider_optionset_load($name);
+    if (empty($optionset)) {
+      watchdog('flexslider', 'Invalid optionset name supplied to flexslider_add: @name', array('@name' => $name), WATCHDOG_WARNING);
+      return;
+    }
+  }
+  
   // Static array to remember which scripts are already attached.
   // @todo not currently in use
   $cache = &drupal_static(__FUNCTION__, array());
 
   // @todo investigate the best way to cache data loaded from drupal_add_library()
   drupal_add_library('flexslider', 'flexslider');
-
-  // Moved theme configuration into hook_library_alter().
 
   // If the ID or optionset aren't set, it is assumed the settings will be set
   // manually via the calling module/theme
