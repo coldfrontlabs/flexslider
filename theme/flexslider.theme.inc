@@ -14,15 +14,12 @@ function theme_flexslider_list(&$vars) {
   // Reference configuration variables
   $optionset = &$vars['settings']['optionset'];
   $items = &$vars['items'];
-  dpm('flex list');
-  dpm($vars);
-
+  $attributes = &$vars['settings']['attributes'];
   $type = &$vars['settings']['type'];
-  //$attributes = $vars['attributes'];
-  $attributes = array();
 
   $output = '';
 
+  // Build the list
   if (!empty($items)) {
     $output .= "<$type" . drupal_attributes($attributes) . '>';
     foreach ($items as $i => $item) {
@@ -30,6 +27,7 @@ function theme_flexslider_list(&$vars) {
     }
     $output .= "</$type>";
   }
+  
   return $output;
 }
 
@@ -37,13 +35,12 @@ function theme_flexslider_list(&$vars) {
  * Default theme implementation for flexslider_list_item
  */
 function theme_flexslider_list_item(&$vars) {
-  dpm('flex list item');
-  dpm($vars);
-  $attributes = array();
-  $data = '';
-  // @todo
+  // Reference configuration variables
+  $item = &$vars['item'];  
+  $attributes = &$vars['settings']['attributes'];
+
   $output = '';
-  $output .= '<li' . drupal_attributes($attributes) . '>' . $data . "</li>\n";
+  $output .= '<li' . drupal_attributes($attributes) . '>' . $item . "</li>\n";
 
   return $output;
 }
@@ -52,6 +49,7 @@ function theme_flexslider_list_item(&$vars) {
  * Template preprocess handler for 'flexslider' theme.
  */
 function template_preprocess_flexslider(&$vars) {
+  // Reference configuration variables
   $optionset = &$vars['settings']['optionset'];
   $settings = &$vars['settings'];
   $items = &$vars['items'];
@@ -118,12 +116,18 @@ function template_preprocess_flexslider(&$vars) {
  * Preprocess function for flexslider_list_item
  */
 function template_preprocess_flexslider_list(&$vars) {
-  // @todo
+  // Reset the list of attributes
+  $vars['settings']['attributes'] = array();
+
 }
 
 /**
  * Preprocess function for flexslider_list_item
  */
 function template_preprocess_flexslider_list_item(&$vars) {
-  // @todo
+  // Reset the list of attributes
+  $vars['settings']['attributes'] = array();
+  
+  $vars['item'] = implode('', $vars['item']);
+  // @todo add attributes for thumbnails
 }
