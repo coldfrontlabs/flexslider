@@ -117,7 +117,10 @@ function template_preprocess_flexslider(&$vars) {
  */
 function template_preprocess_flexslider_list(&$vars) {
   // Reset the list of attributes
-  $vars['settings']['attributes'] = array();
+  $vars['settings']['attributes'] = array(
+    // @todo find a way to detect the outter container class if possible
+    'class' => array('slides'),
+  );
 
 }
 
@@ -127,6 +130,7 @@ function template_preprocess_flexslider_list(&$vars) {
 function template_preprocess_flexslider_list_item(&$vars) {
   // Reset the list of attributes
   $vars['settings']['attributes'] = array();
+  dpm($vars);
   
   $vars['item'] = implode('', $vars['item']);
   // @todo add attributes for thumbnails
