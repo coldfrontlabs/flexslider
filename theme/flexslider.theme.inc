@@ -130,7 +130,7 @@ function template_preprocess_flexslider_list(&$vars) {
 function template_preprocess_flexslider_list_item(&$vars) {
   // Reset the list of attributes
   $vars['settings']['attributes'] = array();
-  dpm($vars);
+  //dpm($vars);
   
   $vars['item'] = implode('', $vars['item']);
   // @todo add attributes for thumbnails
