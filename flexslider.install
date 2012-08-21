@@ -146,6 +146,8 @@ function flexslider_update_7002(&$sandbox) {
  * Migrate settings from FlexSlider v1 to v2
  */
 function flexslider_update_7200(&$sandbox) {
+  $t = get_t();
+  
   $optionsets = flexslider_optionset_load_all();
   
   foreach ($optionsets as $optionset) {
