@@ -14,7 +14,9 @@ function flexslider_library() {
     'website' => 'http://flexslider.woothemes.com',
     'version' => '2.0',
     'js' => array(
-      libraries_get_path('flexslider') . '/jquery.flexslider-min.js' => array(),
+      libraries_get_path('flexslider') . '/jquery.flexslider-min.js' => array(
+		  'scope' => 'footer',
+      ),
     ),
     'css' => array(
       libraries_get_path('flexslider') . '/flexslider.css' => array(
@@ -338,7 +340,7 @@ function flexslider_add($id = NULL, $optionset = NULL) {
     drupal_add_js(array('flexslider' => $js_settings), 'setting');
   }
   // Loader JavaScript
-  drupal_add_js(drupal_get_path('module', 'flexslider') . '/assets/js/flexslider.load.js');
+  drupal_add_js(drupal_get_path('module', 'flexslider') . '/assets/js/flexslider.load.js', array('type' => 'file', 'scope' => 'footer'));
 }
 
 /**
