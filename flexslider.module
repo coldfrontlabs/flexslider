@@ -264,7 +264,7 @@ function flexslider_optionset_save($optionset, $new = FALSE) {
   $db_values = array(
     'name' => $optionset->name,
     'title' => $optionset->title,
-    'options' => $optionset->options,
+    'options' => _flexslider_typecast_optionset($optionset->options),
   );
 
   if ($new) {
