@@ -355,6 +355,9 @@ function flexslider_add($id = NULL, $optionset = NULL) {
  * @see https://github.com/woothemes/FlexSlider/wiki/FlexSlider-Properties
  */
 function _flexslider_optionset_defaults($key = NULL) {
+
+  // We add typecasts to ensure the variables get json encoded properly
+  
   $defaults = array(
     // v2.x options
     'namespace' => 'flex-',
@@ -397,7 +400,7 @@ function _flexslider_optionset_defaults($key = NULL) {
     'directionNav' => TRUE,
     'controlNav' => TRUE,
     //'keyboardnav' => TRUE, --  replaced by 'keyboard'
-    'mousewheel' => FALSE,
+    //'mousewheel' => FALSE,
     'prevText' => t('Previous'),
     'nextText' => t('Next'),
     'pausePlay' => FALSE,
@@ -416,6 +419,9 @@ function _flexslider_optionset_defaults($key = NULL) {
     //'endCallback' => 'function() {}', -- replaced by 'end'
   );
 
+  // Typecast the values
+  _flexslider_typecast_optionset($defaults);
+
   // Return the specific item
   if (isset($key) and array_key_exists($key, $defaults)) {
     return $defaults[$key];
@@ -423,4 +429,58 @@ function _flexslider_optionset_defaults($key = NULL) {
 
   // Return all items
   return $defaults;
+}
+
+/**
+ * Adds the typecasting to the values so that the generated
+ * json array keeps the right values
+ */
+function _flexslider_typecast_optionset(&$options) {
+  foreach ($options as $key => $value) {
+    switch($key) {
+      case 'namespace':
+      case 'selector':
+      case 'easing':
+      case 'direction':
+      case 'controlsContainer':
+      case 'sync':
+      case 'asNavFor':
+      case 'fade':
+      case 'prevText':
+      case 'nextText':
+      case 'pauseText':
+      case 'playText':
+      case 'manualControls':
+        $options[$key] = (string)$value;
+        break;
+      case 'startAt':
+      case 'animationSpeed':
+      case 'initDelay':
+      case 'itemWidth':
+      case 'itemMargin':
+      case 'minItems':
+      case 'maxItems':
+      case 'move':
+        $options[$key] = (int)$value;
+        break;
+      case 'reverse':
+      case 'smoothHeight':
+      case 'useCSS':
+      case 'touch':
+      case 'video':
+      case 'keyboard':
+      case 'multipleKeyboard':
+      case 'mouseWheel':
+      case 'slideshow':
+      case 'directionNav':
+      case 'controlNav':
+      case 'pausePlay':
+      case 'randomize':
+      case 'animationLoop':
+      case 'pauseOnAction':
+      case 'pauseOnHover':
+        $options[$key] = (boolean)$value;
+        break;
+    }
+  }
 }
