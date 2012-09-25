@@ -336,6 +336,10 @@ function flexslider_option_elements($options = array()) {
     '#description' => t('Declare custom control navigation. Example would be ".flex-control-nav li" or "#tabs-nav li img", etc. The number of elements in your controlNav should match the number of slides/tabs.'),
     '#default_value' => isset($options['manualControls']) ? $options['manualControls'] : _flexslider_optionset_defaults('manualControls'),
   );
+
+// @todo temporarily removed until we can figure out a proper default "emtpy"
+// value that doesn't cause a function not found error in the browser
+/*
   $form['advanced']['start'] = array(
     '#type' => 'textarea',
     '#title' => t('Start Function Callback'),
@@ -379,7 +383,7 @@ function flexslider_option_elements($options = array()) {
     '#cols' => 60,
     '#rows' => 5,
   );
-  
+*/
   return $form;
 }
 

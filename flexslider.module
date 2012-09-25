@@ -380,12 +380,12 @@ function _flexslider_optionset_defaults($key = NULL) {
     'minItems' => 0,
     'maxItems' => 0,
     'move' => 0,
-    'start' => '',
-    'before' => '',
-    'after' => '',
-    'end' => '',
-    'added' => '',
-    'removed' => '',
+    //'start' => '',
+    //'before' => '',
+    //'after' => '',
+    //'end' => '',
+    //'added' => '',
+    //'removed' => '',
 
     // @todo verify the 1.x options are still valid
     // v1.x options
