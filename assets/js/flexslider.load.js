@@ -13,9 +13,11 @@ Drupal.behaviors.flexslider = {
           
           var optionset = settings.flexslider.optionsets[settings.flexslider.instances[id]];
           if (optionset) {
+            console.log(optionset);
             $(this).flexslider(optionset);
           }
           else {
+            console.log('no optionset');
             $(this).flexslider();
           }
         }

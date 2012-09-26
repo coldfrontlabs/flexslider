@@ -1,0 +1,11 @@
+<?php
+
+/**
+ * @file
+ * Describe the file
+ *
+ * @author Mathew Winstone <mwinstone@coldfrontlabs.ca>
+ */
+
+
+// @todo add hook_uninstall to clean up generated content
