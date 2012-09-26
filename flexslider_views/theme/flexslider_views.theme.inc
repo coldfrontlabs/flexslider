@@ -16,6 +16,9 @@ function theme_views_view_flexslider($vars) {
   $view = $vars['view'];
   $options = $vars['options'];
 
+  $css_classes = 'flexslider ' . $view->display_handler->get_option('css_class');
+  $view->display_handler->set_option('css_class', $css_classes);
+
   $img_field_name = $vars['img_field_name'];
   foreach ($vars['rows'] as $id => $row) {
     // Can't assume the field has the same language as the Entity that
