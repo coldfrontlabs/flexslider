@@ -211,6 +211,10 @@ function flexslider_optionset_create($values = array()) {
 function flexslider_optionset_load_all() {
   ctools_include('export');
   $optionsets = ctools_export_crud_load_all('flexslider_optionset');
+  foreach ($optionsets as $optionset) {
+    // Ensure the optionset is typecast after being loaded from DB
+    $optionset->options = _flexslider_typecast_optionset($optionset->options);
+  }
   return $optionsets;
 }
 
@@ -220,6 +224,8 @@ function flexslider_optionset_load_all() {
 function flexslider_optionset_load($optionset_name) {
   ctools_include('export');
   $optionset = ctools_export_crud_load('flexslider_optionset', $optionset_name);
+    // Ensure the optionset is typecast after being loaded from DB
+  $optionset->options = _flexslider_typecast_optionset($optionset->options);
   return $optionset;
 }
 
