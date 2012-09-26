@@ -30,3 +30,7 @@
   list-style: none;
   list-style-image: none;
 }
+
+.flexslider ol.flex-control-nav {
+  padding-left: 0;
+}
