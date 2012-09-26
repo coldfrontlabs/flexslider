@@ -1,0 +1,12 @@
+name = FlexSlider Example
+description = Sample implementation of FlexSlider
+core = 7.x
+
+dependencies[] = flexslider
+dependencies[] = image
+dependencies[] = node
+dependencies[] = features
+
+features[features_api][] = api:1
+features[field][] = node-flexslider_example-field_flexslider_example_image
+features[node][] = flexslider_example
