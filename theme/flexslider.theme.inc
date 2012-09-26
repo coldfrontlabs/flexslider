@@ -70,6 +70,9 @@ function template_preprocess_flexslider(&$vars) {
     watchdog('flexslider', 'Fallback to default optionset.', array(), WATCHDOG_WARNING);
   }
 
+  // Ensure the optionset is typecast after being loaded from DB
+  $optionset->options = _flexslider_typecast_optionset($optionset->options);
+
   // Configure attributes for containing elements
   $attributes = array();
   // Merge with defined attributes
