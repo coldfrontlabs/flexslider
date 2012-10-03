@@ -213,7 +213,7 @@ function flexslider_optionset_load_all() {
   $optionsets = ctools_export_crud_load_all('flexslider_optionset');
   foreach ($optionsets as $optionset) {
     // Ensure the optionset is typecast after being loaded from DB
-    $optionset->options = _flexslider_typecast_optionset($optionset->options);
+    _flexslider_typecast_optionset($optionset->options);
   }
   return $optionsets;
 }
@@ -225,7 +225,7 @@ function flexslider_optionset_load($optionset_name) {
   ctools_include('export');
   $optionset = ctools_export_crud_load('flexslider_optionset', $optionset_name);
     // Ensure the optionset is typecast after being loaded from DB
-  $optionset->options = _flexslider_typecast_optionset($optionset->options);
+  _flexslider_typecast_optionset($optionset->options);
   return $optionset;
 }
 
@@ -370,8 +370,8 @@ function _flexslider_optionset_defaults($key = NULL) {
     'selector' => '.slides > li',
     'easing' => 'swing',
     'direction' => 'horizontal',
-    'reverse' => FALSE,
-    'smoothHeight' => FALSE,
+    'reverse' => FALSE,  // @todo verify data value
+    'smoothHeight' => FALSE, // @todo verify data value
     'startAt' => 0,
     'animationSpeed' => 600,
     'initDelay' => 0,
@@ -442,51 +442,57 @@ function _flexslider_optionset_defaults($key = NULL) {
  * json array keeps the right values
  */
 function _flexslider_typecast_optionset(&$options) {
-  foreach ($options as $key => $value) {
-    switch($key) {
-      case 'namespace':
-      case 'selector':
-      case 'easing':
-      case 'direction':
-      case 'controlsContainer':
-      case 'sync':
-      case 'asNavFor':
-      case 'fade':
-      case 'prevText':
-      case 'nextText':
-      case 'pauseText':
-      case 'playText':
-      case 'manualControls':
-        $options[$key] = (string)$value;
-        break;
-      case 'startAt':
-      case 'animationSpeed':
-      case 'initDelay':
-      case 'itemWidth':
-      case 'itemMargin':
-      case 'minItems':
-      case 'maxItems':
-      case 'move':
-        $options[$key] = (int)$value;
-        break;
-      case 'reverse':
-      case 'smoothHeight':
-      case 'useCSS':
-      case 'touch':
-      case 'video':
-      case 'keyboard':
-      case 'multipleKeyboard':
-      case 'mouseWheel':
-      case 'slideshow':
-      case 'directionNav':
-      case 'controlNav':
-      case 'pausePlay':
-      case 'randomize':
-      case 'animationLoop':
-      case 'pauseOnAction':
-      case 'pauseOnHover':
-        $options[$key] = (boolean)$value;
-        break;
+  if (isset($options) && !empty($options)) {
+    foreach ($options as $key => $value) {
+      switch($key) {
+        case 'namespace':
+        case 'selector':
+        case 'easing':
+        case 'direction':
+        case 'controlsContainer':
+        case 'sync':
+        case 'asNavFor':
+        case 'fade':
+        case 'prevText':
+        case 'nextText':
+        case 'pauseText':
+        case 'playText':
+        case 'manualControls':
+          $options[$key] = (string)$value;
+          break;
+        case 'startAt':
+        case 'animationSpeed':
+        case 'initDelay':
+        case 'itemWidth':
+        case 'itemMargin':
+        case 'minItems':
+        case 'maxItems':
+        case 'move':
+          $options[$key] = (int)$value;
+          break;
+        case 'controlNav':
+          if ($value == 'thumbnails') {
+            $options[$key] = (string)$value;
+            break;
+          }
+        case 'reverse':
+        case 'smoothHeight':
+        case 'useCSS':
+        case 'touch':
+        case 'video':
+        case 'keyboard':
+        case 'multipleKeyboard':
+        case 'mouseWheel':
+        case 'slideshow':
+        case 'directionNav':
+        case 'pausePlay':
+        case 'randomize':
+        case 'animationLoop':
+        case 'pauseOnAction':
+        case 'pauseOnHover':
+          $options[$key] = (boolean)$value;
+          break;
+      }
     }
   }
 }

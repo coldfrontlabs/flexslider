@@ -188,11 +188,15 @@ function flexslider_option_elements($options = array()) {
     '#default_value' => isset($options['directionNav']) ? $options['directionNav'] : _flexslider_optionset_defaults('directionNav'),
   );
   $form['nav_controls']['controlNav'] = array(
-    '#type' => 'checkbox',
+    '#type' => 'select',
     '#title' => t('Paging Controls'),
-    '#description' => t('Add controls to jump to individual slides.'),
+    '#description' => t('Add controls to jump to individual slides. (Note: set to "On" if using Manual Controls)'),
     '#default_value' => isset($options['controlNav']) ? $options['controlNav'] : _flexslider_optionset_defaults('controlNav'),
-    // @todo add states options for manualControls
+    '#options' => array(
+      0 => t('Off'),
+      1 => t('On'),
+      'thumbnails' => t('Thumbnails'),
+    )
   );
   $form['nav_controls']['keyboard'] = array(
     '#type' => 'checkbox',
@@ -434,8 +438,14 @@ function flexslider_form_optionset_edit($form, &$form_state) {
     '#options' => $image_style,
     '#default_value' => $optionset->imagestyle_normal,
   );
-
-  // @todo add image styles for thumbnail images
+  $form['image_style']['thumbnail'] = array(
+    '#type' => 'select',
+    '#title' => t('Thumbnail image style'),
+    '#description' => t('Image style for the thumbnail images.'),
+    '#empty_option' => t('None (original image)'),
+    '#options' => $image_style,
+    '#default_value' => $optionset->imagestyle_thumbnail,
+  );
 
   // Options Vertical Tab Group table
   $form['options'] = array(

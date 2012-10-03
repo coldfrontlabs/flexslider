@@ -12,15 +12,17 @@
  */
 function theme_views_view_flexslider($vars) {
   $items = array();
-
   $view = $vars['view'];
   $options = $vars['options'];
+  $optionset = flexslider_optionset_load($options['optionset']);
 
-  $css_classes = 'flexslider ' . $view->display_handler->get_option('css_class');
-  $view->display_handler->set_option('css_class', $css_classes);
-
+  $existing_classes = $view->display_handler->get_option('css_class');
+  $view->display_handler->set_option('css_class', 'flexslider ' . $existing_classes);
+  
   $img_field_name = $vars['img_field_name'];
+  $img_field_field_name = 'field_' . $img_field_name;
   foreach ($vars['rows'] as $id => $row) {
+    
     // Can't assume the field has the same language as the Entity that
     // contains it
     // $lang = $row->_field_data[$view->base_field]['entity']->language;
@@ -44,6 +46,8 @@ function theme_views_view_flexslider($vars) {
         $item['alt'] = $data;
       }
     }
+    
+    $item['thumb'] = image_style_url($optionset->imagestyle_thumbnail, $row->{$img_field_field_name}[0]['raw']['uri']);
     $items[] = $item;
   }
 
@@ -52,4 +56,3 @@ function theme_views_view_flexslider($vars) {
     'settings' => $options,
   ));
 }
-

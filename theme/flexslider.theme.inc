@@ -16,14 +16,13 @@ function theme_flexslider_list(&$vars) {
   $items = &$vars['items'];
   $attributes = &$vars['settings']['attributes'];
   $type = &$vars['settings']['type'];
-
   $output = '';
 
   // Build the list
   if (!empty($items)) {
     $output .= "<$type" . drupal_attributes($attributes) . '>';
     foreach ($items as $i => $item) {
-      $output .= theme('flexslider_list_item', array('item' => $item, 'optionset' => $optionset));
+      $output .= theme('flexslider_list_item', array('item' => $item['image'], 'thumb' => $item['thumb'], 'optionset' => $optionset));
     }
     $output .= "</$type>";
   }
@@ -37,7 +36,12 @@ function theme_flexslider_list(&$vars) {
 function theme_flexslider_list_item(&$vars) {
   // Reference configuration variables
   $item = &$vars['item'];  
+  $thumb = &$vars['thumb'];
   $attributes = &$vars['settings']['attributes'];
+
+  if ($vars['optionset']->options['controlNav'] === "thumbnails") {
+    $attributes['data-thumb'] = $thumb;
+  }
 
   $output = '';
   $output .= '<li' . drupal_attributes($attributes) . '>' . $item . "</li>\n";
@@ -62,13 +66,16 @@ function template_preprocess_flexslider(&$vars) {
   if (!empty($optionset)) {
     $optionset = flexslider_optionset_load($optionset);
   }
-  
+    
   // Check if an optionset was loaded
   if (empty($optionset)) {
     // Fall back to 'default' option set
     $optionset = flexslider_optionset_load('default');
     watchdog('flexslider', 'Fallback to default optionset.', array(), WATCHDOG_WARNING);
   }
+  
+  // Ensure the optionset is typecast after being loaded from DB
+  //$optionset->options = _flexslider_typecast_optionset($optionset->options);
 
   // Configure attributes for containing elements
   $attributes = array();
@@ -132,6 +139,6 @@ function template_preprocess_flexslider_list_item(&$vars) {
   $vars['settings']['attributes'] = array();
   //dpm($vars);
   
-  $vars['item'] = implode('', $vars['item']);
+  //$vars['item'] = implode('', $vars['item']);
   // @todo add attributes for thumbnails
 }
