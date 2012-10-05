@@ -22,7 +22,11 @@ function theme_flexslider_list(&$vars) {
   if (!empty($items)) {
     $output .= "<$type" . drupal_attributes($attributes) . '>';
     foreach ($items as $i => $item) {
-      $output .= theme('flexslider_list_item', array('item' => $item['image'], 'thumb' => $item['thumb'], 'optionset' => $optionset));
+      $output .= theme('flexslider_list_item', array(
+        'item' => isset($item['image']) ? $item['image'] : theme_image_style(array('style_name' => $optionset->imagestyle_normal, 'path' => $item['uri'])),
+        'thumb' => isset($item['thumb']) ? $item['thumb'] : image_style_url($optionset->imagestyle_thumbnail, $item['uri']),
+        'optionset' => $optionset,
+      ));
     }
     $output .= "</$type>";
   }
@@ -36,11 +40,12 @@ function theme_flexslider_list(&$vars) {
 function theme_flexslider_list_item(&$vars) {
   // Reference configuration variables
   $item = &$vars['item'];  
-  $thumb = &$vars['thumb'];
   $attributes = &$vars['settings']['attributes'];
-
-  if ($vars['optionset']->options['controlNav'] === "thumbnails") {
-    $attributes['data-thumb'] = $thumb;
+  
+  if ($vars['optionset']->options['controlNav'] === "thumbnails" &&
+      isset($vars['thumb'])
+  ) {
+    $attributes['data-thumb'] = $vars['thumb'];
   }
 
   $output = '';
@@ -53,6 +58,7 @@ function theme_flexslider_list_item(&$vars) {
  * Template preprocess handler for 'flexslider' theme.
  */
 function template_preprocess_flexslider(&$vars) {
+  
   // Reference configuration variables
   $optionset = &$vars['settings']['optionset'];
   $settings = &$vars['settings'];
@@ -74,8 +80,7 @@ function template_preprocess_flexslider(&$vars) {
     watchdog('flexslider', 'Fallback to default optionset.', array(), WATCHDOG_WARNING);
   }
   
-  // Ensure the optionset is typecast after being loaded from DB
-  //$optionset->options = _flexslider_typecast_optionset($optionset->options);
+
 
   // Configure attributes for containing elements
   $attributes = array();
@@ -87,15 +92,18 @@ function template_preprocess_flexslider(&$vars) {
   // Each flexslider instance gets a unique id
   $flexslider_id = &drupal_static('flexslider_id', 0);
   $attributes['id'] = 'flexslider-' . ++$flexslider_id;
-  // Add default class
-  $attributes['class'][] = 'flexslider';
   
   // Add the namespace to any classes
-  if (!empty($optionset->options['namespace'])) {
+  if (!empty($attributes['class']) && 
+      !empty($optionset->options['namespace'])
+  ) {
     foreach ($attributes['class'] as $key => $value) {
       $attributes['class'][$key] = $optionset->options['namespace'] . $value;
     }
   }
+
+  // Add default class
+  $attributes['class'][] = 'flexslider';
 
   // Add the attributes to the settings array.
   $settings['attributes'] = $attributes;

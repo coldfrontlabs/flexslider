@@ -45,7 +45,7 @@ function flexslider_fields_field_formatter_settings_form($field, $instance, $vie
   foreach (flexslider_optionset_load_all() as $name => $optionset) {
     $optionsets[$name] = check_plain($optionset->title);
   }
-  $form['flexslider_optionset'] = array(
+  $form['optionset'] = array(
     '#title' => t('Option set'),
     '#type' => 'select',
     '#options' => $optionsets,
