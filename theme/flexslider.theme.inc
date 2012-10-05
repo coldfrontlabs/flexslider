@@ -22,8 +22,18 @@ function theme_flexslider_list(&$vars) {
   if (!empty($items)) {
     $output .= "<$type" . drupal_attributes($attributes) . '>';
     foreach ($items as $i => $item) {
+      if (!isset($item['image'])) {
+        $image_options = array(
+          'style_name' => $optionset->imagestyle_normal, 
+          'path'       => $item['uri'],
+          'height'     => $item['height'],
+          'width'      => $item['width'],
+          'alt'        => $item['alt'],
+          'title'      => $item['title'],
+        );
+      }
       $output .= theme('flexslider_list_item', array(
-        'item' => isset($item['image']) ? $item['image'] : theme_image_style(array('style_name' => $optionset->imagestyle_normal, 'path' => $item['uri'])),
+        'item' => isset($item['image']) ? $item['image'] : theme_image_style($image_options),
         'thumb' => isset($item['thumb']) ? $item['thumb'] : image_style_url($optionset->imagestyle_thumbnail, $item['uri']),
         'optionset' => $optionset,
       ));
@@ -92,7 +102,8 @@ function template_preprocess_flexslider(&$vars) {
   // Each flexslider instance gets a unique id
   $flexslider_id = &drupal_static('flexslider_id', 0);
   $attributes['id'] = 'flexslider-' . ++$flexslider_id;
-  
+  $attributes['class'][] = 'flexslider';
+
   // Add the namespace to any classes
   if (!empty($attributes['class']) && 
       !empty($optionset->options['namespace'])

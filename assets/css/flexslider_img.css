@@ -12,8 +12,8 @@
 }
 
 .flexslider .slides li,
-.flexslider .flex-control-nav li,
-.flexslider .flex-direction-nav li {
+.flexslider .control-nav li,
+.flexslider .direction-nav li {
   list-style: none;
   list-style-image: none;
 }
@@ -27,13 +27,13 @@
   margin: 0px;
 }
 
-.flexslider .slides li {
+.flex-flexslider .slides li {
   list-style: none;
   list-style-image: none;
 }
 
-.flexslider .flex-direction-nav,
-.flexslider ol.flex-control-nav {
+.flex-flexslider .flex-direction-nav,
+.flex-flexslider ol.flex-control-nav {
   margin: 0;
   padding: 0;
 }

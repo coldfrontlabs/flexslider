@@ -16,8 +16,8 @@ function theme_views_view_flexslider($vars) {
   $options = $vars['options'];
   $optionset = flexslider_optionset_load($options['optionset']);
 
-  $existing_classes = $view->display_handler->get_option('css_class');
-  $view->display_handler->set_option('css_class', 'flexslider ' . $existing_classes);
+  //$existing_classes = $view->display_handler->get_option('css_class');
+  //$view->display_handler->set_option('css_class', 'flexslider ' . $existing_classes);
   
   $img_field_name = $vars['img_field_name'];
   $img_field_field_name = 'field_' . $img_field_name;
