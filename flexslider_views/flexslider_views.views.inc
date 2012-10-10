@@ -20,7 +20,7 @@ function flexslider_views_views_plugins() {
         'theme' => 'views_view_flexslider',
         'theme file' => 'flexslider_views.theme.inc',
         'theme path' => drupal_get_path('module', 'flexslider_views') . '/theme',
-        'uses row plugin' => FALSE,
+        'uses row plugin' => TRUE,
         'uses fields' => TRUE,
         'uses options' => TRUE,
         'type' => 'normal',

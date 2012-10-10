@@ -27,6 +27,10 @@
   margin: 0px;
 }
 
+.flexslider ul.slides li img {
+  height: auto;
+}
+
 .flex-flexslider .slides li {
   list-style: none;
   list-style-image: none;
@@ -36,4 +40,18 @@
 .flex-flexslider ol.flex-control-nav {
   margin: 0;
   padding: 0;
+}
+
+.flex-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  
+  margin: 0;
+  padding: 2%;
+  text-align: center;
+  width: 96%;
+
+  background: rgba(0,0,0,0.6);
+  color: white;
 }

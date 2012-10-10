@@ -17,12 +17,15 @@ function theme_flexslider_list(&$vars) {
   $attributes = &$vars['settings']['attributes'];
   $type = &$vars['settings']['type'];
   $output = '';
-
+  
   // Build the list
   if (!empty($items)) {
     $output .= "<$type" . drupal_attributes($attributes) . '>';
     foreach ($items as $i => $item) {
-      if (!isset($item['image'])) {
+      // If the slide hasn't been set, build the slide using the image
+      // attributes given (assumes we're using a multi-image field)
+      // @todo need to allow for different types of field and collection fields
+      if (!isset($item['slide'])) {
         $image_options = array(
           'style_name' => $optionset->imagestyle_normal, 
           'path'       => $item['uri'],
@@ -33,7 +36,7 @@ function theme_flexslider_list(&$vars) {
         );
       }
       $output .= theme('flexslider_list_item', array(
-        'item' => isset($item['image']) ? $item['image'] : theme_image_style($image_options),
+        'item' => isset($item['slide']) ? $item['slide'] : theme_image_style($image_options),
         'thumb' => isset($item['thumb']) ? $item['thumb'] : image_style_url($optionset->imagestyle_thumbnail, $item['uri']),
         'optionset' => $optionset,
       ));
@@ -102,6 +105,8 @@ function template_preprocess_flexslider(&$vars) {
   // Each flexslider instance gets a unique id
   $flexslider_id = &drupal_static('flexslider_id', 0);
   $attributes['id'] = 'flexslider-' . ++$flexslider_id;
+
+  // Add the flexslider class to be namespaced
   $attributes['class'][] = 'flexslider';
 
   // Add the namespace to any classes
