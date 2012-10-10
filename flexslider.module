@@ -9,17 +9,27 @@
  * @author minorOffense <mwinstone@coldfrontlabs.ca>
  */
 function flexslider_library() {
+  $path = drupal_get_path('module', 'flexslider');
+
+  // If the library isn't found in Drupal, fall back to a copy of the library
+  // included with the module.
+  $library_path = libraries_get_path('flexslider');
+  $library_fullpath = $_SERVER['DOCUMENT_ROOT'] . base_path() . $library_path;
+  if (empty($library_path) || !file_prepare_directory($library_fullpath)) {
+    $library_path = $path . '/libraries/flexslider';
+  }
+
   $libraries['flexslider'] = array(
     'title' => 'FlexSlider',
     'website' => 'http://flexslider.woothemes.com',
     'version' => '2.0',
     'js' => array(
-      libraries_get_path('flexslider') . '/jquery.flexslider-min.js' => array(
+      $library_path . '/jquery.flexslider-min.js' => array(
         'scope' => 'footer',
       ),
     ),
     'css' => array(
-      libraries_get_path('flexslider') . '/flexslider.css' => array(
+      $library_path . '/flexslider.css' => array(
         'type' => 'file',
         'media' => 'screen',
       ),
