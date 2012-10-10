@@ -11,23 +11,32 @@
   list-style: none;
 }
 
-.flexslider .slides li,
-.flexslider .control-nav li,
-.flexslider .direction-nav li {
+.flex-flexslider .slides li,
+.flex-flexslider .control-nav li,
+.flex-flexslider .direction-nav li {
   list-style: none;
   list-style-image: none;
 }
 
-.flexslider ul.slides,
+.flex-flexslider .flex-direction-nav .flex-next,
+.flex-flexslider .flex-direction-nav .flex-prev {
+  opacity: 0;
+}
+.flex-flexslider:hover .flex-direction-nav .flex-next,
+.flex-flexslider:hover .flex-direction-nav .flex-prev {
+  opacity: 1;
+}
+
+.flex-flexslider ul.slides,
 .flex-nav-container ol.flex-control-nav,
 .flex-nav-container ul.flex-direction-nav,
-.flexslider ul.slides li img,
-.flexslider ol.flex-control-nav li img {
+.flex-flexslider ul.slides li img,
+.flex-flexslider ol.flex-control-nav li img {
   padding: 0px;
   margin: 0px;
 }
 
-.flexslider ul.slides li img {
+.flex-flexslider ul.slides li img {
   height: auto;
 }
 
