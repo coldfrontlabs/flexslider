@@ -51,6 +51,7 @@ class flexslider_views_plugin_style_flexslider extends views_plugin_style {
       $link_options[$field] = $handler->ui_name();
     }
 
+    /*
     $form['flexslider']['caption_field'] = array(
       '#type' => 'select',
       '#title' => t('Caption Field'),
@@ -68,6 +69,7 @@ class flexslider_views_plugin_style_flexslider extends views_plugin_style {
       '#options' => $link_options,
       '#default_value' => $this->options['text_field'],
     );
+    */
   }
 
   /**

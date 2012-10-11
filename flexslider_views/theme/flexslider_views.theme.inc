@@ -22,10 +22,14 @@ function theme_views_view_flexslider($vars) {
   $row_plugin = $view->style_plugin->row_plugin;
 
   foreach ($vars['rows'] as $id => $row) {
+    dpm($row);
     // Render the row into a slide
     $view->row_index = $id;
     $item['slide'] = $row_plugin->render($row);
     
+    // @todo rethink how to add alt/title tags to image fields. It's possible
+    // to have multiple image fields per slide, the alt/title tags to include
+    // on image fields should be tied to each field, not to the style plugin.
     /*
     if (isset($options['caption_field']) && !empty($options['caption_field'])) {
       $data = $view->style_plugin->rendered_fields[$id][$options['caption_field']];
