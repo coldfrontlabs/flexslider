@@ -22,7 +22,6 @@ function theme_views_view_flexslider($vars) {
   $row_plugin = $view->style_plugin->row_plugin;
 
   foreach ($vars['rows'] as $id => $row) {
-    dpm($row);
     // Render the row into a slide
     $view->row_index = $id;
     $item['slide'] = $row_plugin->render($row);
