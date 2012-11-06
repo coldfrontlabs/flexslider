@@ -9,12 +9,12 @@
  */
 function flexslider_form_optionset_add_submit($form, &$form_state) {
   $optionset = flexslider_optionset_create(array('name' => $form_state['values']['name'], 'title' => $form_state['values']['title']));
-  
+
   $saved = flexslider_optionset_save($optionset, TRUE);
 
   if ($saved) {
     drupal_set_message(t('Option set %name was created.', array('%name' => $optionset->name)));
-    $form_state['redirect'] = 'admin/config/media/flexslider/edit/' . $optionset->name;    
+    $form_state['redirect'] = 'admin/config/media/flexslider/edit/' . $optionset->name;
   }
   else {
     drupal_set_message(t('Failed to create option set. Please verify your settings.'), 'error');
@@ -31,7 +31,7 @@ function flexslider_form_optionset_add_submit($form, &$form_state) {
  */
 function flexslider_option_elements($options = array()) {
   $form = array();
-  
+
   // General Slideshow and Animiation Settings
   $form['animation_slideshow'] = array(
     '#type' => 'fieldset',
@@ -49,7 +49,7 @@ function flexslider_option_elements($options = array()) {
     '#default_value' => isset($options['animation']) ? $options['animation'] : _flexslider_optionset_defaults('animation'),
     // @todo add states to enable/disable the direction
   );
-  
+
   $form['animation_slideshow']['animationSpeed'] = array(
     '#type' => 'textfield',
     '#title' => t('Animation Speed'),
@@ -58,7 +58,7 @@ function flexslider_option_elements($options = array()) {
     '#default_value' => isset($options['animationSpeed']) ? $options['animationSpeed'] : _flexslider_optionset_defaults('animationSpeed'),
     '#size' => 30,
   );
-  
+
   $form['animation_slideshow']['direction'] = array(
     '#type' => 'select',
     '#title' => t('Slide Direction'),
@@ -88,14 +88,14 @@ function flexslider_option_elements($options = array()) {
     ), // @todo load list of options based on jquery easing plugin
     '#default_value' => isset($options['easing']) ? $options['easing'] : _flexslider_optionset_defaults('easing'),
   );
-  
+
   $form['animation_slideshow']['smoothHeight'] = array(
     '#type' => 'checkbox',
     '#title' => t('Smooth Height'),
     '#description' => t('Animate the height of the slider smoothly for slides of varying height.'),
     '#default_value' => isset($options['smoothHeight']) ? $options['smoothHeight'] : _flexslider_optionset_defaults('smoothHeight'),
-  );  
-  
+  );
+
   $form['animation_slideshow']['reverse'] = array(
     '#type' => 'checkbox',
     '#title' => t('Reverse'),
@@ -134,7 +134,7 @@ function flexslider_option_elements($options = array()) {
     '#size' => 30,
     // @todo add states to disable if randomize is set
   );
-  
+
   $form['animation_slideshow']['itemWidth'] = array(
     '#type' => 'textfield',
     '#title' => t('Item Width'),
@@ -166,7 +166,7 @@ function flexslider_option_elements($options = array()) {
     '#size' => 40,
     '#maxlength' => 255,
     '#default_value' => isset($options['maxItems']) ? $options['maxItems'] : _flexslider_optionset_defaults('maxItems'),
-  );  
+  );
   $form['animation_slideshow']['move'] = array(
     '#type' => 'textfield',
     '#title' => t('Move'),
@@ -175,7 +175,7 @@ function flexslider_option_elements($options = array()) {
     '#maxlength' => 255,
     '#default_value' => isset($options['move']) ? $options['move'] : _flexslider_optionset_defaults('move'),
   );
-  
+
   // Navigation and Control Settings
   $form['nav_controls'] = array(
     '#type' => 'fieldset',
@@ -240,7 +240,7 @@ function flexslider_option_elements($options = array()) {
   $form['advanced'] = array(
     '#type' => 'fieldset',
     '#title' => t('Advanced Options'),
-  );  
+  );
   $form['advanced']['namespace'] = array(
     '#type' => 'textfield',
     '#title' => t('Namespace'),
@@ -275,7 +275,7 @@ function flexslider_option_elements($options = array()) {
     '#maxlength' => 255,
     '#default_value' => isset($options['asNavFor']) ? $options['asNavFor'] : _flexslider_optionset_defaults('asNavFor'),
   );
-  
+
   $form['advanced']['initDelay'] =  array(
     '#type' => 'textfield',
     '#title' => t('Initialize Delay'),
@@ -296,7 +296,7 @@ function flexslider_option_elements($options = array()) {
     '#title' => t('Video'),
     '#description' => t('Will prevent use of CSS3 3D Transforms, avoiding graphical glitches.'),
     '#default_value' => isset($options['video']) ? $options['video'] : _flexslider_optionset_defaults('video'),
-  );  
+  );
   $form['advanced']['pausePlay'] = array(
     '#type' => 'checkbox',
     '#title' => t('Add Pause/Play Indicator'),
@@ -350,7 +350,7 @@ function flexslider_option_elements($options = array()) {
     '#description' => t('Fires when the slider loads the first slide.'),
     '#cols' => 60,
     '#rows' => 5,
-    '#default_value' => isset($options['start']) ? $options['start'] : _flexslider_optionset_defaults('start'),    
+    '#default_value' => isset($options['start']) ? $options['start'] : _flexslider_optionset_defaults('start'),
   );
   $form['advanced']['before'] = array(
     '#type' => 'textarea',
@@ -394,7 +394,7 @@ function flexslider_option_elements($options = array()) {
 /**
  * Form builder; Form to edit a given option set.
  */
-function flexslider_form_optionset_edit($form, &$form_state) { 
+function flexslider_form_optionset_edit($form, &$form_state) {
 
   if (empty($form_state['optionset'])) {
     $optionset = flexslider_optionset_create();
@@ -533,7 +533,7 @@ function flexslider_form_settings() {
     '#default_value' => variable_get('flexslider_debug', FALSE),
     '#access' => user_access('administer flexslider'),
   );
-  
+
   return system_settings_form($form);
 }
 

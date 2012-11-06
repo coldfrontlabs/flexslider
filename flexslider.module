@@ -334,7 +334,7 @@ function flexslider_add($id = NULL, $optionset = NULL) {
       return;
     }
   }
-  
+
   // Static array to remember which scripts are already attached.
   // @todo not currently in use
   $cache = &drupal_static(__FUNCTION__, array());
@@ -373,7 +373,7 @@ function flexslider_add($id = NULL, $optionset = NULL) {
 function _flexslider_optionset_defaults($key = NULL) {
 
   // We add typecasts to ensure the variables get json encoded properly
-  
+
   $defaults = array(
     // v2.x options
     'namespace' => 'flex-',

@@ -4,7 +4,7 @@
  * @file
  * API documentation for FlexSlider
  */
- 
+
 /**
  * By design, FlexSlider should be entirely configurable from the web interface.
  * However some implementations may require to access the FlexSlider library

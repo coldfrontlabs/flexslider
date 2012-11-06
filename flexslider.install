@@ -154,9 +154,9 @@ function flexslider_update_7002(&$sandbox) {
  */
 function flexslider_update_7200(&$sandbox) {
   $t = get_t();
-  
+
   $optionsets = flexslider_optionset_load_all();
-  
+
   foreach ($optionsets as $optionset) {
     // Map old options to new keys/values
     $optionset->options['animationSpeed'] = $optionset->options['animationDuration'];
@@ -167,7 +167,7 @@ function flexslider_update_7200(&$sandbox) {
     $optionset->options['before'] = $optionset->options['beforeCallback'];
     $optionset->options['after'] = $optionset->options['afterCallback'];
     $optionset->options['end'] = $optionset->options['endCallback'];
-    
+
     // Delete any options which no longer exist
     unset($optionset->options['animationDuration']);
     unset($optionset->options['slidedirection']);
@@ -177,10 +177,10 @@ function flexslider_update_7200(&$sandbox) {
     unset($optionset->options['afterCallback']);
     unset($optionset->options['endCallback']);
     unset($optionset->options['controlsContainer']); // This value changed in the new version. We have to reset it to the default value
-    
+
     // Merge in defaults for new options
     $optionset->options += _flexslider_optionset_defaults();
-    
+
     // Save the updated optionset
     flexslider_optionset_save($optionset);
   }
@@ -196,7 +196,7 @@ function flexslider_update_7201(&$sandbox) {
     'default' => 'flexslider_thumbnail',
   );
   // Change the default image style
-  db_add_field('flexslider_optionset', 'imagestyle_thumbnail', $field_new, array());  
+  db_add_field('flexslider_optionset', 'imagestyle_thumbnail', $field_new, array());
 }
 
 /**
