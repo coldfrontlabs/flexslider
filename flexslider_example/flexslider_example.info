@@ -5,6 +5,7 @@ package = FlexSlider
 php = 5.2.4
 dependencies[] = features
 dependencies[] = flexslider
+dependencies[] = flexslider_fields
 dependencies[] = image
 dependencies[] = views
 features[ctools][] = views:views_default:3.0

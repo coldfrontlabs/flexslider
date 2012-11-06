@@ -14,7 +14,7 @@ function flexslider_example_field_default_fields() {
   $fields['node-flexslider_example-field_flexslider_example_image'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '1',
+      'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_flexslider_example_image',
@@ -47,12 +47,12 @@ function flexslider_example_field_default_fields() {
       'display' => array(
         'default' => array(
           'label' => 'hidden',
-          'module' => 'image',
+          'module' => 'flexslider_fields',
           'settings' => array(
-            'image_link' => '',
-            'image_style' => '',
+            'flexslider_reference_img_src' => NULL,
+            'optionset' => 'default',
           ),
-          'type' => 'image',
+          'type' => 'flexslider',
           'weight' => '0',
         ),
         'teaser' => array(
