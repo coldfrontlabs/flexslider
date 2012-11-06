@@ -82,7 +82,7 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
   }
   
   // Load the FlexSlider library for use
-  flexslider_add();
+  drupal_add_library('flexslider', 'flexslider');
 
   // Create the settings container
   // Due to a limitation inside of views_slideshow, the ID for the settings container
