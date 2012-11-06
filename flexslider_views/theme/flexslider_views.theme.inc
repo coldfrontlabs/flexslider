@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Describe the file
+ * Theme functions for FlexSlider Views integration
  *
  * @author Mathew Winstone <mwinstone@coldfrontlabs.ca>
  */
