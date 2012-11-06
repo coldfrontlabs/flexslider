@@ -43,6 +43,8 @@ function flexslider_example_views_default_views() {
     'image_style' => 'flexslider_full',
     'image_link' => '',
   );
+  $handler->display->display_options['fields']['field_flexslider_example_image']['group_rows'] = FALSE;
+  $handler->display->display_options['fields']['field_flexslider_example_image']['delta_offset'] = '0';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -67,6 +69,10 @@ function flexslider_example_views_default_views() {
   $handler = $view->new_display('page', 'Page', 'page');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['path'] = 'flexslider-views-example';
+
+  /* Display: Block */
+  $handler = $view->new_display('block', 'Block', 'block_1');
+  $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $export['flexslider_views_example'] = $view;
 
   $view = new view();
@@ -131,6 +137,8 @@ function flexslider_example_views_default_views() {
     'image_style' => 'flexslider_full',
     'image_link' => '',
   );
+  $handler->display->display_options['fields']['field_flexslider_example_image']['group_rows'] = FALSE;
+  $handler->display->display_options['fields']['field_flexslider_example_image']['delta_offset'] = '0';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
