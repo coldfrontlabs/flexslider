@@ -116,7 +116,7 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
 }
 
 /**
- * FlexSlider Views theme for the row element
+ * FlexSlider Views Slideshow theme for the row element
  *
  * @ingroup themeable
  */
@@ -138,7 +138,7 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
 }
 
 /**
- * FlexSlider Views theme for an item within a row
+ * FlexSlider Views Slideshow theme for an item within a row
  *
  * @ingroup themeable
  */

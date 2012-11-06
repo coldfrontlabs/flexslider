@@ -26,31 +26,52 @@
         settings.loaded = false;
 
         // Assign default settings
+		// @todo update the list of options to match the new set
         settings.opts = {
+          // v2.x options
+          namespace:settings.namespace,
+          selector:settings.selector,
+          easing:settings.easing,
+          direction:settings.direction,
+          reverse:settings.reverse,
+          smoothHeight:settings.smoothHeight,
+          startAt:settings.startAt,
+          animationSpeed:settings.animationSpeed,
+          initDelay:settings.initDelay,
+          useCSS:settings.useCSS,
+          touch:settings.touch,
+          video:settings.video,
+          keyboard:settings.keyboard,
+          multipleKeyboard:settings.multipleKeyboard,
+          mousewheel:settings.mousewheel,
+          controlsContainer:settings.controlsContainer,
+          sync:settings.sync,
+          asNavFor:settings.asNavFor,
+          itemWidth:settings.itemWidth,
+          itemMargin:settings.itemMargin,
+          minItems:settings.minItems,
+          maxItems:settings.maxItems,
+          move:settings.move,
+          // v1.x options
           animation:settings.animation,
-          slideDirection:settings.slideDirection,
           slideshow:settings.slideshow,
           slideshowSpeed:settings.slideshowSpeed,
-          animationDuration:settings.animationDuration,
           directionNav:settings.directionNav,
           controlNav:settings.controlNav,
-          keyboardNav:settings.keyboardNav,
-          mousewheel:settings.mousewheel,
           prevText:settings.prevText,
           nextText:settings.nextText,
           pausePlay:settings.pausePlay,
           pauseText:settings.pauseText,
           playText:settings.playText,
           randomize:settings.randomize,
-          slideToStart:settings.slideToStart,
           animationLoop:settings.animationLoop,
           pauseOnAction:settings.pauseOnAction,
           pauseOnHover:settings.pauseOnHover,
-          controlsContainer:settings.controlsContainer,
           manualControls:settings.manualControls,
           start: function(slider) {
             flexslider_views_slideshow_register(fullId, slider);
           }
+          // @todo register other callbacks
         };
 
         Drupal.flexsliderViewsSlideshow.load(fullId);
