@@ -15,7 +15,7 @@ function flexslider_library() {
   // included with the module.
   $library_path = libraries_get_path('flexslider');
   $library_fullpath = $_SERVER['DOCUMENT_ROOT'] . base_path() . $library_path;
-  if (empty($library_path) || !file_prepare_directory($library_fullpath)) {
+  if (empty($library_path)) {
     $library_path = $path . '/libraries/flexslider';
   }
 
