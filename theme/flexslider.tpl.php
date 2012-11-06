@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Default output for a Flex Slider node.
+ * Default output for a FlexSlider node.
 */
 ?>
 <div <?php print drupal_attributes($settings['attributes'])?>">

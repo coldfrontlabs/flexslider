@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Template for the Flex Slider row item
+ * Template for the FlexSlider row item
  *
  * @author Mathew Winstone (minorOffense) <mwinstone@coldfrontlabs.ca>
  */
