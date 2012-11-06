@@ -172,7 +172,7 @@ function flexslider_example_generate_content() {
     $node->comment = 0;
     
     $node->field_flexslider_example_image[LANGUAGE_NONE][] = array(
-      'fid' = $file_temp->fid,
+      'fid' => $file_temp->fid,
       'filename' => $file_temp->filename,
       'filemime' => $file_temp->filemime,
       'uid' => 1,
