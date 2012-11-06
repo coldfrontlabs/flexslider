@@ -13,3 +13,4 @@ features[features_api][] = api:1
 features[field][] = node-flexslider_example-field_flexslider_example_image
 features[node][] = flexslider_example
 features[views_view][] = flexslider_views_example
+features[views_view][] = flexslider_views_slideshow_example
