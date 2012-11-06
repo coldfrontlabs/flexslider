@@ -1,12 +1,14 @@
 name = FlexSlider Example
 description = Sample implementation of FlexSlider
 core = 7.x
-
+package = FlexSlider
+php = 5.2.4
+dependencies[] = features
 dependencies[] = flexslider
 dependencies[] = image
-dependencies[] = node
-dependencies[] = features
-
+dependencies[] = views
+features[ctools][] = views:views_default:3.0
 features[features_api][] = api:1
 features[field][] = node-flexslider_example-field_flexslider_example_image
 features[node][] = flexslider_example
+features[views_view][] = flexslider_views_example
