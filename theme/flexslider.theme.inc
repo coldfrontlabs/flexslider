@@ -124,20 +124,6 @@ function template_preprocess_flexslider(&$vars) {
   // Add the attributes to the settings array.
   $settings['attributes'] = $attributes;
 
-  // Prepare slide elements
-  // @todo detect the image style here or leave it to the list_item template?
-  // @todo make this non-image specific
-  /*$items = $vars['items'];
-  $vars['items'] = array();
-  $thumb_style = empty($optionset->imagestyle_thumb) ? 'flexslider_thumb' : $optionset->imagestyle_thumb;
-  foreach ($items as $delta => $item) {
-    $vars['items'][$delta] = array(
-      '#theme' => 'image_formatter',
-      '#item' => $item,
-      '#image_style' => $optionset->imagestyle_normal,
-    );
-  }*/
-
   // Finally, add the FlexSlider library
   flexslider_add($settings['attributes']['id'], $optionset);
 }

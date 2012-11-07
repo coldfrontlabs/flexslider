@@ -6,7 +6,7 @@
  */
 
 /**
- * Implementation of hook_flexslider_default_presets()
+ * Implements hook_flexslider_default_presets()
  */
 function flexslider_flexslider_default_presets() {
   $presets = array();
