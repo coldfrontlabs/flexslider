@@ -17,7 +17,7 @@ function theme_flexslider_list(&$vars) {
   $attributes = &$vars['settings']['attributes'];
   $type = &$vars['settings']['type'];
   $output = '';
-  
+
   // Build the list
   if (!empty($items)) {
     $output .= "<$type" . drupal_attributes($attributes) . '>';
@@ -27,7 +27,7 @@ function theme_flexslider_list(&$vars) {
       // @todo need to allow for different types of field and collection fields
       if (!isset($item['slide'])) {
         $image_options = array(
-          'style_name' => $optionset->imagestyle_normal, 
+          'style_name' => $optionset->imagestyle_normal,
           'path'       => $item['uri'],
           'height'     => $item['height'],
           'width'      => $item['width'],
@@ -43,7 +43,7 @@ function theme_flexslider_list(&$vars) {
     }
     $output .= "</$type>";
   }
-  
+
   return $output;
 }
 
@@ -52,9 +52,9 @@ function theme_flexslider_list(&$vars) {
  */
 function theme_flexslider_list_item(&$vars) {
   // Reference configuration variables
-  $item = &$vars['item'];  
+  $item = &$vars['item'];
   $attributes = &$vars['settings']['attributes'];
-  
+
   if ($vars['optionset']->options['controlNav'] === "thumbnails" &&
       isset($vars['thumb'])
   ) {
@@ -71,7 +71,7 @@ function theme_flexslider_list_item(&$vars) {
  * Template preprocess handler for 'flexslider' theme.
  */
 function template_preprocess_flexslider(&$vars) {
-  
+
   // Reference configuration variables
   $optionset = &$vars['settings']['optionset'];
   $settings = &$vars['settings'];
@@ -85,14 +85,14 @@ function template_preprocess_flexslider(&$vars) {
   if (!empty($optionset)) {
     $optionset = flexslider_optionset_load($optionset);
   }
-    
+
   // Check if an optionset was loaded
   if (empty($optionset)) {
     // Fall back to 'default' option set
     $optionset = flexslider_optionset_load('default');
     watchdog('flexslider', 'Fallback to default optionset.', array(), WATCHDOG_WARNING);
   }
-  
+
 
 
   // Configure attributes for containing elements
@@ -110,7 +110,7 @@ function template_preprocess_flexslider(&$vars) {
   $attributes['class'][] = 'flexslider';
 
   // Add the namespace to any classes
-  if (!empty($attributes['class']) && 
+  if (!empty($attributes['class']) &&
       !empty($optionset->options['namespace'])
   ) {
     foreach ($attributes['class'] as $key => $value) {
@@ -137,7 +137,7 @@ function template_preprocess_flexslider(&$vars) {
       '#image_style' => $optionset->imagestyle_normal,
     );
   }*/
-  
+
   // Finally, add the FlexSlider library
   flexslider_add($settings['attributes']['id'], $optionset);
 }
@@ -162,7 +162,7 @@ function template_preprocess_flexslider_list_item(&$vars) {
   // Reset the list of attributes
   $vars['settings']['attributes'] = array();
   //dpm($vars);
-  
+
   //$vars['item'] = implode('', $vars['item']);
   // @todo add attributes for thumbnails
 }

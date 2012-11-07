@@ -68,7 +68,7 @@ function flexslider_views_slideshow_views_slideshow_slideshow_type_form(&$form, 
     foreach ($optionsets as $key => $optionset) {
       $options[$key] = $optionset->title;
     }
-    
+
     // Add a select field
     $form['flexslider_views_slideshow']['optionset'] = array(
       '#type' => 'select',
@@ -93,7 +93,7 @@ function flexslider_views_slideshow_views_slideshow_slideshow_type_form(&$form, 
       '#options' => $link_options,
       '#default_value' => $view->options['flexslider_views_slideshow']['caption_field'],
     );
-    
+
 }
 
 function flexslider_views_slideshow_views_slideshow_slideshow_type_form_validate(&$form, &$form_state, &$view) {

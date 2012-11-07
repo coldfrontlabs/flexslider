@@ -9,8 +9,8 @@
 
 
 /**
-* Define this Export UI plugin.
-*/
+ * Define this Export UI plugin.
+ */
 $plugin = array(
   'schema' => 'flexslider_optionset',  // As defined in hook_schema().
   'access' => 'administer flexslider',  // Define a permission users must have to access these pages.

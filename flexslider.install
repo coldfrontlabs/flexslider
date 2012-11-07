@@ -76,18 +76,7 @@ function flexslider_schema() {
  * Adds a 'default' option set for fresh installs.
  */
 function flexslider_install() {
-/*
-  $optionset = array(
-    'name' => 'default',
-    'title' => 'Default',
-    'options' => array(
-      'height' => 300,
-      'width' => 450,
-    ),
-  );
-
-  flexslider_optionset_save($optionset, TRUE);
-*/
+  // Do nothing for now
 }
 
 /**

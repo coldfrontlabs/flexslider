@@ -341,53 +341,6 @@ function flexslider_option_elements($options = array()) {
     '#default_value' => isset($options['manualControls']) ? $options['manualControls'] : _flexslider_optionset_defaults('manualControls'),
   );
 
-// @todo temporarily removed until we can figure out a proper default "emtpy"
-// value that doesn't cause a function not found error in the browser
-/*
-  $form['advanced']['start'] = array(
-    '#type' => 'textarea',
-    '#title' => t('Start Function Callback'),
-    '#description' => t('Fires when the slider loads the first slide.'),
-    '#cols' => 60,
-    '#rows' => 5,
-    '#default_value' => isset($options['start']) ? $options['start'] : _flexslider_optionset_defaults('start'),
-  );
-  $form['advanced']['before'] = array(
-    '#type' => 'textarea',
-    '#title' => t('Start Function Callback'),
-    '#description' => t('Fires when the slider loads the first slide.'),
-    '#cols' => 60,
-    '#rows' => 5,
-  );
-  $form['advanced']['after'] = array(
-    '#type' => 'textarea',
-    '#title' => t('Start Function Callback'),
-    '#description' => t('Fires when the slider loads the first slide.'),
-    '#cols' => 60,
-    '#rows' => 5,
-  );
-  $form['advanced']['end'] = array(
-    '#type' => 'textarea',
-    '#title' => t('Start Function Callback'),
-    '#description' => t('Fires when the slider loads the first slide.'),
-    '#cols' => 60,
-    '#rows' => 5,
-  );
-  $form['advanced']['added'] = array(
-    '#type' => 'textarea',
-    '#title' => t('Start Function Callback'),
-    '#description' => t('Fires when the slider loads the first slide.'),
-    '#cols' => 60,
-    '#rows' => 5,
-  );
-  $form['advanced']['removed'] = array(
-    '#type' => 'textarea',
-    '#title' => t('Start Function Callback'),
-    '#description' => t('Fires when the slider loads the first slide.'),
-    '#cols' => 60,
-    '#rows' => 5,
-  );
-*/
   return $form;
 }
 
@@ -549,12 +502,12 @@ function flexslider_form_settings_submit($form, &$form_state) {
  */
 function _flexslider_validate_namespace($element, &$form_state) {
   // @todo
-  // @see form_error().
+  // @see form_error()
   return TRUE;
 }
 
 function _flexslider_validate_selector($element, &$form_state) {
   // @todo
-  // @see form_error().
+  // @see form_error()
   return TRUE;
 }

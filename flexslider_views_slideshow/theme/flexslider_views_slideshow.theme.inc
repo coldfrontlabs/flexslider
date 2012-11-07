@@ -38,10 +38,10 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
       if (is_numeric($value)) {
         $value = (int)$value;
       }
-      elseif (strtolower($value) == 'true') {
+      elseif (drupal_strtolower($value) == 'true') {
         $value = TRUE;
       }
-      elseif (strtolower($value) == 'false') {
+      elseif (drupal_strtolower($value) == 'false') {
         $value = FALSE;
       }
     }
@@ -88,7 +88,7 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
   // Due to a limitation inside of views_slideshow, the ID for the settings container
   // must end with _main
   //
-  // @see lines 162 through 169 in views_slideshow.theme.inc
+  // see lines 162 through 169 in views_slideshow.theme.inc
   drupal_add_js(array('flexslider_views_slideshow' => array('#flexslider_views_slideshow_main_' . $vss_id => $settings)), 'setting');
 
   // Load the initilization javascript

@@ -25,7 +25,7 @@ function theme_views_view_flexslider($vars) {
     // Render the row into a slide
     $view->row_index = $id;
     $item['slide'] = $row_plugin->render($row);
-    
+
     // @todo rethink how to add alt/title tags to image fields. It's possible
     // to have multiple image fields per slide, the alt/title tags to include
     // on image fields should be tied to each field, not to the style plugin.
