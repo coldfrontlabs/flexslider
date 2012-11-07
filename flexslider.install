@@ -228,12 +228,14 @@ function _flexslider_requirements_library_installed(&$requirements) {
       $requirements['flexslider']['severity'] = REQUIREMENT_WARNING;
       $requirements['flexslider']['value'] = $t('Incorrect version detected.');
       return;
-    } else {
+    }
+    else {
       $requirements['flexslider']['description'] = $t('Version %version installed', array( '%version' => $matches[1] . "." . $matches[2]));
       $requirements['flexslider']['value'] = $t('FlexSlider library installed.');
       return;
     }
-  } else {
+  }
+  else {
     $requirements['flexslider']['description'] = $t('FlexSlider version could not be determined.  Please consult the README.txt for installation instructions.');
     $requirements['flexslider']['severity'] = REQUIREMENT_WARNING;
     $requirements['flexslider']['value'] = $t('Unable to detect version.');

@@ -47,7 +47,8 @@ function theme_views_view_flexslider($vars) {
     // If an image field is set, use it to set a slide thumbnail
     if (isset($row->_field_data[$view->base_field]['entity']->{$img_field_name})) {
       $item['thumb'] = image_style_url($optionset->imagestyle_thumbnail, $row->{$img_field_field_name}[0]['raw']['uri']);
-    } else {
+    }
+    else {
       $item['thumb'] = '';
     }
 
