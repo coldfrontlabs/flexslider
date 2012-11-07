@@ -25,7 +25,7 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
   $settings = flexslider_optionset_load($settings['optionset']);
   $settings = $settings->options;
 
-  
+
   // Cast the strings into int or bool as necessary
   $new_settings = array();
   foreach ($settings as $key => $value) {
@@ -33,7 +33,7 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
 
       $value = str_ireplace("\n", ' ', $value);
       $value = trim($value);
-      
+
       // Check for numbers and/or boolean values
       if (is_numeric($value)) {
         $value = (int)$value;
@@ -45,7 +45,7 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
         $value = FALSE;
       }
     }
-    
+
     $new_settings[$key] = $value;
   }
 
@@ -60,7 +60,7 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
     ),
     $new_settings
   );
-  
+
   // We need to go through the current js setting values to make sure the one we
   // want to add is not already there. If it is already there then append -[num]
   // to the id to make it unique.
@@ -74,13 +74,13 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
       }
     }
   }
-  
+
   // Append the new unique IDs if required
   if ($slideshow_count > 1) {
     $vss_id .= '-' . $slideshow_count;
     $settings['vss_id'] = $vss_id;
   }
-  
+
   // Load the FlexSlider library for use
   drupal_add_library('flexslider', 'flexslider');
 
@@ -100,7 +100,7 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
   // Render the rows
   $rendered_rows = '';
   $slideshow_count = 0;
-  foreach($rows as $count => $row) {
+  foreach ($rows as $count => $row) {
     $items[] = $row;
     // @todo see if we can group multiple items per slide
     $rendered_rows .= theme('flexslider_views_slideshow_main_frame_row', array('vss_id' => $vss_id, 'items' => $items, 'count' => $count, 'view' => $view));

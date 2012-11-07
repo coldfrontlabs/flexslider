@@ -107,7 +107,7 @@ function flexslider_help($path, $arg) {
       return
           '<p>'
         . t('An <em>option set</em> defines exactly how a flexslider image gallery looks like on your site. '
-          . 'It is s a combination of <a href="@styles">image styles</a> for the various image sizes and FlexSlider library options.', array('@styles' => url('admin/config/media/image-styles'))). '<br />'
+          . 'It is s a combination of <a href="@styles">image styles</a> for the various image sizes and FlexSlider library options.', array('@styles' => url('admin/config/media/image-styles'))) . '<br />'
         . t('For a full documentation of all options, refer to the official @docs.', array('@docs' => l(t('FlexSlider documentation'), 'http://www.woothemes.com/flexslider/')))
         . '</p>';
   }
@@ -454,7 +454,7 @@ function _flexslider_optionset_defaults($key = NULL) {
 function _flexslider_typecast_optionset(&$options) {
   if (isset($options) && !empty($options)) {
     foreach ($options as $key => $value) {
-      switch($key) {
+      switch ($key) {
         case 'namespace':
         case 'selector':
         case 'easing':

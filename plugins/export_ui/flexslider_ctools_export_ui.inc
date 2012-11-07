@@ -72,7 +72,7 @@ function flexslider_ctools_export_ui_form_submit(&$form, &$form_state) {
   $optionset->options = _flexslider_optionset_defaults();
 
   // Save all the values for the optionset
-  foreach($optionset->options as $key => $value) {
+  foreach ($optionset->options as $key => $value) {
     if (array_key_exists($key, $form_state['values'])) {
       $optionset->options[$key] = $form_state['values'][$key];
     }

@@ -145,14 +145,14 @@ class FlexsliderTestCase extends DrupalWebTestCase {
     // Attempt to save each option value
     $options = _flexslider_test_options();
 
-    foreach($options['valid'] as $testset) {
+    foreach ($options['valid'] as $testset) {
       $this->drupalPost('admin/config/media/flexslider/list/default/edit', $testset, t('Save'));
       $this->assertResponse(200);
 
       // Test saved values loaded into form
       $this->drupalGet('admin/config/media/flexslider/list/default/edit');
       $this->assertResponse(200, t('Default optionset reloaded.'));
-      foreach($testset as $key => $option) {
+      foreach ($testset as $key => $option) {
         $this->assertFieldByName($key, $option, t('Value for @key appears in form correctly.', array('@key' => $key)));
       }
     }
