@@ -46,7 +46,6 @@ function flexslider_views_slideshow_views_slideshow_option_definition() {
   $options['flexslider_views_slideshow'] = array(
     'contains' => array(
       'optionset' => array('default' => 'default'),
-      'caption_field' => array('none' => 'None'),
     ),
   );
   // @todo figure out which options to define
@@ -78,22 +77,6 @@ function flexslider_views_slideshow_views_slideshow_slideshow_type_form(&$form, 
       '#options' => $options,
       '#default_value' => $view->options['flexslider_views_slideshow']['optionset'],
     );
-
-    $link_options = array('none' => t('None'));
-
-    foreach ($view->display->handler->get_handlers('field') as $field => $handler) {
-      $link_options[$field] = $handler->ui_name();
-    }
-
-    $form['flexslider_views_slideshow']['caption_field'] = array(
-      '#type' => 'select',
-      '#title' => t('Caption Field'),
-      '#multiple' => FALSE,
-      '#description' => t('Select a field to be used as an image caption.'),
-      '#options' => $link_options,
-      '#default_value' => $view->options['flexslider_views_slideshow']['caption_field'],
-    );
-
 }
 
 function flexslider_views_slideshow_views_slideshow_slideshow_type_form_validate(&$form, &$form_state, &$view) {
