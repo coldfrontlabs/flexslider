@@ -26,7 +26,8 @@ function flexslider_views_slideshow_theme($existing, $type, $theme, $path) {
     'flexslider_views_slideshow' => array(
       'variables' => array('view' => NULL, 'settings' => array(), 'rows' => array(), 'title' => ''),
       'template' => 'theme/flexslider-views-slideshow',
-      'file' => 'theme/flexslider_views_slideshow.theme.inc'
+      'file' => 'theme/flexslider_views_slideshow.theme.inc',
+      'pattern' => 'flexslider_views_slideshow__',
     ),
     'flexslider_views_slideshow_main_frame' => array(
       'variables' => array('vss_id' => NULL, 'view' => NULL, 'settings' => NULL, 'rows' => NULL),

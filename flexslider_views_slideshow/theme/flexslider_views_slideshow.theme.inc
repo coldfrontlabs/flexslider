@@ -13,6 +13,8 @@
  * @ingroup themeable
  */
 function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_frame(&$vars) {
+  // @todo see if we can get this to call theme('flexslider') instead.
+//  return 
   // Load the settings, row information, view data and views slideshow ID into
   // more conveniently named variables.
   $settings = $vars['settings'];

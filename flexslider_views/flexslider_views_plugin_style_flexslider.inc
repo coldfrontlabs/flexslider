@@ -76,10 +76,10 @@ class flexslider_views_plugin_style_flexslider extends views_plugin_style {
    * Performs some cleanup tasks on the options array before saving it.
    */
   function options_submit(&$form, &$form_state) {
-    $options = &$form_state['values']['style_options'];
+    $options =& $form_state['values']['style_options'];
 
     // Pull the fieldset values one level up
-    $options += $options['flexslider'];
+    $options = $options['flexslider'];
     unset($options['flexslider']);
   }
 

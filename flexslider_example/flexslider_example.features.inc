@@ -5,6 +5,16 @@
  */
 
 /**
+ * Implements hook_ctools_plugin_api().
+ */
+function flexslider_example_ctools_plugin_api() {
+  list($module, $api) = func_get_args();
+  if ($module == "flexslider" && $api == "flexslider_default_preset") {
+    return array("version" => "1");
+  }
+}
+
+/**
  * Implements hook_views_api().
  */
 function flexslider_example_views_api() {
