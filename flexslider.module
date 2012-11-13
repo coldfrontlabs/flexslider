@@ -22,7 +22,7 @@ function flexslider_library() {
   $libraries['flexslider'] = array(
     'title' => 'FlexSlider',
     'website' => 'http://flexslider.woothemes.com',
-    'version' => '2.0',
+    'version' => '2.0', // @todo make this use the detected version on install
     'js' => array(
       $library_path . '/jquery.flexslider-min.js' => array(
         'scope' => 'footer',
