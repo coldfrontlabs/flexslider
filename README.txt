@@ -52,16 +52,33 @@ You can also use Drush Make to download the library automatically. Simply copy/p
 Usage
 ======
 
-No matter how you want to use FlexSlider (with fields, views or views slideshow) you need to define "option sets" to tell FlexSlider how you want it to display. 
+Option Sets
+-----------
+
+No matter how you want to use FlexSlider (with fields, views or views slideshow) you need to define "option sets" to tell FlexSlider how you want it to display. An option set defines all the settings for displaying the slider. Things like slide direction, speed, starting slide, etc... You can define as many option sets as you like and on top of that they're all exportable! Which means you can carry configuration of your Flex Slider instances from one site to the next or create features.
 
 Go to admin/config/media/flexslider
 
-From there you can edit the default option set and define new ones. These will be listed as options in the various forms where you setup FlexSlider to display.
+From there you can edit the default option set and define new ones. These will be listed as options in the various forms where you setup FlexSlider to display.  NOTE: under advanced options, you can set a namespace prefix for the optionset.  This will allow you to build custom CSS for each optionset.  Start by copying the flexslider_img.css from the assets subfolder to your theme.  Build new custom CSS for each prefix in your optionsets.
+
+Carousels
+---------
+
+Carousels can be created with Flexslider2 by setting an Item Width for images and a Margin Width in the optionset.  Use the flexslider_thumbnail image style and set your item width to fit the desired number of images into the div space available.  NOTE: the margin width setting should correspond IN PIXELS to the margin widths set by your img CSS in your theme.  This will allow Flexslider to properly calculate the "total width" of the image+margins so that horizontal scrolling behaves properly.
+
+Flexslider Views
+----------------
+
+Flex Slider Views allows you to build views which display their results in Flex Slider. Similarly to how you can output fields as an "HTML List" or "Table", you can now select "Flex Slider" as an option.
+
+Create or edit a view and ensure it can load a content type which contain image fields. Set your display fields to include an image field. In the field settings, DO NOT SET THE FORMATTER TO FLEXSLIDER. This will attempt to put Flex Sliders inside other Flex Sliders and will just get messy. Ensure you don't include any wrapper markup, labels or container markup for the field value itself. Save your field.
+
+Next, go to "Format" in the main Views windows. Click and select "Flex Slider", then select your option set. Save your view and you should see your results displayed in Flex Slider.
 
 Debugging
 ---------
 
-You can toggle the development version of the library in the administrative settings page. This will load the unminified version of the library.
+You can toggle the development version of the library in the administrative settings page. This will load the unminified version of the library.  Uncheck this when moving to a production site to load the smaller minified version.
 
 Export API
 ==========
