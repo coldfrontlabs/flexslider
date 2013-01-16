@@ -39,7 +39,7 @@ Installation
     - jquery.flexslider-min.js
     - flexslider.css
     - jquery.flexslider.js
-4. Ensure you have a valid path similar to this one for all files
+5. Ensure you have a valid path similar to this one for all files
     - Ex: sites/all/libraries/flexslider/jquery.flexslider-min.js
 
 That's it!
