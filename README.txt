@@ -36,7 +36,8 @@ Library available at https://github.com/woothemes/FlexSlider
 Installation
 ============
 
-1. Download the FlexSlider library from https://github.com/woothemes/FlexSlider
+1. Download the FlexSlider library from https://github.com/woothemes/FlexSlider/zipball/flexslider1 (This is the 1.x version of FlexSlider)
+**N.B. Ensure you're using the 1.x version of FlexSlider. At the time of writing, the latest 1.x version is 1.8**
 2. Unzip the file and rename the folder to "flexslider" (pay attention to the case of the letters)
 3. Put the folder in a libraries directory
     - Ex: sites/all/libraries
