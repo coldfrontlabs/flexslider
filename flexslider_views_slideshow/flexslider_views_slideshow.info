@@ -1,5 +1,5 @@
 name = FlexSlider Views Slideshow
-description = NOT FUNCTIONAL - Integrate the FlexSlider library with Views Slideshow
+description = PARTIAL IMPLEMENTATION - Integrate the FlexSlider library with Views Slideshow
 core = 7.x
 package = FlexSlider
 
