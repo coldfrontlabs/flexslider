@@ -55,7 +55,7 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
   $settings = array_merge(
     array(
       'num_divs' => sizeof($rows),
-      'id_prefix' => '#flexslider_views_slideshow_main_',
+      'id_prefix' => '#flexslider-',
       //'div_prefix' => '#'
       // @todo figure out what the div prefix is used for
       'vss_id' => $vss_id,
@@ -124,12 +124,9 @@ function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_
  */
 function _flexslider_views_slideshow_preprocess_flexslider_views_slideshow_main_frame_row(&$vars) {
   $current = $vars['count'] + 1;
+  // @todo decide whether these extra classes are needed
   $vars['classes_array'][] = 'flexslider_views_slideshow_slide views-row-' . $current;
 
-  // @todo figure out why this if statement is here
-  if ($vars['count']) {
-    $vars['classes_array'][] =  'views_slideshow_cycle_hidden';
-  }
   // @todo add option to toggle views rows counters on/off
   $vars['classes_array'][] = ($vars['count'] % 2) ? 'views-row-even' : 'views-row-odd';
 
