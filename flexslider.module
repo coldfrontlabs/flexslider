@@ -5,56 +5,43 @@
  */
 
 /**
- * Implements hook_library().
- * @author minorOffense <mwinstone@coldfrontlabs.ca>
+ * Implements hook_libraries_info().
  */
-function flexslider_library() {
-  $path = drupal_get_path('module', 'flexslider');
-
-  // If the library isn't found in Drupal, fall back to a copy of the library
-  // included with the module.
-  $library_path = libraries_get_path('flexslider');
-  $library_fullpath = $_SERVER['DOCUMENT_ROOT'] . base_path() . $library_path;
-  if (empty($library_path)) {
-    $library_path = $path . '/libraries/flexslider';
-  }
-
+function flexslider_libraries_info() {
   $libraries['flexslider'] = array(
-    'title' => 'FlexSlider',
-    'website' => 'http://flexslider.woothemes.com',
-    'version' => '2.0', // @todo make this use the detected version on install
-    'js' => array(
-      $library_path . '/jquery.flexslider-min.js' => array(
-        'scope' => 'footer',
-      ),
+    'name' => 'FlexSlider',
+    'vendor url' => 'http://www.woothemes.com/flexslider/',
+    'download url' => 'https://github.com/woothemes/FlexSlider',
+    'version arguments' => array(
+      'file' => 'jquery.flexslider-min.js',
+      // jQuery FlexSlider v2.1
+      'pattern' => '/jQuery FlexSlider v(\d+\.+\d+)/',
+      'lines' => 2,
     ),
-    'css' => array(
-      $library_path . '/flexslider.css' => array(
-        'type' => 'file',
-        'media' => 'screen',
+    'files' => array(
+      'js' => array(
+        'jquery.flexslider-min.js',
       ),
-      drupal_get_path('module', 'flexslider') . '/assets/css/flexslider_img.css' => array(
-        'type' => 'file',
-        'media' => 'screen',
+      'css' => array(
+        'flexslider.css',
       ),
     ),
   );
+
   return $libraries;
 }
 
 /**
- * Implements hook_library_alter().
+ * Implements hook_libraries_info_alter().
  */
-function flexslider_library_alter(&$libraries, $module) {
+function flexslider_libraries_info_alter(&$libraries) {
   $debug = variable_get('flexslider_debug', FALSE);
   if ($debug) {
     // Switch to the unminified version of the library
-    if ($module == 'flexslider' && isset($libraries['flexslider'])) {
-        $libraries['flexslider']['js'] = array(
-          libraries_get_path('flexslider') . '/jquery.flexslider.js' => array(
-            'scope' => 'footer',
-          ),
-        );
+    if (isset($libraries['flexslider'])) {
+      $libraries['flexslider']['files']['js'] = array(
+        'jquery.flexslider.js',
+      );
     }
   }
 
@@ -339,8 +326,8 @@ function flexslider_add($id = NULL, $optionset = NULL) {
   // @todo not currently in use
   $cache = &drupal_static(__FUNCTION__, array());
 
-  // @todo investigate the best way to cache data loaded from drupal_add_library()
-  drupal_add_library('flexslider', 'flexslider');
+  // @todo investigate the best way to cache data loaded from libraries_load()
+  libraries_load('flexslider');
 
   // If the ID or optionset aren't set, it is assumed the settings will be set
   // manually via the calling module/theme
