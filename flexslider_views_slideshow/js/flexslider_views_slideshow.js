@@ -102,6 +102,7 @@
 
   // Play mapping from Views Slideshow to FlexSlider
   Drupal.flexsliderViewsSlideshow.play = function (options) {
+    console.log(Drupal.flexsliderViewsSlideshow);
     Drupal.flexsliderViewsSlideshow.active['#flexslider_views_slideshow_main_' + options.slideshowID].resume();
     Drupal.flexsliderViewsSlideshow.active['#flexslider_views_slideshow_main_' + options.slideshowID].manualPause = false;
   }
