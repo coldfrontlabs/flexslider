@@ -21,7 +21,7 @@ function flexslider_fields_field_formatter_info() {
       'field types' => array('image', 'media'),
       'settings' => array(
         'optionset' => 'default',
-        'flexslider_reference_img_src' => NULL,
+        'caption' => FALSE,
       ),
     ),
   );
@@ -45,12 +45,30 @@ function flexslider_fields_field_formatter_settings_form($field, $instance, $vie
   foreach (flexslider_optionset_load_all() as $name => $optionset) {
     $optionsets[$name] = check_plain($optionset->title);
   }
+
   $form['optionset'] = array(
     '#title' => t('Option set'),
     '#type' => 'select',
     '#options' => $optionsets,
     '#default_value' => $settings['optionset'],
   );
+
+  // If the image field doesn't have the Title field enabled, tell the user.
+  if ($instance['settings']['title_field'] == FALSE) {
+    $form['caption'] = array(
+      '#title' => t('Use image title as the caption'),
+      '#type' => 'checkbox',
+      '#disabled' => TRUE,
+      '#description' => t('You need to <a href="@url">enable the Title field</a> for this image field to be able use it as a caption.', array('@url' => url('admin/structure/types/manage/' . $instance['bundle'] . '/fields/' . $instance['field_name'], array('fragment' => 'edit-instance-settings-title-field', 'query' => array('destination' => 'admin/structure/types/manage/' . $instance['bundle'] . '/display'))))),
+    );
+  }
+  else {
+    $form['caption'] = array(
+      '#title' => t('Use image title as the caption'),
+      '#type' => 'checkbox',
+      '#default_value' => $settings['caption'],
+    );
+  }
 
   return $form;
 }
@@ -78,10 +96,6 @@ function flexslider_fields_field_formatter_settings_summary($field, $instance, $
   // Build settings summary
   $optionset = isset($optionset) ? $optionset->title : t('Default settings');
   $summary[] = t('Option set: %optionset', array('%optionset' => $optionset));
-
-  if (isset($settings['flexslider_reference_img_src'])) {
-    $summary[] = t('Image field of the referenced node: %field', array('%field' => $settings['flexslider_reference_img_src']));
-  }
 
   return implode('<br />', $summary);
 }
@@ -112,5 +126,6 @@ function flexslider_fields_field_formatter_view($entity_type, $entity, $field, $
       '#settings' => $display['settings'],
     );
   }
+
   return $element;
 }

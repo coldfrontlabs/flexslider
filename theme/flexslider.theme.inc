@@ -35,10 +35,16 @@ function theme_flexslider_list(&$vars) {
           'title'      => $item['title'],
         );
       }
+
+      $caption = '';
+      if (!empty($item['title'])) {
+        $caption = $item['title'];
+      }
       $output .= theme('flexslider_list_item', array(
         'item' => isset($item['slide']) ? $item['slide'] : theme_image_style($image_options),
         'thumb' => isset($item['thumb']) ? $item['thumb'] : image_style_url($optionset->imagestyle_thumbnail, $item['uri']),
         'optionset' => $optionset,
+        'caption' => $caption,
       ));
     }
     $output .= "</$type>";
@@ -61,8 +67,13 @@ function theme_flexslider_list_item(&$vars) {
     $attributes['data-thumb'] = $vars['thumb'];
   }
 
+  $caption = '';
+  if (!empty($vars['caption'])) {
+    $caption = '<p class="flex-caption">' . $vars['caption'] . '</p>';
+  }
+
   $output = '';
-  $output .= '<li' . drupal_attributes($attributes) . '>' . $item . "</li>\n";
+  $output .= '<li' . drupal_attributes($attributes) . '>' . $item . $caption . "</li>\n";
 
   return $output;
 }
