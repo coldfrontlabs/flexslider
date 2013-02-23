@@ -398,6 +398,8 @@ function flexslider_form_optionset_edit($form, &$form_state) {
     '#empty_option' => t('None (original image)'),
     '#options' => $image_style,
     '#default_value' => $optionset->imagestyle_thumbnail,
+    // @todo enable/disable this option based on the type of options selected
+    // Ex: Thumbnails should be enabled
   );
 
   // Options Vertical Tab Group table
