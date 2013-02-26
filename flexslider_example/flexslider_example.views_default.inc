@@ -172,6 +172,7 @@ function flexslider_example_views_default_views() {
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['hide_empty'] = TRUE;
   $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
 
@@ -198,10 +199,6 @@ function flexslider_example_views_default_views() {
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['name'] = 'menu-flexslider-example';
   $handler->display->display_options['menu']['context'] = 0;
-
-  /* Display: Block 2 */
-  $handler = $view->new_display('block', 'Block 2', 'block_2');
-  $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
 
   /* Display: Carousel with min and max ranges */
   $handler = $view->new_display('page', 'Carousel with min and max ranges', 'page_4');
@@ -244,7 +241,6 @@ function flexslider_example_views_default_views() {
     t('Thumbnail Controls'),
     t('Controls another FlexSlider instance'),
     t('Basic Carousel'),
-    t('Block 2'),
     t('Carousel with min and max ranges'),
     t('carousel with min and max ranges'),
   );
