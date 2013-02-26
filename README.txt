@@ -54,7 +54,7 @@ Usage
 Option Sets
 -----------
 
-No matter how you want to use FlexSlider (with fields, views or views slideshow) you need to define "option sets" to tell FlexSlider how you want it to display. An option set defines all the settings for displaying the slider. Things like slide direction, speed, starting slide, etc... You can define as many option sets as you like and on top of that they're all exportable! Which means you can carry configuration of your Flex Slider instances from one site to the next or create features.
+No matter how you want to use FlexSlider (with fields or views) you need to define "option sets" to tell FlexSlider how you want it to display. An option set defines all the settings for displaying the slider. Things like slide direction, speed, starting slide, etc... You can define as many option sets as you like and on top of that they're all exportable! Which means you can carry configuration of your Flex Slider instances from one site to the next or create features.
 
 Go to admin/config/media/flexslider
 
