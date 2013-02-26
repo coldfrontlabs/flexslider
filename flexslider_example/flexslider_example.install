@@ -2,13 +2,10 @@
 
 /**
  * @file
- * Describe the file
+ * Install tasks for flexslider_example
  *
  * @author Mathew Winstone <mwinstone@coldfrontlabs.ca>
  */
-
-
-// @todo add hook_uninstall to clean up generated content
 
 /**
  * Implements hook_update_N().
