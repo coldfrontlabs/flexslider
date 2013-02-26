@@ -27,8 +27,19 @@ Library available at https://github.com/woothemes/FlexSlider
 - Free to use under the MIT license
 
 
+
 Installation
 ============
+
+Dependencies
+------------
+
+- [Libraries API 2.x](http://drupal.org/project/libraries)
+- [FlexSlider Library](https://github.com/woothemes/FlexSlider)
+
+
+Tasks
+-----
 
 1. Download the FlexSlider library from https://github.com/woothemes/FlexSlider
 2. Unzip the file and rename the folder to "flexslider" (pay attention to the case of the letters)
