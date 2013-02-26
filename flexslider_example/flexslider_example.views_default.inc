@@ -100,7 +100,7 @@ function flexslider_example_views_default_views() {
   $handler->display->display_options['fields']['title']['element_default_classes'] = FALSE;
   $handler->display->display_options['path'] = 'flexslider-views-example';
   $handler->display->display_options['menu']['type'] = 'normal';
-  $handler->display->display_options['menu']['title'] = 'FlexSlider Views Basic Slider';
+  $handler->display->display_options['menu']['title'] = 'Basic Slider (Views)';
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['name'] = 'menu-flexslider-example';
   $handler->display->display_options['menu']['context'] = 0;
@@ -135,7 +135,7 @@ function flexslider_example_views_default_views() {
   $handler->display->display_options['fields']['field_flexslider_example_image']['delta_offset'] = '0';
   $handler->display->display_options['path'] = 'flexslider-views-example-with-thumbnail-controls';
   $handler->display->display_options['menu']['type'] = 'normal';
-  $handler->display->display_options['menu']['title'] = 'FlexSlider Views with Thumbnail Controls';
+  $handler->display->display_options['menu']['title'] = 'slider w/thumbnail controlnav pattern (Views)';
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['name'] = 'menu-flexslider-example';
   $handler->display->display_options['menu']['context'] = 0;
@@ -156,7 +156,7 @@ function flexslider_example_views_default_views() {
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['path'] = 'flexslider-views-example-with-thumbnail-slider';
   $handler->display->display_options['menu']['type'] = 'normal';
-  $handler->display->display_options['menu']['title'] = 'FlexSlider Views with Thumbnail Slider';
+  $handler->display->display_options['menu']['title'] = 'slider w/thumbnail slider (Views)';
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['name'] = 'menu-flexslider-example';
   $handler->display->display_options['menu']['context'] = 0;
@@ -194,7 +194,7 @@ function flexslider_example_views_default_views() {
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['path'] = 'flexslider-views-example-basic-carousel';
   $handler->display->display_options['menu']['type'] = 'normal';
-  $handler->display->display_options['menu']['title'] = 'Basic Carousel';
+  $handler->display->display_options['menu']['title'] = 'basic carousel (Views)';
   $handler->display->display_options['menu']['weight'] = '0';
   $handler->display->display_options['menu']['name'] = 'menu-flexslider-example';
   $handler->display->display_options['menu']['context'] = 0;
@@ -202,6 +202,30 @@ function flexslider_example_views_default_views() {
   /* Display: Block 2 */
   $handler = $view->new_display('block', 'Block 2', 'block_2');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
+
+  /* Display: Carousel with min and max ranges */
+  $handler = $view->new_display('page', 'Carousel with min and max ranges', 'page_4');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'carousel with min and max ranges';
+  $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'flexslider';
+  $handler->display->display_options['style_options']['optionset'] = 'flexslider_carousel_with_min_and_max_ranges';
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['path'] = 'flexslider-views-example-carousel-min-max';
+  $handler->display->display_options['menu']['type'] = 'normal';
+  $handler->display->display_options['menu']['title'] = 'carousel with min and max ranges (Views)';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['name'] = 'menu-flexslider-example';
+  $handler->display->display_options['menu']['context'] = 0;
   $translatables['flexslider_views_example'] = array(
     t('Master'),
     t('FlexSlider Views Example'),
@@ -221,6 +245,8 @@ function flexslider_example_views_default_views() {
     t('Controls another FlexSlider instance'),
     t('Basic Carousel'),
     t('Block 2'),
+    t('Carousel with min and max ranges'),
+    t('carousel with min and max ranges'),
   );
   $export['flexslider_views_example'] = $view;
 

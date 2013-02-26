@@ -17,6 +17,7 @@ features[ctools][] = views:views_default:3.0
 features[features_api][] = api:1
 features[field][] = node-flexslider_example-field_flexslider_example_image
 features[field][] = node-flexslider_example-field_flexslider_example_slidesh
+features[flexslider_optionset][] = flexslider_carousel_with_min_and_max_ranges
 features[flexslider_optionset][] = flexslider_default_basic_carousel
 features[flexslider_optionset][] = flexslider_default_slider_thumbnail_controlnav
 features[flexslider_optionset][] = flexslider_default_slider_w_thumbnail_slider
