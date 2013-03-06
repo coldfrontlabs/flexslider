@@ -6,7 +6,6 @@ Current Options
 ---------------
 Allows you to use FlexSlider in a few different ways
 
-
 - As a library to be used with any other theme or module by calling flexslider_add() (N.B. You may also use libraries_load('flexslider') however this is not recommended)
 - Integrates with Fields (flexslider_fields)
 - Adds a Views display mode (flexslider_views)
@@ -26,8 +25,6 @@ Library available at https://github.com/woothemes/FlexSlider
 - Built for beginners and pros, alike
 - Free to use under the MIT license
 
-
-
 Installation
 ============
 
@@ -37,7 +34,6 @@ Dependencies
 - [Libraries API 2.x](http://drupal.org/project/libraries)
 - [FlexSlider Library](https://github.com/woothemes/FlexSlider)
 
-
 Tasks
 -----
 
@@ -45,7 +41,7 @@ Tasks
 2. Unzip the file and rename the folder to "flexslider" (pay attention to the case of the letters)
 3. Put the folder in a libraries directory
     - Ex: sites/all/libraries
-4. The first two files are required and the last is optional (required for javascript debugging)
+4. The following files are required (last file is required for javascript debugging)
     - jquery.flexslider-min.js
     - flexslider.css
     - jquery.flexslider.js
@@ -89,6 +85,14 @@ Debugging
 ---------
 
 You can toggle the development version of the library in the administrative settings page. This will load the unminified version of the library.  Uncheck this when moving to a production site to load the smaller minified version.
+
+### Image Width/Height Attributes
+
+If your images aren't resizing, ensure the width and height attributes are removed. The module will attempt to remove them automatically on any image matching the pattern 
+
+    ul.slides > li > img
+    
+
 
 Export API
 ==========

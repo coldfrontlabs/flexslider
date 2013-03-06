@@ -77,15 +77,19 @@ function flexslider_option_elements($options = array()) {
     '#default_value' => isset($options['slideshow']) ? $options['slideshow'] : _flexslider_optionset_defaults('slideshow'),
   );
 
+  // Build in support for easing plugin
+  $easing_options = array('swing' => t('Swing'), 'linear' => t('Linear'));
+  if (module_exists('jqeasing')) {
+    $easing_options = array_merge($easing_options, _flexslider_jqeasing_options());
+    
+  }
+
   $form['animation_slideshow']['easing'] = array(
     '#type' => 'select',
     '#title' => t('Easing'),
     '#multiple' => FALSE,
     '#description' => t('The description appears usually below the item.'),
-    '#options' => array(
-      'linear' => t('Linear'),
-      'swing' => t('Swing'),
-    ), // @todo load list of options based on jquery easing plugin
+    '#options' => $easing_options,
     '#default_value' => isset($options['easing']) ? $options['easing'] : _flexslider_optionset_defaults('easing'),
   );
 

@@ -26,6 +26,11 @@ function flexslider_libraries_info() {
         'flexslider.css',
       ),
     ),
+    'integration files' => array(
+      'flexslider' => array(
+        'css' => array('assets/css/flexslider_img.css'),
+      ),
+    ),
   );
 
   return $libraries;
@@ -45,12 +50,10 @@ function flexslider_libraries_info_alter(&$libraries) {
     }
   }
 
-  // @todo configure the styles for the theme to be altered by admin configurations
-
-  // As it's only possible to use one theme per page, use the first one we get for everything.
-  // @todo load the selected theme
-  // @todo override css path
-  $theme = (!empty($optionset['theme'])) ? $optionset['theme'] : 'default';
+  // Add support for jQuery Easing module
+  if (module_exists('jqeasing')) {
+    $libraries['flexslider']['dependencies'][] = 'easing (>=1.3)';
+  }
 }
 
 /**
@@ -492,4 +495,44 @@ function _flexslider_typecast_optionset(&$options) {
       }
     }
   }
+}
+
+/**
+ * List of all easing methods available from jQuery Easing v1.3
+ */
+function _flexslider_jqeasing_options() {
+  return array(
+    "jswing" => "jswing",
+    "def" => "def",
+    "easeInQuad" => "easeInQuad",
+    "easeOutQuad" => "easeOutQuad",
+    "easeInOutQuad" => "easeInOutQuad",
+    "easeInCubic" => "easeInCubic",
+    "easeOutCubic" => "easeOutCubic",
+    "easeInOutCubic" => "easeInOutCubic",
+    "easeInQuart" => "easeInQuart",
+    "easeOutQuart" => "easeOutQuart",
+    "easeInOutQuart" => "easeInOutQuart",
+    "easeInQuint" => "easeInQuint",
+    "easeOutQuint" => "easeOutQuint",
+    "easeInOutQuint" => "easeInOutQuint",
+    "easeInSine" => "easeInSine",
+    "easeOutSine" => "easeOutSine",
+    "easeInOutSine" => "easeInOutSine",
+    "easeInExpo" => "easeInExpo",
+    "easeOutExpo" => "easeOutExpo",
+    "easeInOutExpo" => "easeInOutExpo",
+    "easeInCirc" => "easeInCirc",
+    "easeOutCirc" => "easeOutCirc",
+    "easeInOutCirc" => "easeInOutCirc",
+    "easeInElastic" => "easeInElastic",
+    "easeOutElastic" => "easeOutElastic",
+    "easeInOutElastic" => "easeInOutElastic",
+    "easeInBack" => "easeInBack",
+    "easeOutBack" => "easeOutBack",
+    "easeInOutBack" => "easeInOutBack",
+    "easeInBounce" => "easeInBounce",
+    "easeOutBounce" => "easeOutBounce",
+    "easeInOutBounce" => "easeInOutBounce",
+  );
 }
