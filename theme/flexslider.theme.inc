@@ -42,6 +42,8 @@ function theme_flexslider_list(&$vars) {
       }
       $output .= theme('flexslider_list_item', array(
         'item' => isset($item['slide']) ? $item['slide'] : theme_image_style($image_options),
+        'item' => isset($item['slide']) ? $item['slide'] : ($optionset->imagestyle_normal ? theme_image_style($image_options) : theme_image($image_options)),
+
         'thumb' => isset($item['thumb']) ? $item['thumb'] : image_style_url($optionset->imagestyle_thumbnail, $item['uri']),
         'optionset' => $optionset,
         'caption' => $caption,
