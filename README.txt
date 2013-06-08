@@ -6,7 +6,7 @@ Current Options
 ---------------
 Allows you to use FlexSlider in a few different ways
 
-- As a library to be used with any other theme or module by calling flexslider_add() (N.B. You may also use libraries_load('flexslider') however this is not recommended)
+- As a library to be used with any other theme or module by calling flexslider_add() (N.B. You may also use libraries_load('flexslider') or drupal_add_library('flexslider', 'flexslider'), but only if you want to control everything manually).
 - Integrates with Fields (flexslider_fields)
 - Adds a Views display mode (flexslider_views)
 
