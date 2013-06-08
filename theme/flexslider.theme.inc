@@ -29,10 +29,11 @@ function theme_flexslider_list(&$vars) {
         $image_options = array(
           'style_name' => $optionset->imagestyle_normal,
           'path'       => $item['uri'],
-          'height'     => $item['height'],
-          'width'      => $item['width'],
+          'height'     => isset($item['height']) ? $item['height'] : '',
+          'width'      => isset($item['width']) ? $item['width'] : '',
           'alt'        => $item['alt'],
           'title'      => $item['title'],
+          'attributes' => array(),
         );
       }
 
