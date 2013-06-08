@@ -101,10 +101,6 @@ class flexslider_views_plugin_style_flexslider extends views_plugin_style {
    */
   function render() {
     $image_field = $this->find_image_field();
-    if ($image_field === FALSE) {
-      drupal_set_message(t('Style @style requires an image field to be added.', array('@style' => $this->definition['title'])), 'error');
-      return;
-    }
 
     // Group the rows according to the grouping field, if specified.
     $sets = $this->render_grouping($this->view->result, $this->options['grouping']);
