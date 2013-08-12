@@ -36,7 +36,27 @@ function _flexslider_init(id, optionset, context) {
     $(this).find('ul.slides > li > img').removeAttr('width');
     
     if (optionset) {
-      $(this).flexslider(optionset);
+      // Add events that developers can use to interact.
+      $(this).flexslider($.extend(optionset, {
+        start: function(slider) {
+          slider.trigger('start');
+        },
+        before: function(slider) {
+          slider.trigger('before');
+        },
+        after: function(slider) {
+          slider.trigger('after');
+        },
+        end: function(slider) {
+          slider.trigger('end');
+        },
+        added: function(slider) {
+          slider.trigger('added');
+        },
+        removed: function(slider) {
+          slider.trigger('removed');
+        }
+      }));
     }
     else {
       $(this).flexslider();
