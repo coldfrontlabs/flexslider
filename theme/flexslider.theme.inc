@@ -137,11 +137,15 @@ function template_preprocess_flexslider(&$vars) {
 
   // Add the attributes to the settings array.
   $settings['attributes'] = $attributes;
-
-  // Finally, add the FlexSlider library
-  flexslider_add($settings['attributes']['id'], $optionset);
 }
 
+/**
+ * Process function for flexslider.
+ */
+function template_process_flexslider(&$vars) {
+  // Finally, add the FlexSlider library.
+  flexslider_add($vars['settings']['attributes']['id'], $vars['settings']['optionset']);
+}
 
 /**
  * Preprocess function for flexslider_list_item
