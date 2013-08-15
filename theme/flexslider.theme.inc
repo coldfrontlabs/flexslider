@@ -84,7 +84,7 @@ function theme_flexslider_list_item(&$vars) {
 /**
  * Template preprocess handler for 'flexslider' theme.
  */
-function template_preprocess_flexslider(&$vars) {
+function template_process_flexslider(&$vars) {
 
   // Reference configuration variables
   $optionset = &$vars['settings']['optionset'];
@@ -107,8 +107,6 @@ function template_preprocess_flexslider(&$vars) {
     watchdog('flexslider', 'Fallback to default optionset.', array(), WATCHDOG_WARNING);
   }
 
-
-
   // Configure attributes for containing elements
   $attributes = array();
   // Merge with defined attributes
@@ -116,34 +114,26 @@ function template_preprocess_flexslider(&$vars) {
     $attributes += $settings['attributes'];
   }
 
-  // Each flexslider instance gets a unique id
-  $flexslider_id = &drupal_static('flexslider_id', 0);
-  $attributes['id'] = 'flexslider-' . ++$flexslider_id;
+  // Set the ID for each flexslider instance if none is provided
+  if (empty($attributes['id'])) {
+    $flexslider_id = &drupal_static('flexslider_id', 0);
+    $attributes['id'] = 'flexslider-' . ++$flexslider_id;
+  }
 
   // Add the flexslider class to be namespaced
   $attributes['class'][] = 'flexslider';
 
   // Add the namespace to any classes
-  if (!empty($attributes['class']) &&
-      !empty($optionset->options['namespace'])
-  ) {
+  if (!empty($attributes['class']) && !empty($optionset->options['namespace'])) {
     foreach ($attributes['class'] as $key => $value) {
       $attributes['class'][$key] = $optionset->options['namespace'] . $value;
     }
   }
 
-  // Add default class
-  $attributes['class'][] = 'flexslider';
-
   // Add the attributes to the settings array.
   $settings['attributes'] = $attributes;
-}
 
-/**
- * Process function for flexslider.
- */
-function template_process_flexslider(&$vars) {
-  // Finally, add the FlexSlider library.
+  // Finally, add the configuration to the page
   flexslider_add($vars['settings']['attributes']['id'], $vars['settings']['optionset']);
 }
 
