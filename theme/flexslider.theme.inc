@@ -91,9 +91,10 @@ function template_process_flexslider(&$vars) {
   $settings = &$vars['settings'];
   $items = &$vars['items'];
 
-  // Set the list type
-  // @todo make this configurable
-  $settings['type'] = 'ul';
+  // Set the default container type
+  if (empty($settings['type'])) {
+    $settings['type'] = 'ul';    
+  }
 
   // Load the selected optionset
   if (!empty($optionset)) {
@@ -120,15 +121,16 @@ function template_process_flexslider(&$vars) {
     $attributes['id'] = 'flexslider-' . ++$flexslider_id;
   }
 
-  // Add the flexslider class to be namespaced
-  $attributes['class'][] = 'flexslider';
-
   // Add the namespace to any classes
+  // @todo figure out what this is supposed to do
   if (!empty($attributes['class']) && !empty($optionset->options['namespace'])) {
     foreach ($attributes['class'] as $key => $value) {
       $attributes['class'][$key] = $optionset->options['namespace'] . $value;
     }
   }
+
+  // Add the flexslider class to be namespaced
+  $attributes['class'][] = 'flexslider';
 
   // Add the attributes to the settings array.
   $settings['attributes'] = $attributes;

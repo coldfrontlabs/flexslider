@@ -25,8 +25,8 @@ function flexslider_views_preprocess_flexslider(&$vars) {
     // Prepare all data to be passed to theme_flexslider().
     $items = array();
     $view = $vars['view'];
-    $options = array();
-    $options['optionset'] = flexslider_optionset_load($vars['options']['optionset']);
+    $settings = array();
+    $settings['optionset'] = $vars['options']['optionset'];
 
     $row_plugin = $view->style_plugin->row_plugin;
 
@@ -42,9 +42,9 @@ function flexslider_views_preprocess_flexslider(&$vars) {
     $vars['items'] = $items;
 
     // Add the attributes
-    $options['attributes']['id'] = $vars['options']->id;
+    $settings['attributes']['id'] = $vars['options']['id'];
 
     // Reset the options to the processed values
-    $vars['options'] = $options;
+    $vars['settings'] = $settings;
   }
 }
