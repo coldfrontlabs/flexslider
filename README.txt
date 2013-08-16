@@ -2,6 +2,11 @@ About
 =====
 Integrates the FlexSlider library into Drupal.
 
+Known Issues
+------------
+
+- IE10 requires an updated version of jQuery to work properly with FlexSlider. Please see http://drupal.org/project/jquery_update
+
 Current Options
 ---------------
 Allows you to use FlexSlider in a few different ways
