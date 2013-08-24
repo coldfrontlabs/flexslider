@@ -90,7 +90,7 @@ class flexslider_views_plugin_style_flexslider extends views_plugin_style {
           'title' => $title)
         );
     }
-    
+
     return $output;
   }
 }

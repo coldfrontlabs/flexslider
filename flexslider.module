@@ -158,18 +158,22 @@ function flexslider_help($path, $arg) {
  */
 function flexslider_theme() {
   return array(
-    // Container for nav elements (arrows)
+    // Flexslider container
     'flexslider' => array(
       'variables' => array('items' => array(), 'settings' => array()),
       'template' => 'theme/flexslider',
       'file' => 'theme/flexslider.theme.inc',
     ),
+    
+    // Slide container
     'flexslider_list' => array(
       'variables' => array('items' => array(), 'settings' => array()),
       'file' => 'theme/flexslider.theme.inc',
     ),
+    
+    // Slide item
     'flexslider_list_item' => array(
-      'variables' => array('item' => array(), 'settings' => array()),
+      'variables' => array('item' => array(), 'settings' => array(), 'caption' => ''),
       'file' => 'theme/flexslider.theme.inc',
     ),
   );
