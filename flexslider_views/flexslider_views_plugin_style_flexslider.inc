@@ -67,7 +67,7 @@ class flexslider_views_plugin_style_flexslider extends views_plugin_style {
     $options =& $form_state['values']['style_options'];
 
     // Pull the fieldset values one level up
-    $options = $options['flexslider'];
+    $options += $options['flexslider'];
     unset($options['flexslider']);
   }
 
