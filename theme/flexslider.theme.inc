@@ -144,13 +144,14 @@ function template_process_flexslider_list_item(&$vars) {
     }
   }
 
-  if (($settings['optionset']->options['thumbCaptions']) && !empty($caption)) {
+  if (isset($settings['optionset']->options['thumbCaptions']) and $settings['optionset']->options['thumbCaptions'] and !empty($caption)) {
     $attributes['data-thumbcaption'] = $caption;
     // Prevent captions from appearing in the slider as well
-    if (FALSE === $settings['optionset']->options['thumbCaptionsBoth']) {
+    if (isset($settings['optionset']->options['thumbCaptionsBoth']) and FALSE === $settings['optionset']->options['thumbCaptionsBoth']) {
       $caption = '';      
     }
   }
+
   if (!empty($caption)) {
     $caption = '<p class="flex-caption">' . $caption . '</p>';
   }
