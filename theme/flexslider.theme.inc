@@ -130,7 +130,6 @@ function template_process_flexslider_list_item(&$vars) {
   $item = &$vars['item'];
   $settings = &$vars['settings'];
   $caption = &$vars['caption'];
-  $thumb = &$vars['thumb'];
   $attributes = &$vars['settings']['attributes'];
 
   // Generated thumbnail support
@@ -145,6 +144,13 @@ function template_process_flexslider_list_item(&$vars) {
     }
   }
 
+  if (($settings['optionset']->options['thumbCaptions']) && !empty($caption)) {
+    $attributes['data-thumbcaption'] = $caption;
+    // Prevent captions from appearing in the slider as well
+    if (FALSE === $settings['optionset']->options['thumbCaptionsBoth']) {
+      $caption = '';      
+    }
+  }
   if (!empty($caption)) {
     $caption = '<p class="flex-caption">' . $caption . '</p>';
   }
