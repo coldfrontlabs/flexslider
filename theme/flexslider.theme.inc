@@ -133,7 +133,7 @@ function template_process_flexslider_list_item(&$vars) {
   $attributes = &$vars['settings']['attributes'];
 
   // Generated thumbnail support
-  if ($settings['optionset']->options['controlNav'] === "thumbnails") {
+  if (isset($settings['optionset']->options['controlNav'] === "thumbnails") and $settings['optionset']->options['controlNav'] === "thumbnails") {
     // If the thumbnails are enabled in the option set, scan for the first img
     // tag and extract the src attribute to set as the thumbnail data
     $src = array();
@@ -153,6 +153,6 @@ function template_process_flexslider_list_item(&$vars) {
   }
 
   if (!empty($caption)) {
-    $caption = '<p class="flex-caption">' . $caption . '</p>';
+    $caption = '<div class="flex-caption">' . $caption . '</div>';
   }
 }
