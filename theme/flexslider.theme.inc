@@ -133,7 +133,7 @@ function template_process_flexslider_list_item(&$vars) {
   $attributes = &$vars['settings']['attributes'];
 
   // Generated thumbnail support
-  if (isset($settings['optionset']->options['controlNav'] === "thumbnails") and $settings['optionset']->options['controlNav'] === "thumbnails") {
+  if (isset($settings['optionset']->options['controlNav']) and $settings['optionset']->options['controlNav'] === "thumbnails") {
     // If the thumbnails are enabled in the option set, scan for the first img
     // tag and extract the src attribute to set as the thumbnail data
     $src = array();
