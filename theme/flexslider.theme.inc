@@ -138,7 +138,8 @@ function template_process_flexslider_list_item(&$vars) {
     // If the thumbnails are enabled in the option set, scan for the first img
     // tag and extract the src attribute to set as the thumbnail data
     $src = array();
-    preg_match( '/src="([^"]*)"/i', $item, $src ) ;
+    
+    preg_match("<img.+?src=[\"'](.+?)[\"'].+?>", $item, $src);
 
     if (!empty($src[1])) {
       $attributes['data-thumb'] = $src[1];
