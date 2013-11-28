@@ -521,13 +521,18 @@ function _flexslider_validate_selector($element, &$form_state) {
  */
 function _flexslider_validate_minimum_version_22($element, &$form_state) {
   $lib = libraries_detect('flexslider');
-  $version = $lib['version'];
-  $required = "2.2";
+  if (!isset($lib['version'])) {
+    drupal_set_message(t('Unable to detect FlexSlider library version. Some options may not function properly. Please review the README.md file for installation instructions.'), 'warning');
+  }
+  else {
+    $version = $lib['version'];
+    $required = "2.2";
 
-  if (!version_compare($version, $required, '>=')) {
-    form_error($element, t('To use %name you must install FlexSlider version !required or higher.', array(
-      '%name' => $element['#title'],
-      '!required' => l($required, 'https://github.com/woothemes/FlexSlider/tree/version/2.2'),
-    )));
+    if (!version_compare($version, $required, '>=')) {
+      form_error($element, t('To use %name you must install FlexSlider version !required or higher.', array(
+        '%name' => $element['#title'],
+        '!required' => l($required, 'https://github.com/woothemes/FlexSlider/tree/version/2.2'),
+      )));
+    }
   }
 }
