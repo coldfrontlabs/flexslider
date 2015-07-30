@@ -152,7 +152,8 @@ function flexslider_update_7002(&$sandbox) {
  */
 function flexslider_update_7200(&$sandbox) {
   $t = get_t();
-
+  
+  module_load_include('module', 'flexslider', 'flexslider');
   $optionsets = flexslider_optionset_load_all();
 
   foreach ($optionsets as $optionset) {
