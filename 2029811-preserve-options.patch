@@ -1,0 +1,13 @@
+diff --git a/flexslider_views/flexslider_views_plugin_style_flexslider.inc b/flexslider_views/flexslider_views_plugin_style_flexslider.inc
+index 1119928..864f7eb 100755
+--- a/flexslider_views/flexslider_views_plugin_style_flexslider.inc
++++ b/flexslider_views/flexslider_views_plugin_style_flexslider.inc
+@@ -67,7 +67,7 @@ class flexslider_views_plugin_style_flexslider extends views_plugin_style {
+     $options =& $form_state['values']['style_options'];
+ 
+     // Pull the fieldset values one level up
+-    $options = $options['flexslider'];
++    $options += $options['flexslider'];
+     unset($options['flexslider']);
+   }
+ 
