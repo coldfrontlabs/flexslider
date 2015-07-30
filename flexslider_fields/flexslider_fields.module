@@ -67,16 +67,26 @@ function flexslider_fields_field_formatter_settings_form($field, $instance, $vie
     // If the image field doesn't have the Title field enabled, tell the user.
     if ($instance['settings']['title_field'] == FALSE and $instance['bundle'] != 'ctools') {
       $form['caption'] = array(
-        '#title' => t('Use image title as the caption'),
-        '#type' => 'checkbox',
+        '#title' => t('Choose a caption source'),
+        '#type' => 'select',
         '#disabled' => TRUE,
+        '#options' => array(
+          0 => t('None'),
+          1 => t('Image title'),
+          'alt' => t('Image ALT attribute'),
+        ),
         '#description' => t('You need to <a href="@url">enable the Title field</a> for this image field to be able use it as a caption.', array('@url' => url('admin/structure/types/manage/' . $instance['bundle'] . '/fields/' . $instance['field_name'], array('fragment' => 'edit-instance-settings-title-field', 'query' => array('destination' => 'admin/structure/types/manage/' . $instance['bundle'] . '/display'))))),
       );
     }
     else {
       $form['caption'] = array(
-        '#title' => t('Use image title as the caption'),
-        '#type' => 'checkbox',
+        '#title' => t('Choose a caption source'),
+        '#type' => 'select',
+        '#options' => array(
+          0 => t('None'),
+          1 => t('Image title'),
+          'alt' => t('Image ALT attribute'),
+        ),
         '#default_value' => $settings['caption'],
       );
     }
@@ -170,8 +180,11 @@ function flexslider_fields_field_formatter_view($entity_type, $entity, $field, $
       }
 
       // Check caption settings
-      if ($display['settings']['caption']) {
+      if ($display['settings']['caption'] === 1) {
         $item['caption'] = filter_xss($item['item']['title']);
+      }
+      elseif ($display['settings']['caption'] === 'alt') {
+        $item['caption'] = filter_xss($item['item']['alt']);
       }
 
       $items[$key] = $item;
