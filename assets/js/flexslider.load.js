@@ -3,6 +3,7 @@
   // Behavior to load FlexSlider
   Drupal.behaviors.flexslider = {
     attach: function(context, settings) {
+      var id;
       var sliders = [];
       if ($.type(settings.flexslider) !== 'undefined' && $.type(settings.flexslider.instances) !== 'undefined') {
 
