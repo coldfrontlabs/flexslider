@@ -42,7 +42,8 @@ Dependencies
 Tasks
 -----
 
-1. Download the FlexSlider library from https://github.com/woothemes/FlexSlider/tree/version/2.2
+1. Download the FlexSlider library from https://github.com/woothemes/FlexSlider
+    - Only the 2.x branch is supported
 2. Unzip the file and rename the folder to "flexslider" (pay attention to the case of the letters)
 3. Put the folder in a libraries directory
     - Ex: sites/all/libraries

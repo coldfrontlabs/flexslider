@@ -4,7 +4,7 @@
  * A light-weight, customizable image gallery plugin for Drupal based on jQuery
  */
 
-define("FLEXSLIDER_VERSION", variable_get('flexslider_version', '2.0'));
+define("FLEXSLIDER_COMPATIBLE_MAJOR_VERSION", '2');
 define("FLEXSLIDER_DEBUG", variable_get('flexslider_debug', FALSE));
 
 /**
@@ -17,8 +17,7 @@ function flexslider_libraries_info() {
     'download url' => 'https://github.com/woothemes/FlexSlider',
     'version arguments' => array(
       'file' => 'jquery.flexslider-min.js',
-      // jQuery FlexSlider v2.1
-      'pattern' => '/jQuery FlexSlider v(\d+\.+\d+)/',
+      'pattern' => '/jQuery FlexSlider v([0-9a-zA-Z\.-]+)/',
       'lines' => 2,
     ),
     'files' => array(
@@ -66,23 +65,23 @@ function flexslider_libraries_info_alter(&$libraries) {
  */
 function flexslider_library() {
   $module_path = drupal_get_path('module', 'flexslider');
-  $library_path = libraries_get_path('flexslider');
-  
+  $library = libraries_detect('flexslider');
+
   $libraries['flexslider'] = array(
-    'title' => 'FlexSlider',
-    'website' => 'http://flexslider.woothemes.com',
-    'version' => FLEXSLIDER_VERSION,
+    'title' => $library['name'],
+    'website' => $library['vendor url'],
+    'version' => $library['version'],
     'js' => array(
-      $library_path . '/jquery.flexslider-min.js' => array(
+      $library['library path'] . '/' . key($library['files']['js']) => array(
         'scope' => 'footer',
       ),
     ),
     'css' => array(
-      $library_path . '/flexslider.css' => array(
+      $library['library path'] . '/' . key($library['files']['css']) => array(
         'type' => 'file',
         'media' => 'screen',
       ),
-      $module_path . '/assets/css/flexslider_img.css' => array(
+      $module_path . key($library['integration files']['flexslider']['css']) => array(
         'type' => 'file',
         'media' => 'screen',
       ),
