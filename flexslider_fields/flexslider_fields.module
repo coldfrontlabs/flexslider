@@ -132,6 +132,7 @@ function flexslider_fields_field_formatter_view($entity_type, $entity, $field, $
   if (count($items) > 0) {
 
     foreach ($items as $key => $item) {
+      if(isset($item['item'])) continue;
       $tmp = $item;
       $item = array();
       $item['item'] = $tmp;
