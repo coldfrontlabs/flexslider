@@ -190,7 +190,7 @@ function flexslider_fields_field_formatter_view($entity_type, $entity, $field, $
       $items[$key] = $item;
     }
 
-    $element = array(
+    $element[0] = array(
       '#theme' => 'flexslider',
       '#items' => $items,
       '#settings' => $display['settings'],
