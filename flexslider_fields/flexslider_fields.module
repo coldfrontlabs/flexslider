@@ -65,7 +65,7 @@ function flexslider_fields_field_formatter_settings_form($field, $instance, $vie
 
   if (!empty($instance['settings'])) {
     // If the image field doesn't have the Title field enabled, tell the user.
-    if ($instance['settings']['title_field'] == FALSE) {
+    if ($instance['settings']['title_field'] == FALSE and $instance['bundle'] != 'ctools') {
       $form['caption'] = array(
         '#title' => t('Use image title as the caption'),
         '#type' => 'checkbox',
@@ -150,7 +150,7 @@ function flexslider_fields_field_formatter_view($entity_type, $entity, $field, $
       if (isset($item['item']['height'])) {
         $item['slide']['height'] = $item['item']['height'];
       }
-      if (isset($item['item']['alt'])) { 
+      if (isset($item['item']['alt'])) {
         $item['slide']['alt'] = $item['item']['alt'];
       }
       if (isset($item['item']['title'])) {
