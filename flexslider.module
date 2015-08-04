@@ -338,7 +338,7 @@ function flexslider_optionset_save($optionset, $new = FALSE) {
     return $optionset;
   }
 
-  // Otherwise, an error occured
+  // Otherwise, an error occurred
   return FALSE;
 }
 

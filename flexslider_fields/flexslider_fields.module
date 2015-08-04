@@ -134,7 +134,7 @@ function flexslider_fields_field_formatter_settings_summary($field, $instance, $
 /**
  * Implements hook_field_formatter_view().
  *
- * Prepares a renderable array of images and adds the neccessary JS and CSS
+ * Prepares a renderable array of images and adds the necessary JS and CSS
  */
 function flexslider_fields_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
 
