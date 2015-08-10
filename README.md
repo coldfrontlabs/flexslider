@@ -94,10 +94,10 @@ You can toggle the development version of the library in the administrative sett
 
 ### Image Width/Height Attributes
 
-If your images aren't resizing, ensure the width and height attributes are removed. The module will attempt to remove them automatically on any image matching the pattern 
+If your images aren't resizing, ensure the width and height attributes are removed. The module will attempt to remove them automatically on any image matching the pattern
 
     ul.slides > li > img
-    
+
 
 
 Export API
@@ -109,3 +109,11 @@ External Links
 ==============
 
 - [Wiki Documentation for FlexSlider 2](https://github.com/woothemes/FlexSlider/wiki/FlexSlider-Properties)
+
+General Notes
+=============
+
+Using FlexSlider with Advagg and Domain Access
+----------------------------------------------
+
+If you use multiple domains or subdomains together with advagg module you have to set the following option at the advagg config page admin/config/development/performance/advagg ”Include the base_url variable in the hooks hash array.” This will generate separate aggregates for each domain.
