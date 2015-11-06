@@ -21,7 +21,7 @@ function theme_flexslider_list(&$vars) {
   // Build the list
   if (!empty($items)) {
     $output .= "<$type" . drupal_attributes($attributes) . '>';
-    foreach ($items as $i => $item) {
+    foreach ($items as $item) {
 
       $caption = '';
       if (!empty($item['caption'])) {

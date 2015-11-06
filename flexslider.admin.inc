@@ -411,7 +411,7 @@ function flexslider_form_optionset_edit($form, &$form_state) {
 
   $default_options = flexslider_option_elements($optionset->options);
   // Add the options to the vertical tabs section
-  foreach ($default_options as $key => $value) {
+  foreach ($default_options as $value) {
     $form['options'][] = $value;
   }
 
