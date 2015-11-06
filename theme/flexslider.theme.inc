@@ -100,6 +100,14 @@ function template_process_flexslider(&$vars) {
   // Add the flexslider class to be namespaced
   $attributes['class'][] = 'flexslider';
 
+  // Add the optionset name as a class to the container.
+  $attributes['class'][] = 'optionset-' . drupal_html_class($optionset->name);
+
+  // Add the image style name as a class to the container.
+  if (!empty($settings['image_style'])) {
+    $attributes['class'][] = 'imagestyle-' . drupal_html_class($settings['image_style']);
+  }
+
   // Add the attributes to the settings array.
   $settings['attributes'] = $attributes;
 
@@ -148,7 +156,7 @@ function template_process_flexslider_list_item(&$vars) {
     $attributes['data-thumbcaption'] = $caption;
     // Prevent captions from appearing in the slider as well
     if (isset($settings['optionset']->options['thumbCaptionsBoth']) and FALSE === $settings['optionset']->options['thumbCaptionsBoth']) {
-      $caption = '';      
+      $caption = '';
     }
   }
 
