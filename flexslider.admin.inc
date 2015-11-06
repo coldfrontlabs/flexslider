@@ -528,7 +528,7 @@ function _flexslider_validate_minimum_version_22($element, &$form_state) {
     $version = $lib['version'];
     $required = "2.2";
 
-    if (!version_compare($version, $required, '>=')) {
+    if ($element['#value'] && !version_compare($version, $required, '>=')) {
       form_error($element, t('To use %name you must install FlexSlider version !required or higher.', array(
         '%name' => $element['#title'],
         '!required' => l($required, 'https://github.com/woothemes/FlexSlider/tree/version/2.2'),
