@@ -10,18 +10,18 @@
 /**
  * Add a preprocessor to prepare data from FlexSlider Views
  */
-function template_process_flexslider_views(&$vars) {
+function template_process_flexslider_views(&$variables) {
   // Only run the preprocessor if it is a view
-  if (!empty($vars['view'])) {
+  if (!empty($variables['view'])) {
     // Prepare all data to be passed to theme_flexslider().
     $items = array();
-    $view = $vars['view'];
+    $view = $variables['view'];
     $settings = array();
-    $settings['optionset'] = $vars['options']['optionset'];
+    $settings['optionset'] = $variables['options']['optionset'];
 
     $row_plugin = $view->style_plugin->row_plugin;
 
-    foreach ($vars['rows'] as $id => $row) {
+    foreach ($variables['rows'] as $id => $row) {
       // Render the row into a slide
       $view->row_index = $id;
       $item['slide'] = $row_plugin->render($row);
@@ -30,13 +30,13 @@ function template_process_flexslider_views(&$vars) {
     }
 
     // Add the slide items to the variables
-    $vars['items'] = $items;
+    $variables['items'] = $items;
 
     // Add the attributes
-    $settings['attributes']['id'] = $vars['options']['id'];
+    $settings['attributes']['id'] = $variables['options']['id'];
 
     // Reset the options to the processed values
-    $vars['settings'] = $settings;
+    $variables['settings'] = $settings;
   }
-  return $vars;
+  return $variables;
 }
