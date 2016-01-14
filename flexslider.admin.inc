@@ -79,7 +79,7 @@ function flexslider_option_elements($options = array()) {
 
   // Build in support for easing plugin
   $easing_options = array('swing' => t('Swing'), 'linear' => t('Linear'));
-  if (module_exists('jqeasing')) {
+  if (\Drupal::moduleHandler()->moduleExists('jqeasing')) {
     $easing_options = array_merge($easing_options, _flexslider_jqeasing_options());
     
   }
@@ -404,32 +404,6 @@ function flexslider_form_optionset_edit($form, &$form_state) {
     '#default_value' => $optionset->name,
   );
 
-  // Show select boxes for the various image styles (thumbnail, normal, big)
-  $image_style = image_style_options(FALSE);
-  $form['image_style'] = array(
-    '#type' => 'fieldset',
-    '#title' => 'Image style',
-    '#tree' => TRUE,
-  );
-  $form['image_style']['normal'] = array(
-    '#type' => 'select',
-    '#title' => t('Normal image style'),
-    '#description' => t('Image style for the main stage images.'),
-    '#empty_option' => t('None (original image)'),
-    '#options' => $image_style,
-    '#default_value' => $optionset->imagestyle_normal,
-  );
-  $form['image_style']['thumbnail'] = array(
-    '#type' => 'select',
-    '#title' => t('Thumbnail image style'),
-    '#description' => t('Image style for the thumbnail images.'),
-    '#empty_option' => t('None (original image)'),
-    '#options' => $image_style,
-    '#default_value' => $optionset->imagestyle_thumbnail,
-    // @todo enable/disable this option based on the type of options selected
-    // Ex: Thumbnails should be enabled
-  );
-
   // Options Vertical Tab Group table
   $form['options'] = array(
     '#type' => 'vertical_tabs',
@@ -475,7 +449,7 @@ function flexslider_optionset_form_delete($form, &$form_state, $optionset) {
 
   return confirm_form(
     $form,
-    t('Are you sure you want to @action the option set %name?', array('@action' => t(drupal_strtolower($op)), '%name' => $optionset->name)),
+    t('Are you sure you want to @action the option set %name?', array('@action' => t(\Drupal\Component\Utility\Unicode::strtolower($op)), '%name' => $optionset->name)),
     'admin/config/media/flexslider',
     NULL,
     t($op),  t('Cancel')
@@ -489,8 +463,18 @@ function flexslider_optionset_form_delete_submit($form, &$form_state) {
   $optionset = &$form_state['optionset'];
   $op = ($optionset->export_type & EXPORT_IN_CODE) ? 'reverted' : 'deleted';
 
-  ctools_include('export');
-  ctools_export_crud_delete('flexslider_optionset', $optionset);
+  // @FIXME
+// Most CTools APIs have been moved into core.
+// 
+// @see https://www.drupal.org/node/2164623
+// ctools_include('export');
+
+  // @FIXME
+// The CTools Export API has been merged with the core entity API.
+// 
+// @see https://www.drupal.org/developing/api/entity
+// ctools_export_crud_delete('flexslider_optionset', $optionset);
+
 
   drupal_set_message(t('Option set %name was ' . $op . '.', array('%name' => $optionset->name)));
   $form_state['redirect'] = 'admin/config/media/flexslider';
@@ -513,8 +497,8 @@ function flexslider_form_settings() {
     '#type' => 'checkbox',
     '#title' => t('Enable debug mode'),
     '#description' => t('Load the human-readable version of the FlexSlider library.'),
-    '#default_value' => variable_get('flexslider_debug', FALSE),
-    '#access' => user_access('administer flexslider'),
+    '#default_value' => \Drupal::config('flexslider.settings')->get('flexslider_debug'),
+    '#access' => \Drupal::currentUser()->hasPermission('administer flexslider'),
   );
 
   return system_settings_form($form);
@@ -547,13 +531,18 @@ function _flexslider_validate_selector($element, &$form_state) {
  */
 function _flexslider_validate_minimum_version_22($element, &$form_state) {
   $lib = libraries_detect('flexslider');
-  $version = $lib['version'];
-  $required = "2.2";
+  if (!isset($lib['version'])) {
+    drupal_set_message(t('Unable to detect FlexSlider library version. Some options may not function properly. Please review the README.md file for installation instructions.'), 'warning');
+  }
+  else {
+    $version = $lib['version'];
+    $required = "2.2";
 
-  if (!version_compare($version, $required, '>=')) {
-    form_error($element, t('To use %name you must install FlexSlider version !required or higher.', array(
-      '%name' => $element['#title'],
-      '!required' => l($required, 'https://github.com/woothemes/FlexSlider/tree/version/2.2'),
-    )));
+    if (!version_compare($version, $required, '>=')) {
+      form_error($element, t('To use %name you must install FlexSlider version !required or higher.', array(
+        '%name' => $element['#title'],
+        '!required' => \Drupal::l($required, \Drupal\Core\Url::fromUri('https://github.com/woothemes/FlexSlider/tree/version/2.2')),
+      )));
+    }
   }
 }

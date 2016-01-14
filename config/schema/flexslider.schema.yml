@@ -1,0 +1,8 @@
+flexslider.settings:
+  type: mapping
+  label: Settings
+  mapping:
+    flexslider_version:
+      type: string
+    flexslider_debug:
+      type: boolean

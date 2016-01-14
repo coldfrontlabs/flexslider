@@ -28,13 +28,22 @@ function theme_flexslider_list(&$vars) {
         $caption = $item['caption'];
       }
 
-      $output .= theme('flexslider_list_item', array(
-        'item' => $item['slide'],
-        'settings' => array(
-          'optionset' => $optionset,
-        ),
-        'caption' => $caption,
-      ));
+      // @FIXME
+// theme() has been renamed to _theme() and should NEVER be called directly.
+// Calling _theme() directly can alter the expected output and potentially
+// introduce security issues (see https://www.drupal.org/node/2195739). You
+// should use renderable arrays instead.
+// 
+// 
+// @see https://www.drupal.org/node/2195739
+// $output .= theme('flexslider_list_item', array(
+//         'item' => $item['slide'],
+//         'settings' => array(
+//           'optionset' => $optionset,
+//         ),
+//         'caption' => $caption,
+//       ));
+
     }
     $output .= "</$type>";
   }
@@ -73,7 +82,7 @@ function template_process_flexslider(&$vars) {
   if (empty($optionset)) {
     // Fall back to 'default' option set
     $optionset = flexslider_optionset_load('default');
-    watchdog('flexslider', 'Fallback to default optionset.', array(), WATCHDOG_WARNING);
+    \Drupal::logger('flexslider')->warning('Fallback to default optionset.', array());
   }
 
   // Configure attributes for containing elements

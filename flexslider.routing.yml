@@ -1,0 +1,7 @@
+flexslider.form_settings:
+  path: /admin/config/media/flexslider/advanced
+  defaults:
+    _title: 'Advanced settings'
+    _form: \Drupal\flexslider\Form\FlexsliderFormSettings
+  requirements:
+    _permission: 'administer flexslider'

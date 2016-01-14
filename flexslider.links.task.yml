@@ -1,0 +1,4 @@
+flexslider.form_settings:
+  route_name: flexslider.form_settings
+  title: 'Advanced settings'
+  weight: 2

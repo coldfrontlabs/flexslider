@@ -48,7 +48,7 @@ function flexslider_ctools_export_ui_form(&$form, &$form_state) {
   $form_state['optionset'] = &$form_state['item'];
 
   // Load the configuration form
-  $form = drupal_retrieve_form('flexslider_form_optionset_edit', $form_state);
+  $form = \Drupal::formBuilder()->retrieveForm('flexslider_form_optionset_edit', $form_state);
 }
 
 /**
@@ -66,8 +66,6 @@ function flexslider_ctools_export_ui_form_submit(&$form, &$form_state) {
   // reference $form_state['item'] which is what CTools is looking for.
   $optionset = &$form_state['optionset'];
   $optionset->title = $form_state['values']['title'];
-  $optionset->imagestyle_normal = $form_state['values']['image_style']['normal'];
-  $optionset->imagestyle_thumbnail = $form_state['values']['image_style']['thumbnail'];
 
   // Assign the values to the option set
   $optionset->options = _flexslider_optionset_defaults();
