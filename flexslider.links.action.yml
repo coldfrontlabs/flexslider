@@ -1,0 +1,5 @@
+entity.flexslider_optionset.add_form:
+  route_name: 'entity.flexslider_optionset.add_form'
+  title: 'Add optionset'
+  appears_on:
+    - entity.flexslider_optionset.collection

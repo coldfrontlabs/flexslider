@@ -1,7 +1,69 @@
 flexslider.form_settings:
   path: /admin/config/media/flexslider/advanced
   defaults:
-    _title: 'Advanced settings'
+    _title: 'Flexslider Advanced settings'
     _form: \Drupal\flexslider\Form\FlexsliderFormSettings
   requirements:
     _permission: 'administer flexslider'
+
+# Optionset routing definition
+entity.flexslider_optionset.collection:
+  path: '/admin/config/media/flexslider'
+  defaults:
+    _entity_list: 'flexslider_optionset'
+    _title: 'Flexslider'
+  requirements:
+    _permission: 'administer flexslider'
+  options:
+    _admin_route: TRUE
+
+entity.flexslider_optionset.add_form:
+  path: '/admin/config/media/flexslider/add'
+  defaults:
+    _entity_form: 'flexslider_optionset.add'
+    _title: 'Add optionset'
+  requirements:
+    _permission: 'administer flexslider'
+  options:
+    _admin_route: TRUE
+
+entity.flexslider_optionset.edit_form:
+  path: '/admin/config/media/flexslider/{flexslider_optionset}'
+  defaults:
+    _entity_form: 'flexslider_optionset.edit'
+    _title: 'Edit optionset'
+  requirements:
+    _permission: 'administer flexslider'
+  options:
+    _admin_route: TRUE
+
+entity.flexslider_optionset.delete_form:
+  path: '/admin/config/media/flexslider/{flexslider_optionset}/delete'
+  defaults:
+    _entity_form: 'flexslider_optionset.delete'
+    _title: 'Delete optionset'
+  requirements:
+    _permission: 'administer flexslider'
+  options:
+    _admin_route: TRUE
+
+entity.flexslider_optionset.enable:
+  path: '/admin/config/media/flexslider/{flexslider_optionset}/enable'
+  defaults:
+    _controller: '\Drupal\flexslider\Controller\OptionsetConfigController::enable'
+    entity_type: 'flexslider_optionset'
+  requirements:
+    _permission: 'administer flexslider'
+  options:
+    _admin_route: TRUE
+
+entity.flexslider_optionset.disable:
+  path: '/admin/config/media/flexslider/{flexslider_optionset}/disable'
+  defaults:
+    _controller: '\Drupal\flexslider\Controller\OptionsetConfigController::disable'
+    entity_type: 'flexslider_optionset'
+  requirements:
+    _permission: 'administer flexslider'
+  options:
+    _admin_route: TRUE
+
