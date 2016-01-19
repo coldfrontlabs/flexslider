@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\flexslider\Form\OptionsetDeleteForm.
+ * Contains \Drupal\flexslider\Form\FlexsliderDeleteForm.
  */
 
 namespace Drupal\flexslider\Form;
@@ -14,7 +14,7 @@ use Drupal\Core\Url;
 /**
  * Builds the form to delete Flexslider optionset entities.
  */
-class OptionsetDeleteForm extends EntityConfirmFormBase {
+class FlexsliderDeleteForm extends EntityConfirmFormBase {
   /**
    * {@inheritdoc}
    */
@@ -26,7 +26,7 @@ class OptionsetDeleteForm extends EntityConfirmFormBase {
    * {@inheritdoc}
    */
   public function getCancelUrl() {
-    return new Url('entity.flexslider_optionset.collection');
+    return new Url('entity.flexslider.collection');
   }
 
   /**

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\flexslider\OptionsetListBuilder.
+ * Contains \Drupal\flexslider\FlexsliderListBuilder.
  */
 
 namespace Drupal\flexslider\Controller;
@@ -13,7 +13,7 @@ use Drupal\Core\Entity\EntityInterface;
 /**
  * Provides a listing of Flexslider optionset entities.
  */
-class OptionsetListBuilder extends ConfigEntityListBuilder {
+class FlexsliderListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */

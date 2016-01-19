@@ -6,62 +6,62 @@ flexslider.form_settings:
   requirements:
     _permission: 'administer flexslider'
 
-# Optionset routing definition
-entity.flexslider_optionset.collection:
+# Flexslider optionset routing definition
+entity.flexslider.collection:
   path: '/admin/config/media/flexslider'
   defaults:
-    _entity_list: 'flexslider_optionset'
+    _entity_list: 'flexslider'
     _title: 'Flexslider'
   requirements:
     _permission: 'administer flexslider'
   options:
     _admin_route: TRUE
 
-entity.flexslider_optionset.add_form:
+entity.flexslider.add_form:
   path: '/admin/config/media/flexslider/add'
   defaults:
-    _entity_form: 'flexslider_optionset.add'
+    _entity_form: 'flexslider.add'
     _title: 'Add optionset'
   requirements:
     _permission: 'administer flexslider'
   options:
     _admin_route: TRUE
 
-entity.flexslider_optionset.edit_form:
-  path: '/admin/config/media/flexslider/{flexslider_optionset}'
+entity.flexslider.edit_form:
+  path: '/admin/config/media/flexslider/{flexslider}'
   defaults:
-    _entity_form: 'flexslider_optionset.edit'
+    _entity_form: 'flexslider.edit'
     _title: 'Edit optionset'
   requirements:
     _permission: 'administer flexslider'
   options:
     _admin_route: TRUE
 
-entity.flexslider_optionset.delete_form:
-  path: '/admin/config/media/flexslider/{flexslider_optionset}/delete'
+entity.flexslider.delete_form:
+  path: '/admin/config/media/flexslider/{flexslider}/delete'
   defaults:
-    _entity_form: 'flexslider_optionset.delete'
+    _entity_form: 'flexslider.delete'
     _title: 'Delete optionset'
   requirements:
     _permission: 'administer flexslider'
   options:
     _admin_route: TRUE
 
-entity.flexslider_optionset.enable:
-  path: '/admin/config/media/flexslider/{flexslider_optionset}/enable'
+entity.flexslider.enable:
+  path: '/admin/config/media/flexslider/{flexslider}/enable'
   defaults:
-    _controller: '\Drupal\flexslider\Controller\OptionsetConfigController::enable'
-    entity_type: 'flexslider_optionset'
+    _controller: '\Drupal\flexslider\Controller\FlexsliderOptionsetController::enable'
+    entity_type: 'flexslider'
   requirements:
     _permission: 'administer flexslider'
   options:
     _admin_route: TRUE
 
-entity.flexslider_optionset.disable:
-  path: '/admin/config/media/flexslider/{flexslider_optionset}/disable'
+entity.flexslider.disable:
+  path: '/admin/config/media/flexslider/{flexslider}/disable'
   defaults:
-    _controller: '\Drupal\flexslider\Controller\OptionsetConfigController::disable'
-    entity_type: 'flexslider_optionset'
+    _controller: '\Drupal\flexslider\Controller\FlexsliderOptionsetController::disable'
+    entity_type: 'flexslider'
   requirements:
     _permission: 'administer flexslider'
   options:

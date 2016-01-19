@@ -57,8 +57,8 @@ class FlexsliderTestCase extends DrupalWebTestCase {
     foreach ($testsets as $name) {
       // Create a new optionset with default settings
       $optionset = flexslider_optionset_create(array('name' => $name));
-      $this->assertTrue($optionset->name == $name, t('Optionset object created: @name', array('@name' => $optionset->name)));
-      $this->assertFalse(empty($optionset->options), t('Create optionset works.'));
+      $this->assertTrue($optionset->id() == $name, t('Optionset object created: @name', array('@name' => $optionset->id())));
+      $this->assertFalse(empty($optionset->getOptions), t('Create optionset works.'));
 
       // Save the optionset to the database
       $optionset = flexslider_optionset_save($optionset, TRUE);
@@ -68,11 +68,11 @@ class FlexsliderTestCase extends DrupalWebTestCase {
       $optionset = flexslider_optionset_load($name);
 
       $this->assertTrue(is_object($optionset), t('Loaded option set.'));
-      $this->assertEqual($name, $optionset->name, t('Loaded name matches: @name', array('@name' => $optionset->name)));
+      $this->assertEqual($name, $optionset->id(), t('Loaded name matches: @name', array('@name' => $optionset->id())));
 
       $default_optionset = flexslider_optionset_create();
-      foreach ($default_optionset->options as $key => $value) {
-        $this->assertEqual($value, $optionset->options[$key], t('Option @option matches saved value.', array('@option' => $key)));
+      foreach ($default_optionset->getOptions as $key => $value) {
+        $this->assertEqual($value, $optionset->getOptions[$key], t('Option @option matches saved value.', array('@option' => $key)));
       }
 
     }
@@ -84,9 +84,9 @@ class FlexsliderTestCase extends DrupalWebTestCase {
 
     // Ensure they all loaded correctly
     foreach ($optionsets as $optionset) {
-      $this->assertTrue(isset($optionset->name), t('Loaded optionsets have a defined machine name'));
+      $this->assertTrue(isset($optionset->id()), t('Loaded optionsets have a defined machine name'));
       $this->assertTrue(isset($optionset->title), t('Loaded optionsets have a defined human readable name (title)'));
-      $this->assertTrue(isset($optionset->options), t('Loaded optionsets have a defined array of options'));
+      $this->assertTrue(isset($optionset->getOptions), t('Loaded optionsets have a defined array of options'));
     }
 
     // Update the optionset
@@ -97,7 +97,7 @@ class FlexsliderTestCase extends DrupalWebTestCase {
     $optionset = flexslider_optionset_load($testsets[0]);
 
     // Change the settings
-    $optionset->options += $test_options['set2'];
+    $optionset->getOptions += $test_options['set2'];
 
     // Save the updated values
     $optionset = flexslider_optionset_save($optionset);
@@ -108,15 +108,15 @@ class FlexsliderTestCase extends DrupalWebTestCase {
 
     // Compare settings to the test options
     foreach ($test_options['set2'] as $key => $value) {
-      $this->assertEqual($optionset->options[$key], $value, t('Saved value matches set value: @key', array('@key' => $key)));
+      $this->assertEqual($optionset->getOptions[$key], $value, t('Saved value matches set value: @key', array('@key' => $key)));
     }
 
     // Delete the optionset
-    $this->assertTrue(flexslider_optionset_exists($optionset->name), t('Optionset exists and is ready to be deleted.'));
-    flexslider_optionset_delete($optionset->name);
+    $this->assertTrue(flexslider_optionset_exists($optionset->id()), t('Optionset exists and is ready to be deleted.'));
+    flexslider_optionset_delete($optionset->id());
 
     // Ensure the delete is successfull
-    $this->assertFalse(flexslider_optionset_exists($optionset->name), t('Optionset successfully deleted: @name', array('@name' => $optionset->name)));
+    $this->assertFalse(flexslider_optionset_exists($optionset->id()), t('Optionset successfully deleted: @name', array('@name' => $optionset->id())));
   }
 
   function testOptionSetForm() {

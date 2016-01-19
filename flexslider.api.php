@@ -22,7 +22,7 @@ flexslider_add('my_image_list', 'default');
 /**
  * You also have the option of skipping the option set parameter if you want
  * to run with the library defaults or plan on adding the settings array
- * into the page manually using drupal_add_js().
+ * into the page manually using #attached.
  */
 flexslider_add('my_image_list');
 

@@ -6,6 +6,7 @@
  * Preprocessor functions fill variables for templates and helper
  * functions to make theming easier.
  */
+use Drupal\flexslider\Entity\Flexslider;
 
 /**
  * Default theme implementation for flexslider_list
@@ -61,7 +62,7 @@ function theme_flexslider_list_item(&$vars) {
 /**
  * Template preprocess handler for 'flexslider' theme.
  */
-function template_process_flexslider(&$vars) {
+function template_preprocess_flexslider(&$vars) {
 
   // Reference configuration variables
   $optionset = &$vars['settings']['optionset'];
@@ -75,14 +76,17 @@ function template_process_flexslider(&$vars) {
 
   // Load the selected optionset
   if (!empty($optionset)) {
-    $optionset = flexslider_optionset_load($optionset);
+    $optionset = Flexslider::load($optionset);
   }
 
   // Check if an optionset was loaded
-  if (empty($optionset)) {
-    // Fall back to 'default' option set
-    $optionset = flexslider_optionset_load('default');
+  if (is_null($optionset)) {
+    // Fall back to 'default' options
+    $options = \Drupal::config('flexslider.optionset.default')->get('options');
     \Drupal::logger('flexslider')->warning('Fallback to default optionset.', array());
+  }
+  else {
+    $options = $optionset->getOptions();
   }
 
   // Configure attributes for containing elements
@@ -100,9 +104,9 @@ function template_process_flexslider(&$vars) {
 
   // Add the namespace to any classes
   // @todo figure out what this is supposed to do
-  if (!empty($attributes['class']) && !empty($optionset->options['namespace'])) {
+  if (!empty($attributes['class']) && !empty($options['namespace'])) {
     foreach ($attributes['class'] as $key => $value) {
-      $attributes['class'][$key] = $optionset->options['namespace'] . $value;
+      $attributes['class'][$key] = $options['namespace'] . $value;
     }
   }
 

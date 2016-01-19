@@ -7,9 +7,9 @@ flexslider.settings:
     flexslider_debug:
       type: boolean
 
-flexslider.flexslider_optionset.*:
+flexslider.optionset.*:
   type: config_entity
-  label: 'Flexslider optionset config'
+  label: 'Flexslider optionset'
   mapping:
     id:
       type: string
