@@ -50,7 +50,9 @@ function theme_flexslider_list_item(&$variables) {
 }
 
 /**
- * Template preprocess handler for 'flexslider' theme.
+ * Prepares variables for flexslider templates.
+ *
+ * @see flexslider.tpl.php.
  */
 function template_process_flexslider(&$variables) {
 
@@ -116,7 +118,9 @@ function template_process_flexslider(&$variables) {
 }
 
 /**
- * Process function for flexslider_list_item
+ * Prepares variables for flexslider list templates.
+ *
+ * @see flexslider-list.tpl.php.
  */
 function template_process_flexslider_list(&$variables) {
   // Reset the list of attributes
@@ -128,7 +132,9 @@ function template_process_flexslider_list(&$variables) {
 }
 
 /**
- * Process function for flexslider_list_item
+ * Prepares variables for flexslider list item templates.
+ *
+ * @see flexslider-list-item.tpl.php.
  */
 function template_process_flexslider_list_item(&$variables) {
   // Reset the list of attributes
