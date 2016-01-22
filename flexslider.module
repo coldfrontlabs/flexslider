@@ -6,6 +6,7 @@
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\flexslider\Entity\Flexslider;
+use Symfony\Component\Validator\Constraints\True;
 
 define("FLEXSLIDER_VERSION", \Drupal::config('flexslider.settings')->get('flexslider_version'));
 define("FLEXSLIDER_DEBUG", \Drupal::config('flexslider.settings')->get('flexslider_debug'));
@@ -63,46 +64,90 @@ function flexslider_libraries_info_alter(&$libraries) {
 }
 
 /**
- * Implements hook_library().
+ * Implements hook_library_info_build().
  *
  * We also define FlexSlider through the core library callbacks
  */
-function flexslider_library() {
-  $module_path = drupal_get_path('module', 'flexslider');
+function flexslider_library_info_build() {
+  $libraries = [];
+
   $library_path = libraries_get_path('flexslider');
-  
+  if (strpos($library_path, '/') !== 0) {
+    $library_path = '/' . $library_path;
+  }
+
   $libraries['flexslider'] = array(
     'title' => 'FlexSlider',
-    'website' => 'http://flexslider.woothemes.com',
+    'remote' => 'http://flexslider.woothemes.com',
     'version' => FLEXSLIDER_VERSION,
+    'license' => array(
+      'name' => 'GNU-GPL-2.0-or-later',
+      'url' => 'https://github.com/woothemes/FlexSlider/blob/master/LICENSE.md',
+      'gpl-compatible' => TRUE,
+    ),
+    'dependencies' => array(
+      'core/jquery',
+      'core/drupal',
+      'core/drupalSettings',
+      'core/jquery.once',
+    ),
     'js' => array(
       $library_path . '/jquery.flexslider-min.js' => array(
         'scope' => 'footer',
       ),
+      'assets/js/flexslider.load.js' => array(
+        'scope' => 'footer',
+      ),
     ),
     'css' => array(
-      $library_path . '/flexslider.css' => array(
-        'type' => 'file',
-        'media' => 'screen',
-      ),
-      $module_path . '/assets/css/flexslider_img.css' => array(
-        'type' => 'file',
-        'media' => 'screen',
+      'theme' => array(
+        $library_path . '/flexslider.css' => array(
+          'media' => 'screen',
+        ),
+        'assets/css/flexslider_img.css' => array(
+          'media' => 'screen',
+        ),
       ),
     ),
   );
+
+  // Add support for jQuery Easing module
+  if (\Drupal::moduleHandler()->moduleExists('jqeasing')) {
+    // Using the jqeasing module
+    $libraries['flexslider']['dependencies'][] = 'jqeasing.easing';
+  }
+  /*
+  else {
+    // Without the module
+    $libraries['flexslider']['easing'] = [
+      'remote' => 'https://github.com/gdsmith/jquery.easing',
+      'license' => [
+        'name' => 'MIT',
+        'url' => 'http://www.opensource.org/licenses/mit-license.php',
+        'gpl-compatible' => true,
+      ],
+      'version' => '1.3',
+      'js' => [
+        '/libraries/easing/jquery.easing.min.js'
+      ],
+      'dependencies' => [
+        'core/jquery'
+      ],
+    ];
+  }
+  */
   return $libraries;
 }
 
 /**
- * Implements hook_library_alter().
+ * Implements hook_library_info_alter().
  */
-function flexslider_library_alter(&$libraries, $module) {
+function flexslider_library_info_alter(&$libraries, $extension) {
   // Enable debug mode
   if (FLEXSLIDER_DEBUG) {
-    if ($module == 'flexslider' and isset($libraries['flexslider'])) {
-      $libraries['flexslider']['js'] = array(
-        libraries_get_path() . '/jquery.flexslider.js' => array(
+    if ($extension == 'flexslider' and isset($libraries['flexslider'])) {
+      $libraries['flexslider/flexslider']['js'] = array(
+        libraries_get_path('flexslider') . '/jquery.flexslider.js' => array(
           'scope' => 'footer',
         ),
       );
@@ -122,7 +167,7 @@ function flexslider_help($route_name, RouteMatchInterface $route_match) {
       return
         '<p>'
         . t('An <em>option set</em> defines exactly how a flexslider image gallery looks like on your site. '
-          . 'It is s a combination of <a href="@styles">image styles</a> for the various image sizes and FlexSlider library options.', array('@styles' => url('admin/config/media/image-styles'))) . '<br />'
+          . 'It is a combination of <a href="@styles">image styles</a> for the various image sizes and FlexSlider library options.', array('@styles' => url('admin/config/media/image-styles'))) . '<br />'
         . t('For a full documentation of all options, refer to the official @docs.', array('@docs' => render($vendor_link)))
         . '</p>';
     case 'entity.flexslider.collection':
@@ -142,19 +187,19 @@ function flexslider_theme() {
     // Flexslider container
     'flexslider' => array(
       'variables' => array('items' => array(), 'settings' => array()),
-      'file' => 'theme/flexslider.theme.inc',
+      'file' => 'templates/flexslider.theme.inc',
     ),
     
     // Slide container
     'flexslider_list' => array(
       'variables' => array('items' => array(), 'settings' => array()),
-      'file' => 'theme/flexslider.theme.inc',
+      'file' => 'templates/flexslider.theme.inc',
     ),
     
     // Slide item
     'flexslider_list_item' => array(
       'variables' => array('item' => array(), 'settings' => array(), 'caption' => ''),
-      'file' => 'theme/flexslider.theme.inc',
+      'file' => 'templates/flexslider.theme.inc',
     ),
   );
 }
@@ -212,23 +257,30 @@ function flexslider_optionset_exists($optionset_name) {
   // return isset($optionset->name);
 }
 
-/*
- * This function loads the required JavaScripts and settings for a flexslider
+/**
+ * This function returns an array of the required JavaScripts and settings for a flexslider
  * instance.
  *
  * @param string $id [optional]
  *  ID Attribute for FlexSlider container
+ *
  * @param object|strong $optionset [optional]
  *  Option set to load or the machine name of an existing optionset
- */
+ *
+ * @return array
+ *   Array of asset attachments
+ **/
 function flexslider_add($id = NULL, $optionset = NULL) {
+
+  $attached = [];
+
   // Check optionset value
   if (is_string($optionset)) {
     $name = $optionset;
     $optionset = Flexslider::load($name);
     if (empty($optionset)) {
       \Drupal::logger('flexslider')->warning('Invalid optionset name supplied to flexslider_add: @name', array('@name' => $name));
-      return;
+      return $attached;
     }
   }
 
@@ -236,55 +288,26 @@ function flexslider_add($id = NULL, $optionset = NULL) {
   // @todo not currently in use
   $cache = &drupal_static(__FUNCTION__, array());
 
-  // @todo investigate the best way to cache data loaded from libraries_load()
-  libraries_load('flexslider');
+  $attached['library'][] = 'flexslider/flexslider';
 
   // If the ID or optionset aren't set, it is assumed the settings will be set
   // manually via the calling module/theme
   if (!empty($optionset) && !in_array($optionset->id(), $cache)) {
     $cache[] = $optionset->id();
-    $js_setting['optionsets'] = array(
+    $attached['drupalSettings']['flexslider']['optionsets'] = array(
       $optionset->id() => $optionset->getOptions(),
     );
-    // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_js(array('flexslider' => $js_setting), 'setting');
-
   }
   
   if (!empty($id)) {
     // JavaScript settings
-    $js_settings = array(
-      'instances' => array(
-        $id => $optionset->name,
-      ),
+    $attached['drupalSettings']['flexslider']['instances'] = array(
+      $id => $optionset->id(),
     );
-    // @todo add alter hook for optionset
-    // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_js(array('flexslider' => $js_settings), 'setting');
 
   }
-  // Loader JavaScript
-  // @FIXME
-// The Assets API has totally changed. CSS, JavaScript, and libraries are now
-// attached directly to render arrays using the #attached property.
-// 
-// 
-// @see https://www.drupal.org/node/2169605
-// @see https://www.drupal.org/node/2408597
-// drupal_add_js(drupal_get_path('module', 'flexslider') . '/assets/js/flexslider.load.js', array('type' => 'file', 'scope' => 'footer'));
 
+  return $attached;
 }
 
 /**

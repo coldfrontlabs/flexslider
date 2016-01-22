@@ -28,6 +28,16 @@ class FlexsliderFormatter extends ImageFormatter {
   /**
    * {@inheritdoc}
    */
+  public static function defaultSettings() {
+    return array(
+      'optionset' => 'default',
+      'caption' => '',
+    ) + parent::defaultSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function settingsSummary() {
     $summary = array();
 
@@ -114,11 +124,29 @@ class FlexsliderFormatter extends ImageFormatter {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-    $items = parent::viewElements($items, $langcode);
+
+    $images = parent::viewElements($items, $langcode);
 
     // Bail out if no images to render
-    if (empty($items)) {
+    if (empty($images)) {
       return array();
+    }
+
+    $items = [];
+
+    foreach ($images as $delta => $image) {
+
+      $item = array();
+
+      // Prepare the slide item render array
+      $item['slide'] = $image;
+
+      // Check caption settings
+      if ($this->getSetting('caption')) {
+        $item['caption'] =  ['#markup' => Xss::filterAdmin($image->get('title'))];
+      }
+
+      $items[$delta] = $item;
     }
 
     // Get cache tags for the option set

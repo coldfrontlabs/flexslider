@@ -1,9 +1,11 @@
 (function($) {
 
+  "use strict";
+
   // Behavior to load FlexSlider
   Drupal.behaviors.flexslider = {
     attach: function(context, settings) {
-      var sliders = [];
+      var sliders = [], id;
       if ($.type(settings.flexslider) !== 'undefined' && $.type(settings.flexslider.instances) !== 'undefined') {
 
         for (id in settings.flexslider.instances) {
@@ -31,7 +33,7 @@
    */
 
   function _flexslider_init(id, optionset, context) {
-    $('#' + id, context).once('flexslider', function() {
+    $('#' + id, context).once('flexslider').each(function() {
       // Remove width/height attributes
       // @todo load the css path from the settings
       $(this).find('ul.slides > li > *').removeAttr('width').removeAttr('height');
