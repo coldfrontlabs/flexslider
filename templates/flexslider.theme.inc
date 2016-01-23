@@ -20,7 +20,7 @@ function template_preprocess_flexslider(&$vars) {
   $optionset = &$vars['settings']['optionset'];
   $settings = &$vars['settings'];
   $items = &$vars['items'];
-
+  dpm($items[0]);
   // Set the default container type
   if (empty($settings['type'])) {
     $settings['type'] = 'ul';
@@ -134,12 +134,10 @@ function template_preprocess_flexslider_list_item(&$vars) {
   // Generated thumbnail support
   if ($optionset->getOption('controlNav') === "thumbnails") {
     // If the thumbnails are enabled in the option set,
-    // extract the src attribute to set as the thumbnail data
-    $src = array();
-
-    if (!empty($src[1])) {
-      $attributes['data-thumb'] = $src[1];
-    }
+    // extract the url to set as the thumbnail data
+    // @todo deal with caching when optionset changes
+    // @fixme make sure we use the style url instead of the original if style name set
+    $attributes['data-thumb'] = $item['#item']->entity->url();
   }
 
   if ($optionset->getOption('thumbCaptions') and !empty($caption)) {
