@@ -20,7 +20,7 @@ function template_preprocess_flexslider(&$vars) {
   $optionset = &$vars['settings']['optionset'];
   $settings = &$vars['settings'];
   $items = &$vars['items'];
-  dpm($items[0]);
+
   // Set the default container type
   if (empty($settings['type'])) {
     $settings['type'] = 'ul';
