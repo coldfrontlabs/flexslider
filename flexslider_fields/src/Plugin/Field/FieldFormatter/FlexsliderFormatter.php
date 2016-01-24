@@ -6,6 +6,8 @@
 namespace Drupal\flexslider_fields\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Url;
+use Drupal\Core\Cache\Cache;
+use Drupal\Component\Utility\Xss;
 use Drupal\flexslider\Entity\Flexslider;
 use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatter;
 use Drupal\Core\Form\FormStateInterface;
@@ -132,13 +134,25 @@ class FlexsliderFormatter extends ImageFormatter {
       return array();
     }
 
+    // Get cache tags for the option set
+    if ($optionset = $this->loadOptionset()) {
+      $cache_tags = $optionset->getCacheTags();
+    }
+    else {
+      $cache_tags = array();
+    }
+
     $items = [];
 
-    foreach ($images as $delta => $image) {
+    foreach ($images as $delta => &$image) {
 
-      $item = array();
+      // Merge in the cache tags
+      if ($cache_tags) {
+        $image['#cache']['tags'] = Cache::mergeTags($image['#cache']['tags'], $cache_tags);
+      }
 
       // Prepare the slide item render array
+      $item = array();
       $item['slide'] = $image;
 
       // Check caption settings
@@ -149,19 +163,10 @@ class FlexsliderFormatter extends ImageFormatter {
       $items[$delta] = $item;
     }
 
-    // Get cache tags for the option set
-    if ($optionset = $this->loadOptionset()) {
-      $tags = $optionset->getCacheTags();
-    }
-    else {
-      $tags = array();
-    }
-
     $element = array(
       '#theme' => 'flexslider',
       '#items' => $items,
       '#settings' => $this->getSettings(),
-      '#cache' => $tags,
     );
 
     return $element;
