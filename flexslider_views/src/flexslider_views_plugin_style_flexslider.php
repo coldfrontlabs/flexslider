@@ -1,8 +1,5 @@
 <?php
-/**
- * @file
- * flexslider style plugin for the Views module.
- */
+namespace Drupal\flexslider_views;
 
 /**
   * Implements a style type plugin for the Views module.
@@ -36,7 +33,7 @@ class flexslider_views_plugin_style_flexslider extends views_plugin_style {
 
     $optionsets = array();
     foreach (flexslider_optionset_load_all() as $name => $optionset) {
-      $optionsets[$name] = check_plain($optionset->title);
+      $optionsets[$name] = \Drupal\Component\Utility\SafeMarkup::checkPlain($optionset->title);
     }
     $form['flexslider']['optionset'] = array(
       '#title' => t('Option set'),
@@ -108,14 +105,23 @@ class flexslider_views_plugin_style_flexslider extends views_plugin_style {
           $rows[$index]->caption = $this->rendered_fields[$index][$caption_field];
         }
       }
-      $output .= theme($this->theme_functions(),
-        array(
-          'view' => $this->view,
-          'options' => $this->options,
-          'rows' => $rows,
-          'title' => $title
-        )
-      );
+      // @FIXME
+// theme() has been renamed to _theme() and should NEVER be called directly.
+// Calling _theme() directly can alter the expected output and potentially
+// introduce security issues (see https://www.drupal.org/node/2195739). You
+// should use renderable arrays instead.
+// 
+// 
+// @see https://www.drupal.org/node/2195739
+// $output .= theme($this->theme_functions(),
+//         array(
+//           'view' => $this->view,
+//           'options' => $this->options,
+//           'rows' => $rows,
+//           'title' => $title
+//         )
+//       );
+
     }
 
     return $output;

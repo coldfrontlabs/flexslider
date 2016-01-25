@@ -3,6 +3,8 @@
 /**
  * @file
  * Contains \Drupal\flexslider\FlexsliderListBuilder.
+ *
+ * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>
  */
 
 namespace Drupal\flexslider\Controller;

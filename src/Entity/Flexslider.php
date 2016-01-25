@@ -3,6 +3,7 @@
 /**
  * @file
  * Contains \Drupal\flexslider\Entity\Flexslider.
+ * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>
  */
 
 namespace Drupal\flexslider\Entity;

@@ -2,6 +2,8 @@
 /**
  * @file
  * Contains \Drupal\flexslider_fields\Plugin\Field\FieldFormatter\FlexsliderFormatter.
+ *
+ * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>
  */
 namespace Drupal\flexslider_fields\Plugin\Field\FieldFormatter;
 
@@ -47,8 +49,8 @@ class FlexsliderFormatter extends ImageFormatter {
     $optionset = $this->loadOptionset();
 
     // Build the optionset summary
-    $os_summary = $optionset ? $optionset->label() : t('Default settings');
-    $summary[] = t('Option set: %os_summary', array('%os_summary' => $os_summary));
+    $os_summary = $optionset ? $optionset->label() : $this->t('Default settings');
+    $summary[] = $this->t('Option set: %os_summary', array('%os_summary' => $os_summary));
 
     // Add the image settings summary and return
     return array_merge($summary, parent::settingsSummary());
@@ -63,7 +65,7 @@ class FlexsliderFormatter extends ImageFormatter {
     $optionsets = flexslider_optionset_load_all();
 
     $element['optionset'] = array(
-      '#title' => t('Option Set'),
+      '#title' => $this->t('Option Set'),
       '#type' => 'select',
       '#default_value' => $this->getSetting('optionset'),
       '#options' => $optionsets,
@@ -73,11 +75,11 @@ class FlexsliderFormatter extends ImageFormatter {
       '#theme' => 'links',
       '#links' => array(
         array(
-          'title' => t('Create new option set'),
+          'title' => $this->t('Create new option set'),
           'url' => Url::fromRoute('entity.flexslider.add_form', array(), array('query' => \Drupal::destination()->getAsArray())),
         ),
         array(
-          'title' => t('Manage option sets'),
+          'title' => $this->t('Manage option sets'),
           'url' => Url::fromRoute('entity.flexslider.collection', array(), array('query' => \Drupal::destination()->getAsArray())),
         ),
       ),
@@ -92,7 +94,7 @@ class FlexsliderFormatter extends ImageFormatter {
     $field_settings = $this->getFieldSettings();
     if (!empty($field_settings)) {
       $element['caption'] = array(
-        '#title' => t('Use image title as the caption'),
+        '#title' => $this->t('Use image title as the caption'),
         '#type' => 'checkbox',
       );
 
@@ -111,7 +113,7 @@ class FlexsliderFormatter extends ImageFormatter {
 
         $element['caption']['#disabled'] = TRUE;
         $element['caption']['#description'] =
-            t('You need to @action for this image field to be able to use it as a caption.',
+          $this->t('You need to @action for this image field to be able to use it as a caption.',
               array('@action' => render($action->toRenderable())));
       }
       else {
@@ -153,7 +155,8 @@ class FlexsliderFormatter extends ImageFormatter {
 
       // Prepare the slide item render array
       $item = array();
-      $item['slide'] = $image;
+      // @todo Should find a way of dealing with render arrays instead of the actual output
+      $item['slide'] = render($image);
 
       // Check caption settings
       if ($this->getSetting('caption')) {
