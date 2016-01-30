@@ -205,13 +205,12 @@ function flexslider_theme() {
 }
 
 /**
- * Fetches all option sets from the database and returns them as an associative array.
- * Suitable as options for select lists.
+ * Gets an array of option sets suitable for using as select list options.
  *
  * @return array
  *   Array of optionset labels keyed by id
  */
-function flexslider_optionset_load_all() {
+function flexslider_optionset_list() {
   $optionsets = Flexslider::loadMultiple();
   $options = array();
   foreach ($optionsets as $name => $optionset) {
@@ -222,20 +221,6 @@ function flexslider_optionset_load_all() {
     $options[''] = t('No defined option sets');
   }
   return $options;
-}
-
-/**
- * Fetches the given option set and returns it as an object or NULL, if no set could be found.
- *
- * @param string $optionset_name
- * @param boolean $fallback
- * @return \Drupal\flexslider\Entity\Flexslider
- */
-function flexslider_optionset_load($optionset_name, $fallback = TRUE) {
-
-    // Ensure the optionset is typecast after being loaded from DB
-  //_flexslider_typecast_optionset($optionset->options);
-  /// return $optionset;
 }
 
 /**
@@ -308,68 +293,6 @@ function flexslider_add($id = NULL, $optionset = NULL) {
   }
 
   return $attached;
-}
-
-/**
- * Adds the typecasting to the values so that the generated
- * json array keeps the right values
- */
-function _flexslider_typecast_optionset(&$options) {
-  if (isset($options) && !empty($options)) {
-    foreach ($options as $key => $value) {
-      switch ($key) {
-        case 'namespace':
-        case 'selector':
-        case 'easing':
-        case 'direction':
-        case 'controlsContainer':
-        case 'sync':
-        case 'asNavFor':
-        case 'fade':
-        case 'prevText':
-        case 'nextText':
-        case 'pauseText':
-        case 'playText':
-        case 'manualControls':
-          $options[$key] = (string)$value;
-          break;
-        case 'startAt':
-        case 'animationSpeed':
-        case 'initDelay':
-        case 'itemWidth':
-        case 'itemMargin':
-        case 'minItems':
-        case 'maxItems':
-        case 'move':
-          $options[$key] = (int)$value;
-          break;
-        case 'controlNav':
-          if ($value == 'thumbnails') {
-            $options[$key] = (string)$value;
-            break;
-          }
-        case 'reverse':
-        case 'smoothHeight':
-        case 'useCSS':
-        case 'touch':
-        case 'video':
-        case 'keyboard':
-        case 'multipleKeyboard':
-        case 'mouseWheel':
-        case 'slideshow':
-        case 'directionNav':
-        case 'pausePlay':
-        case 'randomize':
-        case 'thumbCaptions':
-        case 'thumbCaptionsBoth':
-        case 'animationLoop':
-        case 'pauseOnAction':
-        case 'pauseOnHover':
-          $options[$key] = (boolean)$value;
-          break;
-      }
-    }
-  }
 }
 
 /**

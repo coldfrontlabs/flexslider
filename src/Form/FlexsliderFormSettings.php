@@ -19,7 +19,7 @@ class FlexsliderFormSettings extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'flexslider_form_settings';
+    return 'flexslider_advanced_settings_form';
   }
 
   /**
@@ -27,15 +27,11 @@ class FlexsliderFormSettings extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->config('flexslider.settings');
+    $config->set('flexslider_debug', $form_state->getValue('flexslider_debug'))
+              ->save();
 
-    foreach (Element::children($form) as $variable) {
-      $config->set($variable, $form_state->getValue($form[$variable]['#parents']));
-    }
-    $config->save();
-
-    if (method_exists($this, '_submitForm')) {
-      $this->_submitForm($form, $form_state);
-    }
+    // Invalidate the library discovery cache to update new assets.
+    \Drupal::service('library.discovery')->clearCachedDefinitions();
 
     parent::submitForm($form, $form_state);
   }
@@ -53,22 +49,19 @@ class FlexsliderFormSettings extends ConfigFormBase {
     $form['library'] = [
       '#type' => 'fieldset',
       '#title' => 'Library',
+      '#tree' => FALSE,
     ];
 
     // Debug mode toggle
     $form['library']['flexslider_debug'] = [
       '#type' => 'checkbox',
-      '#title' => t('Enable debug mode'),
-      '#description' => t('Load the human-readable version of the FlexSlider library.'),
+      '#title' => $this->t('Enable debug mode'),
+      '#description' => $this->t('Load the human-readable version of the FlexSlider library.'),
       '#default_value' => \Drupal::config('flexslider.settings')->get('flexslider_debug'),
       '#access' => \Drupal::currentUser()->hasPermission('administer flexslider'),
     ];
 
     return parent::buildForm($form, $form_state);
-  }
-
-  public function _submitForm(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
-    // Do nothing for now
   }
 
 }

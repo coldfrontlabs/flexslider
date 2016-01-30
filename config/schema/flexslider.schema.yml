@@ -1,6 +1,6 @@
 flexslider.settings:
-  type: mapping
-  label: Settings
+  type: config_object
+  label: 'FlexSlider settings'
   mapping:
     flexslider_version:
       type: string
@@ -108,7 +108,7 @@ flexslider.optionset.*:
         selector:
           type: string
           label: 'Selector'
-        synch:
+        sync:
           type: string
           label: 'Snych'
         asNavFor:

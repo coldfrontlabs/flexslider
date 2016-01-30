@@ -45,15 +45,30 @@ class FlexsliderDeleteForm extends EntityConfirmFormBase {
     $this->entity->delete();
 
     drupal_set_message(
-      $this->t('content @type: deleted @label.',
+      $this->t('Deleted the %label Flexslider optionset.',
         [
-          '@type' => $this->entity->bundle(),
-          '@label' => $this->entity->label()
+          '%label' => $this->entity->label()
         ]
         )
     );
 
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildForm(array $form, FormStateInterface $form_state) {
+    $form = parent::buildForm($form, $form_state);
+
+    if ($this->entity->id() == 'default') {
+      $form['#title'] = $this->t('The default optionset cannot be deleted.');
+      $form['description'] = array('#markup' => t('Please click Cancel to go back to the list of optionsets.'));
+      $form['actions']['submit']['#access'] = FALSE;
+    }
+
+    return $form;
+  }
+
 
 }

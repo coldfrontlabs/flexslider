@@ -62,7 +62,7 @@ class FlexsliderFormatter extends ImageFormatter {
   public function settingsForm(array $form, FormStateInterface $form_state) {
 
     // Get list of option sets as an associative array
-    $optionsets = flexslider_optionset_load_all();
+    $optionsets = flexslider_optionset_list();
 
     $element['optionset'] = array(
       '#title' => $this->t('Option Set'),
@@ -109,12 +109,12 @@ class FlexsliderFormatter extends ImageFormatter {
               'query' => \Drupal::destination()->getAsArray()
             )
           )
-        );
+        )->toRenderable();
 
         $element['caption']['#disabled'] = TRUE;
-        $element['caption']['#description'] =
+        $element['caption']['#description'] = '';
           $this->t('You need to @action for this image field to be able to use it as a caption.',
-              array('@action' => render($action->toRenderable())));
+              array('@action' => render($action)));
       }
       else {
         $element['caption']['#default_value'] = $this->getSetting('caption');

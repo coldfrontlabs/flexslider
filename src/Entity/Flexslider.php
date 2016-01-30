@@ -98,4 +98,14 @@ class Flexslider extends ConfigEntityBase implements FlexsliderInterface {
     return parent::load($id);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(array $values = array()) {
+    $flexslider = parent::create($values);
+    // Merge options with default options
+    $defaultOptions = \Drupal::config('flexslider.optionset.default')->getOriginal('options', FALSE);
+    $flexslider->setOptions($flexslider->getOptions() + $defaultOptions);
+    return $flexslider;
+  }
 }

@@ -34,7 +34,7 @@ function template_preprocess_flexslider(&$vars) {
   // Check if an optionset was loaded
   if (is_null($optionset)) {
     // Fall back to 'default' options
-    $options = \Drupal::config('flexslider.optionset.default')->get('options');
+    $options = \Drupal::config('flexslider.optionset.default')->getOriginal('options', FALSE);
     \Drupal::logger('flexslider')->warning('Fallback to default optionset.', array());
   }
   else {

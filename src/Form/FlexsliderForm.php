@@ -27,7 +27,7 @@ class FlexsliderForm extends EntityForm {
     /**  @var $flexslider \Drupal\flexslider\FlexsliderInterface */
     $flexslider = $this->entity;
     $options = $flexslider->getOptions();
-    $default_options = \Drupal::config('flexslider.optionset.default')->get('options');
+    $default_options = \Drupal::config('flexslider.optionset.default')->getOriginal('options', FALSE);
 
     $form['label'] = array(
       '#type' => 'textfield',
@@ -425,9 +425,26 @@ class FlexsliderForm extends EntityForm {
     $options = array();
     $values = $form_state->getValues();
     foreach ($values as $key => $value) {
-      $options[$key] = $value;
+      if (in_array($key, array('id', 'label'))) {
+        $entity->set($key, $value);
+      }
+      else {
+        $options[$key] = $value;
+      }
     }
     $entity->set('options', $options);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function actions(array $form, FormStateInterface $form_state) {
+    $actions = parent::actions($form, $form_state);
+    // Prevent access to the delete button when editing the default configuration
+    if ($this->entity->id() == 'default' && isset($actions['delete'])) {
+      $actions['delete']['#access'] = FALSE;
+    }
+    return $actions;
   }
 
   /**

@@ -29,7 +29,7 @@ options:
   nextText: 'Next'
   namespace: 'flex-'
   selector: '.slides > li'
-  synch: ''
+  sync: ''
   asNavFor: ''
   initDelay: 0
   useCSS: TRUE
