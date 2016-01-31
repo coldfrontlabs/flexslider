@@ -112,7 +112,7 @@ class FlexsliderFormatter extends ImageFormatter {
         )->toRenderable();
 
         $element['caption']['#disabled'] = TRUE;
-        $element['caption']['#description'] = '';
+        $element['caption']['#description'] =
           $this->t('You need to @action for this image field to be able to use it as a caption.',
               array('@action' => render($action)));
       }
