@@ -141,7 +141,7 @@ function template_preprocess_flexslider_list_item(&$vars) {
     if (!empty($src[1])) {
       $attributes['data-thumb'] = $src[1];
     }
-    // @todo Use something like this instead if we go to render arrays
+    // @todo Use something like this instead if we switch to using render arrays
     // $attributes['data-thumb'] = $item['#item']->entity->url();
   }
 

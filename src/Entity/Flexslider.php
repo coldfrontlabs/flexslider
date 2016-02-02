@@ -72,8 +72,15 @@ class Flexslider extends ConfigEntityBase implements FlexsliderInterface {
   /**
    * {@inheritdoc}
    */
-  public function getOptions() {
-    return $this->options;
+  public function getOptions($strict = FALSE) {
+    if ($strict) {
+      $options = $this->options;
+      if(isset($options['controlNav'])) {
+        $options['controlNav'] = boolval($options['controlNav']);
+      }
+      return $options;
+    }
+    else return $this->options;
   }
 
   /**

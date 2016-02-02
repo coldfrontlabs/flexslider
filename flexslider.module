@@ -280,7 +280,7 @@ function flexslider_add($id = NULL, $optionset = NULL) {
   if (!empty($optionset) && !in_array($optionset->id(), $cache)) {
     $cache[] = $optionset->id();
     $attached['drupalSettings']['flexslider']['optionsets'] = array(
-      $optionset->id() => $optionset->getOptions(),
+      $optionset->id() => $optionset->getOptions(TRUE),
     );
   }
   

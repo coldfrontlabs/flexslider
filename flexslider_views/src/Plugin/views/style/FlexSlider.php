@@ -48,6 +48,7 @@ class FlexSlider extends StylePluginBase {
   public function evenEmpty() {
     return FALSE;
   }
+
   /**
    * {@inheritdoc}
    */
@@ -130,5 +131,24 @@ class FlexSlider extends StylePluginBase {
     }
 
     return $output;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitOptionsForm(&$form, FormStateInterface $form_state) {
+    parent::submitOptionsForm($form, $form_state);
+
+    // Move flexslider options to the parent array so that values are saved properly
+    // Original: values['style_options']['flexslider'] = ['options', 'caption', 'id']
+    $flexsliderOptions = $form_state->getValue(array('style_options', 'flexslider'));
+
+    // Edits:  values['style_options'] += ['options', 'caption', 'id']
+    foreach ($flexsliderOptions as $key => $value) {
+      $form_state->setValue(array('style_options', $key), $value);
+    }
+
+    // Edits:  values['style_options']['flexslider'] = NULL
+    $form_state->setValue(array('style_options', 'flexslider'), NULL);
   }
 }
