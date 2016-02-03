@@ -12,6 +12,7 @@ namespace Drupal\flexslider\Form;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\flexslider\FlexsliderDefaults;
 
 /**
  * Class FlexsliderForm.
@@ -27,7 +28,7 @@ class FlexsliderForm extends EntityForm {
     /**  @var $flexslider \Drupal\flexslider\FlexsliderInterface */
     $flexslider = $this->entity;
     $options = $flexslider->getOptions();
-    $default_options = \Drupal::config('flexslider.optionset.default')->getOriginal('options', FALSE);
+    $default_options = FlexsliderDefaults::defaultOptions();
 
     $form['label'] = array(
       '#type' => 'textfield',

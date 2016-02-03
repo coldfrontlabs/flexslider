@@ -47,7 +47,7 @@ function flexslider_libraries_info() {
  * Implements hook_libraries_info_alter().
  */
 function flexslider_libraries_info_alter(&$libraries) {
-  $debug = \Drupal::config('flexslider.settings')->get('flexslider_debug');
+  $debug = FLEXSLIDER_DEBUG;
   if ($debug) {
     // Switch to the unminified version of the library
     if (isset($libraries['flexslider'])) {
@@ -221,25 +221,6 @@ function flexslider_optionset_list() {
     $options[''] = t('No defined option sets');
   }
   return $options;
-}
-
-/**
- * Checks whether an option set with the given name already exists.
- */
-function flexslider_optionset_exists($optionset_name) {
-  // @FIXME
-// Most CTools APIs have been moved into core.
-// 
-// @see https://www.drupal.org/node/2164623
-// ctools_include('export');
-
-  // @FIXME
-// The CTools Export API has been merged with the core entity API.
-// 
-// @see https://www.drupal.org/developing/api/entity
-// $optionset = ctools_export_crud_load('flexslider_optionset', $optionset_name);
-
-  // return isset($optionset->name);
 }
 
 /**

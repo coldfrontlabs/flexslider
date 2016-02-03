@@ -100,21 +100,28 @@ class FlexsliderFormatter extends ImageFormatter {
 
       // If the image field doesn't have the Title field enabled, tell the user.
       if ($field_settings['title_field'] == FALSE) {
-        $rel = "{$this->fieldDefinition->getTargetEntityTypeId()}-field-edit-form";
-        $action = \Drupal\Core\Link::fromTextAndUrl(
-          $this->t('enable the Title field'),
-          $this->fieldDefinition->toUrl($rel,
-            array(
-              'fragment' => 'edit-settings-alt-field',
-              'query' => \Drupal::destination()->getAsArray()
+        $actionText = $this->t('enable the Title field');
+        // @todo figure out a way to get the url of the field edit form when
+        // this is displayed in Views configuration
+        if (method_exists($this->fieldDefinition, 'toUrl')) {
+          $rel = "{$this->fieldDefinition->getTargetEntityTypeId()}-field-edit-form";
+          $action = \Drupal\Core\Link::fromTextAndUrl(
+            $actionText,
+            $this->fieldDefinition->toUrl($rel,
+              array(
+                'fragment' => 'edit-settings-alt-field',
+                'query' => \Drupal::destination()->getAsArray()
+              )
             )
-          )
-        )->toRenderable();
-
+          )->toRenderable();
+        }
+        else {
+          $action = ['#markup' => $actionText];
+        }
         $element['caption']['#disabled'] = TRUE;
         $element['caption']['#description'] =
           $this->t('You need to @action for this image field to be able to use it as a caption.',
-              array('@action' => render($action)));
+            array('@action' => render($action)));
       }
       else {
         $element['caption']['#default_value'] = $this->getSetting('caption');
@@ -166,13 +173,14 @@ class FlexsliderFormatter extends ImageFormatter {
       $items[$delta] = $item;
     }
 
-    $element = array(
+    // We have to pass an array of elements for Views compatibility
+    $elements[] = array(
       '#theme' => 'flexslider',
       '#items' => $items,
       '#settings' => $this->getSettings(),
     );
 
-    return $element;
+    return $elements;
   }
 
   /**

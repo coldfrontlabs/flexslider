@@ -39,7 +39,7 @@ flexslider.optionset.*:
           label: 'Easing'
         smoothHeight:
           type: boolean
-          label: 'Slideshow'
+          label: 'Smooth Height'
         reverse:
           type: boolean
           label: Reverse

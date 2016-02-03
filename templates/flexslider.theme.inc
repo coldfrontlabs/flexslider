@@ -7,8 +7,8 @@
  * functions to make theming easier.
  */
 use Drupal\Component\Utility\NestedArray;
-use Drupal\Core\Template\Attribute;
 use Drupal\flexslider\Entity\Flexslider;
+use Drupal\flexslider\FlexsliderDefaults;
 
 
 /**
@@ -34,7 +34,7 @@ function template_preprocess_flexslider(&$vars) {
   // Check if an optionset was loaded
   if (is_null($optionset)) {
     // Fall back to 'default' options
-    $options = \Drupal::config('flexslider.optionset.default')->getOriginal('options', FALSE);
+    $options = FlexsliderDefaults::defaultOptions();
     \Drupal::logger('flexslider')->warning('Fallback to default optionset.', array());
   }
   else {

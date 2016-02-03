@@ -9,6 +9,7 @@
 namespace Drupal\flexslider\Tests;
 
 use Drupal\flexslider\Entity\Flexslider;
+use Drupal\flexslider\FlexsliderDefaults;
 use Drupal\simpletest\WebTestBase;
 
 /**
@@ -103,7 +104,6 @@ class FlexsliderTest extends WebTestBase {
       // Read the values from the database
       $optionset = Flexslider::load($name);
 
-      // @todo should be a better way to determine exsitance of config entity in storage
       $this->assertTrue(is_object($optionset), t('Loaded option set.'));
       $this->assertEqual($name, $optionset->id(), t('Loaded name matches: @name', array('@name' => $optionset->id())));
 
@@ -151,7 +151,6 @@ class FlexsliderTest extends WebTestBase {
     }
 
     // Delete the optionset
-    // @todo should be a better way to determine exsitance of config entity in storage
     $this->assertTrue(is_object($optionset), t('Optionset exists and is ready to be deleted.'));
     try {
       $optionset->delete();
@@ -178,12 +177,13 @@ class FlexsliderTest extends WebTestBase {
 
     // Save new optionset
     $optionset = array();
-    $optionset['label'] = 'testset';
+    $optionset['label'] = t('testset');
     $optionset['id'] = 'testset';
     $this->drupalPostForm('admin/config/media/flexslider/add', $optionset, t('Save'));
+
     $this->assertResponse(200);
     $this->assertText('Created the testset Flexslider optionset.', t('Successfully saved the new optionset "testset"'));
-/*
+
     // Attempt to save option set of the same name again
     $this->drupalPostForm('admin/config/media/flexslider/add', $optionset, t('Save'));
     $this->assertResponse(200);
@@ -204,11 +204,12 @@ class FlexsliderTest extends WebTestBase {
         $this->assertFieldByName($key, $option, t('Value for @key appears in form correctly.', array('@key' => $key)));
       }
     }
-*/
+
     // ------------ Test Option Set Delete ------------ //
     $testset = Flexslider::load('testset');
 
     // Test the delete workflow
+
     $this->drupalGet("admin/config/media/flexslider/{$testset->id()}/delete");
     $this->assertResponse(200);
     $this->assertText("Are you sure you want to delete {$testset->label()}?", t('Delete confirmation form loaded.'));
@@ -227,7 +228,7 @@ class FlexsliderTest extends WebTestBase {
   protected function getTestOptions() {
     // Valid option set data
     $valid = array(
-      'set1' => \Drupal::config('flexslider.optionset.default')->getOriginal('options', FALSE),
+      'set1' => FlexsliderDefaults::defaultOptions(),
       'set2' => array(
         'animation' => 'slide',
         'startAt' => 4,

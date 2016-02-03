@@ -26,7 +26,7 @@ interface FlexsliderInterface extends ConfigEntityInterface {
    * @return array
    *   The array of options.
    */
-  public function getOptions($strict);
+  public function getOptions($strict = FALSE);
 
   /**
    * Returns the value of a flexslider library option.

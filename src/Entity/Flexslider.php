@@ -9,6 +9,7 @@
 namespace Drupal\flexslider\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Drupal\flexslider\FlexsliderDefaults;
 use Drupal\flexslider\FlexsliderInterface;
 
 /**
@@ -75,7 +76,7 @@ class Flexslider extends ConfigEntityBase implements FlexsliderInterface {
   public function getOptions($strict = FALSE) {
     if ($strict) {
       $options = $this->options;
-      if(isset($options['controlNav'])) {
+      if(isset($options['controlNav']) && $options['controlNav'] != 'thumbnails') {
         $options['controlNav'] = boolval($options['controlNav']);
       }
       return $options;
@@ -111,7 +112,7 @@ class Flexslider extends ConfigEntityBase implements FlexsliderInterface {
   public static function create(array $values = array()) {
     $flexslider = parent::create($values);
     // Merge options with default options
-    $defaultOptions = \Drupal::config('flexslider.optionset.default')->getOriginal('options', FALSE);
+    $defaultOptions = FlexsliderDefaults::defaultOptions();
     $flexslider->setOptions($flexslider->getOptions() + $defaultOptions);
     return $flexslider;
   }
