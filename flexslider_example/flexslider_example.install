@@ -5,40 +5,95 @@
  * Install tasks for flexslider_example
  *
  * @author Mathew Winstone <mwinstone@coldfrontlabs.ca>
+ * @author Agnes Chisholm <amaria@chisholmtech.com>
  */
+
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_install().
+ */
+function flexslider_example_install() {
+  // Generate content for examples
+  flexslider_example_generate_content();
+}
 
 /**
  * Implements hook_uninstall().
+ *
+ * Deletes all content and configuration installed by this module
  */
 function flexslider_example_uninstall() {
-  // Collect all the example nodes and delete them since core/features won't do
-  // this for us
-  // @see [#1840288]
-  
-  $query = new EntityFieldQuery();
-  $query->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', 'flexslider_example');
-  
-  $results = $query->execute();
-  
-  // Ensure we have some nodes
-  if (!empty($results['node'])) {
-    $nids = array_keys($results['node']);
-    node_delete_multiple($nids);
+  // Collect all of the example nodes and delete them
+  $storage_handler = \Drupal::entityTypeManager()->getStorage('node');
+  $nodes = $storage_handler->loadByProperties(array('type' => 'flexslider_example'));
+
+  // Ensure we have some nodes before deleting
+  if (!empty($nodes)) {
+    $storage_handler->delete($nodes);
+    \Drupal::logger('flexslider')->info(t('Deleted @count flexslider_example nodes', array('@count' => count($nodes))), array());
   }
+
+  // Now delete all of the configuration installed by this module
+  $dir = drupal_get_path('module', 'flexslider_example') . '/config/install';
+  $files = file_scan_directory($dir, '/.*/');
+  foreach ($files as $file) {
+    \Drupal::configFactory()->getEditable($file->name)->delete();
+  }
+  \Drupal::logger('flexslider')->info(t('Deleted flexslider example configuration'), array());
+
 }
-
-
 
 /**
- * Implements hook_update_N().
- *
- * Checks for the Context module. Disables if not present.
+ * Generate the sample content
  */
-function flexslider_example_update_7001(&$sandbox) {
-  if (!module_exists('context')) {
-    module_disable(array('flexslider_example'));
-      drupal_set_message(t('FlexSlider Example has been disabled as it now requires the !context module which is not currently available. Please download and enable the !context module and re-enable the FlexSlider Example module', array('!context' => l('Context', 'http://drupal.org/project/context'))), 'warning');
+function flexslider_example_generate_content() {
+  $images = array(
+    'flexslider-sample-1.jpg',
+    'flexslider-sample-2.jpg',
+    'flexslider-sample-3.jpg',
+    'flexslider-sample-4.jpg',
+  );
+
+  foreach ($images as $image) {
+
+    // Add the images using the Drupal File API
+    $path = drupal_get_path('module', 'flexslider') . '/assets/images/' . $image;
+    $filename = $image;
+
+    $file_temp = file_get_contents($path);
+    $file_temp = file_save_data($file_temp, 'public://' . $filename, FILE_EXISTS_RENAME);
+
+    // Create node object with attached file.
+    $node = Node::create([
+      'type'  => 'flexslider_example',
+      'title'  => ucfirst(str_replace(array('-', '.jpg'), array(' ', ''), $image)),
+      'promote' => NODE_NOT_PROMOTED,
+      'created' => REQUEST_TIME,
+      'changed' => REQUEST_TIME,
+      'uid' => 1,
+      'field_flexslider_example_image' => [
+        'target_id' => $file_temp->id(),
+      ],
+    ]);
+
+    try {
+      $result = $node->save();
+      if ($result == SAVED_NEW) {
+        $saved = 'Created';
+      }
+      elseif ($result == SAVED_UPDATED) {
+        $saved = 'Updated';
+      }
+      else {
+        throw new Exception(t('Unknown value [@result] was returned', array('@result' => $result)));
+      }
+
+      \Drupal::logger('flexslider')->info(t('@saved flexslider_example node @nid', array('@saved' => $saved, '@nid' => $node->id())), array());
+
+    } catch(Exception $e) {
+      \Drupal::logger('flexslider')->error(t('Node create failure: @msg', array('@msg' => $e->getMessage())), array());
+    }
+
   }
 }
-
