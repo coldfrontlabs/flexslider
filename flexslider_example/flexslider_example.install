@@ -48,26 +48,21 @@ function flexslider_example_uninstall() {
  * Generate the sample content
  */
 function flexslider_example_generate_content() {
-  $images = array(
-    'flexslider-sample-1.jpg',
-    'flexslider-sample-2.jpg',
-    'flexslider-sample-3.jpg',
-    'flexslider-sample-4.jpg',
-  );
+
+  $dir = drupal_get_path('module', 'flexslider') . '/assets/images';
+  $images = file_scan_directory($dir, '/flexslider-sample/');
 
   foreach ($images as $image) {
 
-    // Add the images using the Drupal File API
-    $path = drupal_get_path('module', 'flexslider') . '/assets/images/' . $image;
-    $filename = $image;
+    $filename = $image->filename;
 
-    $file_temp = file_get_contents($path);
+    $file_temp = file_get_contents($image->uri);
     $file_temp = file_save_data($file_temp, 'public://' . $filename, FILE_EXISTS_RENAME);
 
     // Create node object with attached file.
     $node = Node::create([
       'type'  => 'flexslider_example',
-      'title'  => ucfirst(str_replace(array('-', '.jpg'), array(' ', ''), $image)),
+      'title'  => ucfirst(str_replace('-', ' ', $image->name)),
       'promote' => NODE_NOT_PROMOTED,
       'created' => REQUEST_TIME,
       'changed' => REQUEST_TIME,
