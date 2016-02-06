@@ -94,6 +94,7 @@ function flexslider_library_info_build() {
     'js' => array(
       $library_path . '/jquery.flexslider-min.js' => array(
         'scope' => 'footer',
+        'minified' => TRUE,
       ),
       'assets/js/flexslider.load.js' => array(
         'scope' => 'footer',
@@ -116,26 +117,7 @@ function flexslider_library_info_build() {
     // Using the jqeasing module
     $libraries['flexslider']['dependencies'][] = 'jqeasing.easing';
   }
-  /*
-  else {
-    // Without the module
-    $libraries['flexslider']['easing'] = [
-      'remote' => 'https://github.com/gdsmith/jquery.easing',
-      'license' => [
-        'name' => 'MIT',
-        'url' => 'http://www.opensource.org/licenses/mit-license.php',
-        'gpl-compatible' => true,
-      ],
-      'version' => '1.3',
-      'js' => [
-        '/libraries/easing/jquery.easing.min.js'
-      ],
-      'dependencies' => [
-        'core/jquery'
-      ],
-    ];
-  }
-  */
+
   return $libraries;
 }
 
@@ -146,11 +128,18 @@ function flexslider_library_info_alter(&$libraries, $extension) {
   // Enable debug mode
   if (FLEXSLIDER_DEBUG) {
     if ($extension == 'flexslider' and isset($libraries['flexslider'])) {
-      $libraries['flexslider/flexslider']['js'] = array(
-        libraries_get_path('flexslider') . '/jquery.flexslider.js' => array(
+      $library_path = libraries_get_path('flexslider');
+      if (strpos($library_path, '/') !== 0) {
+        $library_path = '/' . $library_path;
+      }
+      // Prepend the unminified version
+      $libraries['flexslider']['js'] = array(
+        $library_path . '/jquery.flexslider.js' => array(
           'scope' => 'footer',
-        ),
-      );
+        )
+      ) + $libraries['flexslider']['js'];
+      // Remove the minified version
+      unset($libraries['flexslider']['js'][$library_path . '/jquery.flexslider-min.js']);
     }
   }
 }
