@@ -11,8 +11,12 @@ namespace Drupal\flexslider\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element;
 
+/**
+ * Class FlexsliderFormSettings.
+ *
+ * @package Drupal\flexslider\Form
+ */
 class FlexsliderFormSettings extends ConfigFormBase {
 
   /**
@@ -43,6 +47,9 @@ class FlexsliderFormSettings extends ConfigFormBase {
     return ['flexslider.settings'];
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
     $form = [];
 
@@ -52,7 +59,7 @@ class FlexsliderFormSettings extends ConfigFormBase {
       '#tree' => FALSE,
     ];
 
-    // Debug mode toggle
+    // Debug mode toggle.
     $form['library']['flexslider_debug'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enable debug mode'),

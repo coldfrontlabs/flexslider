@@ -105,7 +105,7 @@ class FlexSlider extends StylePluginBase {
   /**
    * {@inheritdoc}
    */
-  function render() {
+  public function render() {
 
     // Group the rows according to the grouping field, if specified.
     $sets = parent::render();
@@ -139,16 +139,19 @@ class FlexSlider extends StylePluginBase {
   public function submitOptionsForm(&$form, FormStateInterface $form_state) {
     parent::submitOptionsForm($form, $form_state);
 
-    // Move flexslider options to the parent array so that values are saved properly
-    // Original: values['style_options']['flexslider'] = ['options', 'caption', 'id']
-    $flexsliderOptions = $form_state->getValue(array('style_options', 'flexslider'));
+    /* Move flexslider options to the parent array so that
+     * values are saved properly.
+     * Original: values['style_options']['flexslider'] = ['options', 'caption', 'id'].
+     */
+    $flexslider_options = $form_state->getValue(array('style_options', 'flexslider'));
 
-    // Edits:  values['style_options'] += ['options', 'caption', 'id']
-    foreach ($flexsliderOptions as $key => $value) {
+    // Edit:  values['style_options'] += ['options', 'caption', 'id'].
+    foreach ($flexslider_options as $key => $value) {
       $form_state->setValue(array('style_options', $key), $value);
     }
 
-    // Edits:  values['style_options']['flexslider'] = NULL
+    // Edit:  values['style_options']['flexslider'] = NULL.
     $form_state->setValue(array('style_options', 'flexslider'), NULL);
   }
+
 }

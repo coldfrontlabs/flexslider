@@ -3,6 +3,7 @@
 /**
  * @file
  * Contains \Drupal\flexslider\Entity\Flexslider.
+ *
  * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>
  */
 
@@ -17,7 +18,7 @@ use Drupal\flexslider\FlexsliderInterface;
  *
  * @ConfigEntityType(
  *   id = "flexslider",
- *   label = @Translation("Flexslider optionset"),
+ *   label = @Translation("FlexSlider optionset"),
  *   handlers = {
  *     "list_builder" = "Drupal\flexslider\Controller\FlexsliderListBuilder",
  *     "form" = {
@@ -76,12 +77,14 @@ class Flexslider extends ConfigEntityBase implements FlexsliderInterface {
   public function getOptions($strict = FALSE) {
     if ($strict) {
       $options = $this->options;
-      if(isset($options['controlNav']) && $options['controlNav'] != 'thumbnails') {
+      if (isset($options['controlNav']) && $options['controlNav'] != 'thumbnails') {
         $options['controlNav'] = boolval($options['controlNav']);
       }
       return $options;
     }
-    else return $this->options;
+    else {
+      return $this->options;
+    }
   }
 
   /**
@@ -99,21 +102,14 @@ class Flexslider extends ConfigEntityBase implements FlexsliderInterface {
   }
 
   /**
-   * @param mixed $id
-   * @return \Drupal\flexslider\Entity\Flexslider
-   */
-  public static function load($id) {
-    return parent::load($id);
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(array $values = array()) {
     $flexslider = parent::create($values);
-    // Merge options with default options
-    $defaultOptions = FlexsliderDefaults::defaultOptions();
-    $flexslider->setOptions($flexslider->getOptions() + $defaultOptions);
+    // Merge options with default options.
+    $default_options = FlexsliderDefaults::defaultOptions();
+    $flexslider->setOptions($flexslider->getOptions() + $default_options);
     return $flexslider;
   }
+
 }

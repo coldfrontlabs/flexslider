@@ -5,6 +5,7 @@
  *
  * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>
  */
+
 namespace Drupal\flexslider\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
@@ -25,7 +26,7 @@ class FlexsliderOptionsetController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   A redirect response to the Flexslider optionset listing page.
    */
-  function enable(Flexslider $flexslider) {
+  public function enable(Flexslider $flexslider) {
     $flexslider->enable()->save();
     return new RedirectResponse($flexslider->url('collection', array('absolute' => TRUE)));
   }
@@ -39,7 +40,7 @@ class FlexsliderOptionsetController extends ControllerBase {
    * @return \Symfony\Component\HttpFoundation\RedirectResponse
    *   A redirect response to the Flexslider optionset listing page.
    */
-  function disable(Flexslider $flexslider) {
+  public function disable(Flexslider $flexslider) {
     $flexslider->disable()->save();
     return new RedirectResponse($flexslider->url('collection', array('absolute' => TRUE)));
   }

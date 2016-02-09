@@ -29,12 +29,12 @@ INSTALLATION
    https://drupal.org/documentation/install/modules-themes/modules-8
    for further information.
 
- * You should make sure your toolbar is visible via the Toolbar module or some other
-    module that constructs the toolbar.
+ * You should make sure your toolbar is visible via the Toolbar module or some
+    other module that constructs the toolbar.
 
 CONFIGURATION
 --------------------
 
 The module has no modifiable settings. There is no configuration. When
-enabled, the module will provide a Flexslider Examples menu in the toolbar. When
+enabled, the module will provide a FlexSlider Examples menu in the toolbar. When
 disabled, the module will remove all installed features.

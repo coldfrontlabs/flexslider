@@ -1,8 +1,7 @@
 <?php
-
 /**
  * @file
- * flexslider_example module
+ * Flexslider_example module.
  *
  * @author Agnes Chisholm <amaria@chisholmtech.com>
  */
@@ -10,33 +9,33 @@
 use Drupal\Core\Url;
 
 /**
- * Implements hook_toolbar
+ * Implements hook_toolbar().
  */
 function flexslider_example_toolbar() {
   $items = array();
 
-  // Load the menu
+  // Load the menu.
   $fs_tree = Drupal::service('toolbar.menu_tree')->load('flexslider-example', new Drupal\Core\Menu\MenuTreeParameters());
-  // Build the menu render array
+  // Build the menu render array.
   $fs_menu = Drupal::service('toolbar.menu_tree')->build($fs_tree);
 
   $items['flexslider_examples'] = array(
-      '#type' => 'toolbar_item',
-      'tab' => array(
-        '#type' => 'link',
-        '#title' => t('Flexslider Examples'),
-        '#url' => Url::fromRoute('<front>'),
-        '#attributes' => array(
-          'title' => t('Flexslider examples menu'),
-          'class' => array('toolbar-icon', 'toolbar-icon-menu'),
-        ),
+    '#type' => 'toolbar_item',
+    'tab' => array(
+      '#type' => 'link',
+      '#title' => t('FlexSlider Examples'),
+      '#url' => Url::fromRoute('<front>'),
+      '#attributes' => array(
+        'title' => t('FlexSlider examples menu'),
+        'class' => array('toolbar-icon', 'toolbar-icon-menu'),
       ),
-      'tray' => array(
-        '#heading' => t('Flexslider examples menu'),
-        'flexslider_example_menu' => $fs_menu,
-      ),
-      '#weight' => 99,
-    );
+    ),
+    'tray' => array(
+      '#heading' => t('FlexSlider examples menu'),
+      'flexslider_example_menu' => $fs_menu,
+    ),
+    '#weight' => 99,
+  );
 
   return $items;
 }

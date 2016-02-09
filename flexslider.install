@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Installation actions for FlexSlider
+ * Installation actions for FlexSlider.
  */
 
 /**
@@ -9,10 +9,8 @@
  */
 function flexslider_requirements($phase) {
   $requirements = array();
-  // Ensure translations don't break at install time
-  $t = 't';
 
-  // Check to see if the flexslider library is available
+  // Check to see if the flexslider library is available.
   if ($phase == 'runtime') {
     $requirements['flexslider'] = array(
       'title' => t('FlexSlider'),
@@ -26,17 +24,17 @@ function flexslider_requirements($phase) {
 }
 
 /**
- * Check if the library is available
+ * Check if the library is available.
  *
  * @param array $requirements
- *  Requirements definition
+ *   Requirements definition.
  */
 function _flexslider_requirements_library_installed(&$requirements) {
 
   $path = libraries_get_path('flexslider');
   $installed = file_exists($path . '/jquery.flexslider-min.js') && file_exists($path . '/jquery.flexslider.js');
 
-  // Check the results of the test
+  // Check the results of the test.
   if (!$installed) {
     $requirements['flexslider']['description'] = t('FlexSlider library not found. Please consult the README.txt for installation instructions.');
     $requirements['flexslider']['severity'] = REQUIREMENT_ERROR;
@@ -57,7 +55,7 @@ function _flexslider_requirements_library_installed(&$requirements) {
     else {
       $version = $matches[1] . "." . $matches[2];
       \Drupal::configFactory()->getEditable('flexslider.settings')->set('flexslider_version', $version)->save();
-      $requirements['flexslider']['description'] = t('Version %version installed', array( '%version' => $version));
+      $requirements['flexslider']['description'] = t('Version %version installed', array('%version' => $version));
       $requirements['flexslider']['value'] = t('FlexSlider library installed.');
       return;
     }
@@ -68,5 +66,3 @@ function _flexslider_requirements_library_installed(&$requirements) {
     $requirements['flexslider']['value'] = t('Unable to detect version.');
   }
 }
-
-// @todo add hook_update_N function to migrate old option set data to new values

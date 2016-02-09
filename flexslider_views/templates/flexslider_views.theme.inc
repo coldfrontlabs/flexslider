@@ -2,17 +2,17 @@
 
 /**
  * @file
- * Theme functions for FlexSlider Views
+ * Theme functions for FlexSlider Views.
  *
  * @author Mathew Winstone <mwinstone@coldfrontlabs.ca>
  */
 
 /**
- * Prepares variables for view templates.
+ * Prepares variables for flexslider view templates.
  *
  * Default template: flexslider-views-style.html.twig.
  *
- * @param array $vars
+ * @param array $variables
  *   An associative array containing:
  *   - view: A ViewExecutable object.
  *   - rows: The raw row data.
@@ -20,13 +20,13 @@
  *     - separator: A string to be placed between inline fields to keep them
  *       visually distinct.
  */
-function template_preprocess_flexslider_views_style(&$vars) {
-  // Only run the preprocessor if it is a view
-  if (empty($vars['view'])) {
+function template_preprocess_flexslider_views_style(&$variables) {
+  // Only run the preprocessor if it is a view.
+  if (empty($variables['view'])) {
     return;
   }
 
-  $view = $vars['view'];
+  $view = $variables['view'];
   $style = $view->style_plugin;
   $options = $style->options;
 
@@ -34,8 +34,8 @@ function template_preprocess_flexslider_views_style(&$vars) {
   $settings = array();
   $settings['optionset'] = $options['optionset'];
 
-  foreach ($vars['rows'] as $id => $row) {
-    // Render the row into a slide
+  foreach ($variables['rows'] as $id => $row) {
+    // Render the row into a slide.
     // @todo should use render arrays instead of actual output
     $item['slide'] = render($row);
     $item['caption'] = (isset($row['#caption']) && !empty($row['#caption'])) ? $row['#caption'] : NULL;
@@ -46,10 +46,10 @@ function template_preprocess_flexslider_views_style(&$vars) {
     '#theme' => 'flexslider',
     '#items' => $items,
     '#settings' => $settings,
-    '#attributes' => array('id' => $vars['options']['id']),
+    '#attributes' => array('id' => $variables['options']['id']),
   );
 
-  // Add the slide items to the variables
-  $vars['content'] = $content;
+  // Add the slide items to the variables.
+  $variables['content'] = $content;
 
 }

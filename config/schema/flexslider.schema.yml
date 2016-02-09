@@ -9,7 +9,7 @@ flexslider.settings:
 
 flexslider.optionset.*:
   type: config_entity
-  label: 'Flexslider optionset'
+  label: 'FlexSlider optionset'
   mapping:
     id:
       type: string

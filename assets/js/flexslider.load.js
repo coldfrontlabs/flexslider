@@ -1,8 +1,12 @@
+/**
+ * @file
+ * Loads the FlexSlider library.
+ */
+
 (function($) {
 
   "use strict";
 
-  // Behavior to load FlexSlider
   Drupal.behaviors.flexslider = {
     attach: function(context, settings) {
       var sliders = [], id;
@@ -14,14 +18,15 @@
             if (settings.flexslider.optionsets[settings.flexslider.instances[id]].asNavFor !== '') {
               // We have to initialize all the sliders which are "asNavFor" first.
               _flexslider_init(id, settings.flexslider.optionsets[settings.flexslider.instances[id]], context);
-            } else {
-              // Everyone else is second
+            }
+            else {
+              // Everyone else is second.
               sliders[id] = settings.flexslider.optionsets[settings.flexslider.instances[id]];
             }
           }
         }
       }
-      // Slider set
+      // Slider set.
       for (id in sliders) {
         _flexslider_init(id, settings.flexslider.optionsets[settings.flexslider.instances[id]], context);
       }
@@ -29,12 +34,11 @@
   };
 
   /**
-   * Initialize the flexslider instance
+   * Initialize the flexslider instance.
    */
-
   function _flexslider_init(id, optionset, context) {
     $('#' + id, context).once('flexslider').each(function() {
-      // Remove width/height attributes
+      // Remove width/height attributes.
       // @todo load the css path from the settings
       $(this).find('ul.slides > li > *').removeAttr('width').removeAttr('height');
 
@@ -60,7 +64,8 @@
             slider.trigger('removed');
           }
         }));
-      } else {
+      }
+      else {
         $(this).flexslider();
       }
     });

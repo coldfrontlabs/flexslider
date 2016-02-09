@@ -25,7 +25,6 @@ class FlexsliderForm extends EntityForm {
    */
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
-    /**  @var $flexslider \Drupal\flexslider\FlexsliderInterface */
     $flexslider = $this->entity;
     $options = $flexslider->getOptions();
     $default_options = FlexsliderDefaults::defaultOptions();
@@ -48,12 +47,12 @@ class FlexsliderForm extends EntityForm {
       '#disabled' => !$flexslider->isNew(),
     );
 
-    // Options Vertical Tab Group table
+    // Options Vertical Tab Group table.
     $form['tabs'] = array(
       '#type' => 'vertical_tabs',
     );
 
-    // General Slideshow and Animiation Settings
+    // General Slideshow and Animiation Settings.
     $form['animation_slideshow'] = array(
       '#type' => 'details',
       '#title' => $this->t('General Slideshow and Animation Settings'),
@@ -77,8 +76,10 @@ class FlexsliderForm extends EntityForm {
       '#type' => 'number',
       '#title' => $this->t('Animation Speed'),
       '#description' => $this->t('Set the speed of animations, in milliseconds'),
-      '#min' => 0, // Only positive numbers
-      '#step' => 1, // Only integers
+    // Only positive numbers.
+      '#min' => 0,
+    // Only integers.
+      '#step' => 1,
       '#default_value' => isset($options['animationSpeed']) ? $options['animationSpeed'] : $default_options['animationSpeed'],
     );
 
@@ -90,7 +91,7 @@ class FlexsliderForm extends EntityForm {
         'horizontal'   => $this->t('Horizontal'),
         'vertical'  => $this->t('Vertical'),
       ),
-      '#default_value' =>  isset($options['direction']) ? $options['direction'] : $default_options['direction'],
+      '#default_value' => isset($options['direction']) ? $options['direction'] : $default_options['direction'],
     );
 
     $form['animation_slideshow']['slideshow'] = array(
@@ -100,7 +101,7 @@ class FlexsliderForm extends EntityForm {
       '#default_value' => isset($options['slideshow']) ? $options['slideshow'] : $default_options['slideshow'],
     );
 
-    // Build in support for easing plugin
+    // Build in support for easing plugin.
     $easing_options = array('swing' => $this->t('Swing'), 'linear' => $this->t('Linear'));
     if (\Drupal::moduleHandler()->moduleExists('jqeasing')) {
       $easing_options = array_merge($easing_options, _flexslider_jqeasing_options());
@@ -133,8 +134,10 @@ class FlexsliderForm extends EntityForm {
       '#type' => 'number',
       '#title' => $this->t('Slideshow speed'),
       '#description' => $this->t('Set the speed of the slideshow cycling, in milliseconds'),
-      '#min' => 0, // Only positive numbers
-      '#step' => 1, // Only integers
+    // Only positive numbers.
+      '#min' => 0,
+    // Only integers.
+      '#step' => 1,
       '#default_value' => isset($options['slideshowSpeed']) ? $options['slideshowSpeed'] : $default_options['slideshowSpeed'],
     );
 
@@ -155,54 +158,66 @@ class FlexsliderForm extends EntityForm {
       '#type' => 'number',
       '#title' => $this->t('Starting Slide'),
       '#description' => $this->t('The slide that the slider should start on. Ex: For the first slide enter "0", for the second enter "1", etc. If you enter a value which is greater than the number of slides, the slider will default to the first slide.'),
-      '#min' => 0, // Only positive numbers
-      '#step' => 1, // Only integers
+    // Only positive numbers.
+      '#min' => 0,
+    // Only integers.
+      '#step' => 1,
       '#default_value' => isset($options['startAt']) ? $options['startAt'] : $default_options['startAt'],
       // @todo add states to disable if randomize is set
     );
 
     $form['animation_slideshow']['itemWidth'] = array(
       '#type' => 'number',
-      '#min' => 0, // Only positive numbers
-      '#step' => 1, // Only integers
+    // Only positive numbers.
+      '#min' => 0,
+    // Only integers.
+      '#step' => 1,
       '#title' => $this->t('Item Width'),
       '#description' => $this->t('Box-model width of individual carousel items, including horizontal borders and padding.'),
       '#default_value' => isset($options['itemWidth']) ? $options['itemWidth'] : $default_options['itemWidth'],
     );
     $form['animation_slideshow']['itemMargin'] = array(
       '#type' => 'number',
-      '#min' => 0, // Only positive numbers
-      '#step' => 1, // Only integers
+    // Only positive numbers.
+      '#min' => 0,
+    // Only integers.
+      '#step' => 1,
       '#title' => $this->t('Item Margin'),
       '#description' => $this->t('Margin between carousel items. (NB: the margin must be set in your CSS styles. This property merely informs FlexSlider of the margin.)'),
       '#default_value' => isset($options['itemMargin']) ? $options['itemMargin'] : $default_options['itemMargin'],
     );
     $form['animation_slideshow']['minItems'] = array(
       '#type' => 'number',
-      '#min' => 0, // Only positive numbers
-      '#step' => 1, // Only integers
+    // Only positive numbers.
+      '#min' => 0,
+    // Only integers.
+      '#step' => 1,
       '#title' => $this->t('Minimum Items'),
       '#description' => $this->t('Minimum number of carousel items that should be visible.'),
       '#default_value' => isset($options['minItems']) ? $options['minItems'] : $default_options['minItems'],
     );
     $form['animation_slideshow']['maxItems'] = array(
       '#type' => 'number',
-      '#min' => 0, // Only positive numbers
-      '#step' => 1, // Only integers
+    // Only positive numbers.
+      '#min' => 0,
+    // Only integers.
+      '#step' => 1,
       '#title' => $this->t('Max Items'),
       '#description' => $this->t('Maximum number of carousel items that should be visible.'),
       '#default_value' => isset($options['maxItems']) ? $options['maxItems'] : $default_options['maxItems'],
     );
     $form['animation_slideshow']['move'] = array(
       '#type' => 'number',
-      '#min' => 0, // Only positive numbers
-      '#step' => 1, // Only integers
+    // Only positive numbers.
+      '#min' => 0,
+    // Only integers.
+      '#step' => 1,
       '#title' => $this->t('Move'),
       '#description' => $this->t('Number of carousel items that should move on animation. If 0, slider will move all visible items.'),
       '#default_value' => isset($options['move']) ? $options['move'] : $default_options['move'],
     );
 
-    // Navigation and Control Settings
+    // Navigation and Control Settings.
     $form['nav_controls'] = array(
       '#type' => 'details',
       '#title' => $this->t('Navigation and Control Settings'),
@@ -223,7 +238,7 @@ class FlexsliderForm extends EntityForm {
         0 => $this->t('Off'),
         1 => $this->t('On'),
         'thumbnails' => $this->t('Thumbnails'),
-      )
+      ),
     );
     $form['nav_controls']['thumbCaptions'] = array(
       '#type' => 'checkbox',
@@ -235,7 +250,7 @@ class FlexsliderForm extends EntityForm {
           ':input[name="controlNav"]' => array('value' => 'thumbnails'),
         ),
       ),
-      '#element_validate' => array('::validate_minimum_version_22'),
+      '#element_validate' => array('::validateMinimumVersion22'),
     );
     $form['nav_controls']['thumbCaptionsBoth'] = array(
       '#type' => 'checkbox',
@@ -247,7 +262,7 @@ class FlexsliderForm extends EntityForm {
           ':input[name="controlNav"]' => array('value' => 'thumbnails'),
         ),
       ),
-      '#element_validate' => array('::validate_minimum_version_22'),
+      '#element_validate' => array('::validateMinimumVersion22'),
     );
     $form['nav_controls']['keyboard'] = array(
       '#type' => 'checkbox',
@@ -287,7 +302,7 @@ class FlexsliderForm extends EntityForm {
       '#default_value' => isset($options['nextText']) ? $options['nextText'] : $default_options['nextText'],
     );
 
-    // Advanced Options
+    // Advanced Options.
     $form['advanced'] = array(
       '#type' => 'details',
       '#title' => $this->t('Advanced Options'),
@@ -299,7 +314,7 @@ class FlexsliderForm extends EntityForm {
       '#description' => $this->t('Prefix string attached to the classes of all elements generated by the plugin.'),
       '#size' => 40,
       '#maxlength' => 255,
-      '#element_validate' => array('::validate_namespace'),
+      '#element_validate' => array('::validateNamespace'),
       '#default_value' => isset($options['namespace']) ? $options['namespace'] : $default_options['namespace'],
     );
     $form['advanced']['selector'] = array(
@@ -308,7 +323,7 @@ class FlexsliderForm extends EntityForm {
       '#description' => $this->t('Must match a simple pattern. "{container} > {slide}".'),
       '#size' => 40,
       '#maxlength' => 255,
-      '#element_validate' => array('::validate_selector'),
+      '#element_validate' => array('::validateSelector'),
       '#default_value' => isset($options['selector']) ? $options['selector'] : $default_options['selector'],
     );
     $form['advanced']['sync'] = array(
@@ -327,12 +342,14 @@ class FlexsliderForm extends EntityForm {
       '#maxlength' => 255,
       '#default_value' => isset($options['asNavFor']) ? $options['asNavFor'] : $default_options['asNavFor'],
     );
-    $form['advanced']['initDelay'] =  array(
+    $form['advanced']['initDelay'] = array(
       '#type' => 'number',
       '#title' => $this->t('Initialize Delay'),
       '#description' => $this->t('Set an initialization delay, in milliseconds.'),
-      '#min' => 0, // Only positive numbers
-      '#step' => 1, // Only integers
+    // Only positive numbers.
+      '#min' => 0,
+    // Only integers.
+      '#step' => 1,
       '#default_value' => isset($options['initDelay']) ? $options['initDelay'] : $default_options['initDelay'],
     );
     $form['advanced']['useCSS'] = array(
@@ -391,7 +408,6 @@ class FlexsliderForm extends EntityForm {
       '#default_value' => isset($options['manualControls']) ? $options['manualControls'] : $default_options['manualControls'],
     );
 
-
     return $form;
   }
 
@@ -406,13 +422,13 @@ class FlexsliderForm extends EntityForm {
 
     switch ($status) {
       case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Flexslider optionset.', [
+        drupal_set_message($this->t('Created the %label FlexSlider optionset.', [
           '%label' => $flexslider->label(),
         ]));
         break;
 
       default:
-        drupal_set_message($this->t('Saved the %label Flexslider optionset.', [
+        drupal_set_message($this->t('Saved the %label FlexSlider optionset.', [
           '%label' => $flexslider->label(),
         ]));
     }
@@ -420,7 +436,7 @@ class FlexsliderForm extends EntityForm {
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   protected function copyFormValuesToEntity(EntityInterface $entity, array $form, FormStateInterface $form_state) {
     $options = array();
@@ -441,7 +457,7 @@ class FlexsliderForm extends EntityForm {
    */
   protected function actions(array $form, FormStateInterface $form_state) {
     $actions = parent::actions($form, $form_state);
-    // Prevent access to the delete button when editing the default configuration
+    // Prevent access to the delete button when editing the default configuration.
     if ($this->entity->id() == 'default' && isset($actions['delete'])) {
       $actions['delete']['#access'] = FALSE;
     }
@@ -449,24 +465,27 @@ class FlexsliderForm extends EntityForm {
   }
 
   /**
-   * Validation functions
+   * Validation functions.
    */
-  public function validate_namespace(array &$element, FormStateInterface $form_state) {
-    // @todo
-    // @see form_error()
-    return TRUE;
-  }
-
-  public function validate_selector(array &$element, FormStateInterface $form_state) {
+  public function validateNamespace(array &$element, FormStateInterface $form_state) {
     // @todo
     // @see form_error()
     return TRUE;
   }
 
   /**
-   * Validate a form element that should have a number as value.
+   * Validation functions.
    */
-  public function validate_minimum_version_22(array &$element, FormStateInterface $form_state) {
+  public function validateSelector(array &$element, FormStateInterface $form_state) {
+    // @todo
+    // @see form_error()
+    return TRUE;
+  }
+
+  /**
+   * Validate the correct version for thumbnail options.
+   */
+  public function validateMinimumVersion22(array &$element, FormStateInterface $form_state) {
     $lib = libraries_detect('flexslider');
     if (!isset($lib['version'])) {
       drupal_set_message(t('Unable to detect FlexSlider library version. Some options may not function properly. Please review the README.md file for installation instructions.'), 'warning');
@@ -474,7 +493,7 @@ class FlexsliderForm extends EntityForm {
     else {
       $version = $lib['version'];
       $required = "2.2";
-      if (!version_compare($version, $required, '>=')) {
+      if ($element['#value'] && !version_compare($version, $required, '>=')) {
         $form_state->setError($element, t('To use %name you must install FlexSlider version !required or higher.', array(
           '%name' => $element['#title'],
           '!required' => \Drupal\Core\Link::fromTextAndUrl($required, \Drupal\Core\Url::fromUri('https://github.com/woothemes/FlexSlider/tree/version/2.2')),
@@ -482,6 +501,5 @@ class FlexsliderForm extends EntityForm {
       }
     }
   }
-
 
 }

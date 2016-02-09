@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Adds fields integration with FlexSlider
+ * Adds fields integration with FlexSlider.
  *
  * @author jepedo
  * @author Mathew Winstone <mwinstone@coldfrontlabs.ca>
@@ -11,7 +11,7 @@
 /**
  * Implements hook_field_formatter_view().
  *
- * Prepares a renderable array of images and adds the neccessary JS and CSS
+ * Prepares a renderable array of images and adds the neccessary JS and CSS.
  */
 function flexslider_fields_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
 
@@ -19,12 +19,14 @@ function flexslider_fields_field_formatter_view($entity_type, $entity, $field, $
   if (count($items) > 0) {
 
     foreach ($items as $key => $item) {
-      if(isset($item['item'])) continue;
+      if (isset($item['item'])) {
+        continue;
+      }
       $tmp = $item;
       $item = array();
       $item['item'] = $tmp;
 
-      // Setup the variables for calling theme_image_style
+      // Setup the variables for calling theme_image_style.
       if (isset($item['item']['uri'])) {
         $item['slide']['path'] = $item['item']['uri'];
       }
@@ -46,17 +48,17 @@ function flexslider_fields_field_formatter_view($entity_type, $entity, $field, $
 
       // Render the slide item
       // If not style set, we have to call theme_image since theme_image_style
-      // doesn't auto-fallback to full size image
+      // doesn't auto-fallback to full size image.
       if (!empty($item['slide']['style_name'])) {
-        // Generate the HTML for the slide
+        // Generate the HTML for the slide.
         $item['slide'] = theme('image_style', $item['slide']);
       }
       else {
-        // Generate the HTML for the slide
+        // Generate the HTML for the slide.
         $item['slide'] = theme('image', $item['slide']);
       }
 
-      // Check caption settings
+      // Check caption settings.
       if ($display['settings']['caption']) {
         $item['caption'] = filter_xss($item['item']['title']);
       }

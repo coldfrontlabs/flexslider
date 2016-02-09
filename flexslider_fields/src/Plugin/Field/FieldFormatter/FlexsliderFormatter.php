@@ -5,6 +5,7 @@
  *
  * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>
  */
+
 namespace Drupal\flexslider_fields\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Url;
@@ -20,7 +21,7 @@ use Drupal\Core\Field\FieldItemListInterface;
  *
  * @FieldFormatter(
  *   id = "flexslider",
- *   label = @Translation("Flexslider"),
+ *   label = @Translation("FlexSlider"),
  *   field_types = {
  *     "image",
  *     "media"
@@ -45,14 +46,14 @@ class FlexsliderFormatter extends ImageFormatter {
   public function settingsSummary() {
     $summary = array();
 
-    // Load the selected optionset
+    // Load the selected optionset.
     $optionset = $this->loadOptionset();
 
-    // Build the optionset summary
+    // Build the optionset summary.
     $os_summary = $optionset ? $optionset->label() : $this->t('Default settings');
     $summary[] = $this->t('Option set: %os_summary', array('%os_summary' => $os_summary));
 
-    // Add the image settings summary and return
+    // Add the image settings summary and return.
     return array_merge($summary, parent::settingsSummary());
   }
 
@@ -61,7 +62,7 @@ class FlexsliderFormatter extends ImageFormatter {
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
 
-    // Get list of option sets as an associative array
+    // Get list of option sets as an associative array.
     $optionsets = flexslider_optionset_list();
 
     $element['optionset'] = array(
@@ -86,9 +87,9 @@ class FlexsliderFormatter extends ImageFormatter {
       '#access' => $this->currentUser->hasPermission('administer flexslider'),
     );
 
-    // Add the image settings
+    // Add the image settings.
     $element = array_merge($element, parent::settingsForm($form, $form_state));
-    // We don't need the link setting
+    // We don't need the link setting.
     $element['image_link']['#access'] = FALSE;
 
     $field_settings = $this->getFieldSettings();
@@ -100,27 +101,27 @@ class FlexsliderFormatter extends ImageFormatter {
 
       // If the image field doesn't have the Title field enabled, tell the user.
       if ($field_settings['title_field'] == FALSE) {
-        $actionText = $this->t('enable the Title field');
+        $action_text = $this->t('enable the Title field');
         // @todo figure out a way to get the url of the field edit form when
         // this is displayed in Views configuration
         if (method_exists($this->fieldDefinition, 'toUrl')) {
           $rel = "{$this->fieldDefinition->getTargetEntityTypeId()}-field-edit-form";
           $action = \Drupal\Core\Link::fromTextAndUrl(
-            $actionText,
+            $action_text,
             $this->fieldDefinition->toUrl($rel,
               array(
                 'fragment' => 'edit-settings-alt-field',
-                'query' => \Drupal::destination()->getAsArray()
+                'query' => \Drupal::destination()->getAsArray(),
               )
             )
           )->toRenderable();
         }
         else {
-          $action = ['#markup' => $actionText];
+          $action = ['#markup' => $action_text];
         }
         $element['caption']['#disabled'] = TRUE;
-        $element['caption']['#description'] =
-          $this->t('You need to @action for this image field to be able to use it as a caption.',
+        $element['caption']['#description']
+          = $this->t('You need to @action for this image field to be able to use it as a caption.',
             array('@action' => render($action)));
       }
       else {
@@ -138,12 +139,12 @@ class FlexsliderFormatter extends ImageFormatter {
 
     $images = parent::viewElements($items, $langcode);
 
-    // Bail out if no images to render
+    // Bail out if no images to render.
     if (empty($images)) {
       return array();
     }
 
-    // Get cache tags for the option set
+    // Get cache tags for the option set.
     if ($optionset = $this->loadOptionset()) {
       $cache_tags = $optionset->getCacheTags();
     }
@@ -155,25 +156,25 @@ class FlexsliderFormatter extends ImageFormatter {
 
     foreach ($images as $delta => &$image) {
 
-      // Merge in the cache tags
+      // Merge in the cache tags.
       if ($cache_tags) {
         $image['#cache']['tags'] = Cache::mergeTags($image['#cache']['tags'], $cache_tags);
       }
 
-      // Prepare the slide item render array
+      // Prepare the slide item render array.
       $item = array();
       // @todo Should find a way of dealing with render arrays instead of the actual output
       $item['slide'] = render($image);
 
-      // Check caption settings
+      // Check caption settings.
       if ($this->getSetting('caption')) {
-        $item['caption'] =  ['#markup' => Xss::filterAdmin($image->get('title'))];
+        $item['caption'] = ['#markup' => Xss::filterAdmin($image['#item']->title)];
       }
 
       $items[$delta] = $item;
     }
 
-    // We have to pass an array of elements for Views compatibility
+    // We have to pass an array of elements for Views compatibility.
     $elements[] = array(
       '#theme' => 'flexslider',
       '#items' => $items,
@@ -197,4 +198,3 @@ class FlexsliderFormatter extends ImageFormatter {
   }
 
 }
-

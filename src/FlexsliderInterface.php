@@ -18,10 +18,10 @@ interface FlexsliderInterface extends ConfigEntityInterface {
   /**
    * Returns the array of flexslider library options.
    *
-   * @param boolean $strict
+   * @param bool $strict
    *   Use strict typecasting, as defined by the flexslider library.
    *   This fixes the typecasting of options that we defined
-   *   differently in the schema
+   *   differently in the schema.
    *
    * @return array
    *   The array of options.
@@ -40,10 +40,11 @@ interface FlexsliderInterface extends ConfigEntityInterface {
   public function getOption($name);
 
   /**
-   * Sets the flexslider library options array
+   * Sets the flexslider library options array.
    *
    * @param array $options
-   *    New/updated array of options
+   *    New/updated array of options.
    */
   public function setOptions($options);
+
 }

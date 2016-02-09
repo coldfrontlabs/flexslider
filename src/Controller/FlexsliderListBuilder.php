@@ -38,8 +38,8 @@ class FlexsliderListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function getDefaultOperations(EntityInterface $entity) {
-    $ops =  parent::getDefaultOperations($entity);
-    // Do not allow deletion of the default configuration
+    $ops = parent::getDefaultOperations($entity);
+    // Do not allow deletion of the default configuration.
     if ($entity->id() == 'default') {
       unset($ops['delete']);
     }
