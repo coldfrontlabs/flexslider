@@ -5,6 +5,21 @@
  */
 
 /**
+ * Implements hook_uninstall().
+ *
+ * Deletes all content and configuration installed by this module.
+ */
+function flexslider_uninstall() {
+  // Delete all of the configuration installed by this module.
+  $dir = drupal_get_path('module', 'flexslider') . '/config/install';
+  $files = file_scan_directory($dir, '/.*/');
+  foreach ($files as $file) {
+    \Drupal::configFactory()->getEditable($file->name)->delete();
+  }
+  \Drupal::logger('flexslider')->info(t('Deleted flexslider configuration'), array());
+}
+
+/**
  * Implements hook_requirements().
  */
 function flexslider_requirements($phase) {
