@@ -9,62 +9,70 @@
 namespace Drupal\flexslider_fields\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldDefinitionInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Url;
 use Drupal\Core\Cache\Cache;
 use Drupal\Component\Utility\Xss;
 
 /**
- * A common Trait for flexslider image formatters.
+ * A common Trait for flexslider formatters.
  *
- * Both flexslider image formatters add the same options but extend different
- * base classes. This trait applies only to classes extending
- * ImageFormatterBase.
+ * Currently, only image based formatters exist for flexslider but this trait
+ * could apply to any type formatter.
  *
- * @see Drupal\image\Plugin\Field\FieldFormatter\ImageFormatterBase
+ * @see Drupal\Core\Field\FormatterBase
  */
 trait FlexsliderFormatterTrait {
 
   /**
-   * {@inheritdoc}
+   * Returns the flexslider specific default settings.
+   *
+   * @return array
    */
-  public static function defaultSettings() {
+  protected static function getDefaultSettings() {
     return array(
       'optionset' => 'default',
       'caption' => '',
-    ) + parent::defaultSettings();
+    ) ;
   }
 
   /**
-   * {@inheritdoc}
+   * Builds the flexslider settings summary.
+   *
+   * @param \Drupal\Core\Field\FormatterBase $formatter
+   *
+   * @return array
    */
-  public function settingsSummary() {
+  protected function buildSettingsSummary(FormatterBase $formatter) {
     $summary = array();
 
     // Load the selected optionset.
-    $optionset = $this->loadOptionset();
+    $optionset = $this->loadOptionset($formatter->getSetting('optionset'));
 
     // Build the optionset summary.
-    $os_summary = $optionset ? $optionset->label() : $this->t('Default settings');
-    $summary[] = $this->t('Option set: %os_summary', array('%os_summary' => $os_summary));
+    $os_summary = $optionset ? $optionset->label() : $formatter->t('Default settings');
+    $summary[] = $formatter->t('Option set: %os_summary', array('%os_summary' => $os_summary));
 
-    // Add the image settings summary and return.
-    return array_merge($summary, parent::settingsSummary());
+    return $summary;
   }
 
   /**
-   * {@inheritdoc}
+   * Builds the flexslider settings form.
+   *
+   * @param \Drupal\Core\Field\FormatterBase $formatter
+   * @param array $formatter_settings
+   *
+   * @return array
    */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
+  protected function buildSettingsForm(FormatterBase $formatter) {
 
     // Get list of option sets as an associative array.
     $optionsets = flexslider_optionset_list();
 
     $element['optionset'] = array(
-      '#title' => $this->t('Option Set'),
+      '#title' => $formatter->t('Option Set'),
       '#type' => 'select',
-      '#default_value' => $this->getSetting('optionset'),
+      '#default_value' => $formatter->getSetting('optionset'),
       '#options' => $optionsets,
     );
 
@@ -72,68 +80,29 @@ trait FlexsliderFormatterTrait {
       '#theme' => 'links',
       '#links' => array(
         array(
-          'title' => $this->t('Create new option set'),
+          'title' => $formatter->t('Create new option set'),
           'url' => Url::fromRoute('entity.flexslider.add_form', array(), array('query' => \Drupal::destination()->getAsArray())),
         ),
         array(
-          'title' => $this->t('Manage option sets'),
+          'title' => $formatter->t('Manage option sets'),
           'url' => Url::fromRoute('entity.flexslider.collection', array(), array('query' => \Drupal::destination()->getAsArray())),
         ),
       ),
-      '#access' => $this->currentUser->hasPermission('administer flexslider'),
+      '#access' => \Drupal::currentUser()->hasPermission('administer flexslider'),
     );
-
-    // Add the image settings.
-    $element = array_merge($element, parent::settingsForm($form, $form_state));
-    // We don't need the link setting.
-    $element['image_link']['#access'] = FALSE;
-
-    $field_settings = $this->getFieldSettings();
-    if (!empty($field_settings)) {
-      $element['caption'] = array(
-        '#title' => $this->t('Use image title as the caption'),
-        '#type' => 'checkbox',
-      );
-
-      // If the image field doesn't have the Title field enabled, tell the user.
-      if ($field_settings['title_field'] == FALSE) {
-        $action_text = $this->t('enable the Title field');
-        // @todo figure out a way to get the url of the field edit form when
-        // this is displayed in Views configuration
-        if (method_exists($this->fieldDefinition, 'toUrl')) {
-          $rel = "{$this->fieldDefinition->getTargetEntityTypeId()}-field-edit-form";
-          $action = \Drupal\Core\Link::fromTextAndUrl(
-            $action_text,
-            $this->fieldDefinition->toUrl($rel,
-              array(
-                'fragment' => 'edit-settings-alt-field',
-                'query' => \Drupal::destination()->getAsArray(),
-              )
-            )
-          )->toRenderable();
-        }
-        else {
-          $action = ['#markup' => $action_text];
-        }
-        $element['caption']['#disabled'] = TRUE;
-        $element['caption']['#description']
-          = $this->t('You need to @action for this image field to be able to use it as a caption.',
-          array('@action' => render($action)));
-      }
-      else {
-        $element['caption']['#default_value'] = $this->getSetting('caption');
-      }
-    }
 
     return $element;
   }
 
   /**
-   * {@inheritdoc}
+   * The flexslider formatted view for images.
+   *
+   * @param array $images
+   * @param array $formatter_settings
+   *
+   * @return array
    */
-  public function viewElements(FieldItemListInterface $items, $langcode) {
-
-    $images = parent::viewElements($items, $langcode);
+  protected function viewImages(array $images, array $formatter_settings) {
 
     // Bail out if no images to render.
     if (empty($images)) {
@@ -141,7 +110,7 @@ trait FlexsliderFormatterTrait {
     }
 
     // Get cache tags for the option set.
-    if ($optionset = $this->loadOptionset()) {
+    if ($optionset = $this->loadOptionset($formatter_settings['optionset'])) {
       $cache_tags = $optionset->getCacheTags();
     }
     else {
@@ -163,8 +132,11 @@ trait FlexsliderFormatterTrait {
       $item['slide'] = render($image);
 
       // Check caption settings.
-      if ($this->getSetting('caption')) {
+      if ($formatter_settings['caption'] == 1) {
         $item['caption'] = ['#markup' => Xss::filterAdmin($image['#item']->title)];
+      }
+      elseif ($formatter_settings['caption'] == 'alt') {
+        $item['caption'] = ['#markup' => Xss::filterAdmin($image['#item']->alt)];
       }
 
       $items[$delta] = $item;
@@ -174,30 +146,97 @@ trait FlexsliderFormatterTrait {
     $elements[] = array(
       '#theme' => 'flexslider',
       '#items' => $items,
-      '#settings' => $this->getSettings(),
+      '#settings' => $formatter_settings,
     );
 
     return $elements;
   }
 
   /**
-   * {@inheritdoc}
-   */
-  public static function isApplicable(FieldDefinitionInterface $field_definition) {
-    return parent::isApplicable($field_definition) && $field_definition->getFieldStorageDefinition()->isMultiple();
-  }
-
-  /**
    * Loads the selected option set.
+   *
+   * @param string $id
    *
    * @returns \Drupal\flexslider\Entity\Flexslider
    *   The option set selected in the formatter settings.
    */
-  protected function loadOptionset() {
-    if ($id = $this->getSetting('optionset')) {
+  protected function loadOptionset($id) {
       return \Drupal\flexslider\Entity\Flexslider::load($id);
-    }
-    return NULL;
   }
 
+  /**
+   * Returns the form element for caption settings.
+   *
+   * @param \Drupal\Core\Field\FormatterBase $formatter
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *
+   * @return array
+   */
+  protected function captionSettings(FormatterBase $formatter, FieldDefinitionInterface $field_definition) {
+    $field_settings = $field_definition->getSettings();
+
+    // Set the caption options.
+    $caption_options = array(
+      0 => $formatter->t('None'),
+      1 => $formatter->t('Image title'),
+      'alt' => $formatter->t('Image ALT attribute'),
+    );
+
+    // Remove the options that are not available.
+    $action_fields = array();
+    if ($field_settings['title_field'] == FALSE) {
+      unset( $caption_options[1]);
+      // User action required on the image title.
+      $action_fields[] = 'title';
+    }
+    if ($field_settings['alt_field'] == FALSE) {
+      unset( $caption_options['alt']);
+      // User action required on the image alt.
+      $action_fields[] = 'alt';
+    }
+
+    // Create the caption element.
+    $element['caption'] = array(
+      '#title' => $formatter->t('Choose a caption source'),
+      '#type' => 'select',
+      '#options' => $caption_options,
+    );
+
+    // If the image field doesn't have all of the suitable caption sources, tell the user.
+    if ($action_fields) {
+      $action_text = $formatter->t('enable the @action_field field', array('@action_field' => join(' and/or ', $action_fields)));
+      /* This may be a base field definition (e.g. in Views UI) which means it
+       * is not associated with a bundle and will not have the toUrl() method.
+       * So we need to check for the existence of the method before we can
+       * build a link to the image field edit form.
+       */
+      if (method_exists($field_definition, 'toUrl')) {
+        // Build the link to the image field edit form for this bundle.
+        $rel = "{$field_definition->getTargetEntityTypeId()}-field-edit-form";
+        $action = $field_definition->toLink($action_text, $rel,
+          array(
+            'fragment' => 'edit-settings-alt-field',
+            'query' => \Drupal::destination()->getAsArray(),
+          )
+        )->toRenderable();
+      }
+      else {
+        // Just use plain text if we can't build the field edit link.
+        $action = ['#markup' => $action_text];
+      }
+      $element['caption']['#description']
+        = $formatter->t('You need to @action for this image field to be able to use it as a caption.',
+        array('@action' => render($action)));
+
+      // If there are no suitable caption sources, disable the caption element.
+      if (count($action_fields) >= 2) {
+        $element['caption']['#disabled'] = TRUE;
+      }
+    }
+    else {
+      $element['caption']['#default_value'] = $formatter->getSetting('caption');
+    }
+
+    return $element;
+  }
 }
