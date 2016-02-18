@@ -250,7 +250,7 @@ class FlexsliderForm extends EntityForm {
           ':input[name="controlNav"]' => array('value' => 'thumbnails'),
         ),
       ),
-      '#element_validate' => array('::validateMinimumVersion22'),
+      '#element_validate' => array('::validateMinimumVersion22', '::validateThumbnailOptions'),
     );
     $form['nav_controls']['thumbCaptionsBoth'] = array(
       '#type' => 'checkbox',
@@ -262,7 +262,7 @@ class FlexsliderForm extends EntityForm {
           ':input[name="controlNav"]' => array('value' => 'thumbnails'),
         ),
       ),
-      '#element_validate' => array('::validateMinimumVersion22'),
+      '#element_validate' => array('::validateMinimumVersion22', '::validateThumbnailOptions'),
     );
     $form['nav_controls']['keyboard'] = array(
       '#type' => 'checkbox',
@@ -499,6 +499,21 @@ class FlexsliderForm extends EntityForm {
           '!required' => \Drupal\Core\Link::fromTextAndUrl($required, \Drupal\Core\Url::fromUri('https://github.com/woothemes/FlexSlider/tree/version/2.2')),
         )));
       }
+    }
+  }
+
+  /**
+   * Validate thumbnail option values.
+   *
+   * Empties the value of the thumbnail caption option when the paging control
+   * is not set to thumbnails.
+   *
+   * @param array $element
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   */
+  public function validateThumbnailOptions(array &$element, FormStateInterface $form_state) {
+    if ($form_state->getValue('controlNav') !== 'thumbnails' && $element['#value']) {
+      $form_state->setValueForElement($element, '');
     }
   }
 
