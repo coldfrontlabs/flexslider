@@ -212,7 +212,7 @@ function flexslider_option_elements($options = array()) {
         ':input[name="controlNav"]' => array('value' => 'thumbnails'),
       ),
     ),
-    '#element_validate' => array('_flexslider_validate_minimum_version_22'),
+    '#element_validate' => array('_flexslider_validate_minimum_version_22', '_flexslider_validate_thumb_caption'),
   );
   $form['nav_controls']['thumbCaptionsBoth'] = array(
     '#type' => 'checkbox',
@@ -224,7 +224,7 @@ function flexslider_option_elements($options = array()) {
         ':input[name="controlNav"]' => array('value' => 'thumbnails'),
       ),
     ),
-    '#element_validate' => array('_flexslider_validate_minimum_version_22'),
+    '#element_validate' => array('_flexslider_validate_minimum_version_22', '_flexslider_validate_thumb_caption'),
   );
   $form['nav_controls']['keyboard'] = array(
     '#type' => 'checkbox',
@@ -517,7 +517,7 @@ function _flexslider_validate_selector($element, &$form_state) {
 }
 
 /**
- * Validate a form element that should have a number as value.
+ * Validate the minimum library version.
  */
 function _flexslider_validate_minimum_version_22($element, &$form_state) {
   $lib = libraries_detect('flexslider');
@@ -534,5 +534,20 @@ function _flexslider_validate_minimum_version_22($element, &$form_state) {
         '!required' => l($required, 'https://github.com/woothemes/FlexSlider/tree/version/2.2'),
       )));
     }
+  }
+}
+
+/**
+ * Validate the thumb caption options.
+ *
+ * Empties the value of the thumbnail caption option when the paging control
+ * is not set to thumbnails.
+ *
+ * @param array $element
+ * @param array$form_state
+ */
+function _flexslider_validate_thumb_caption($element, &$form_state) {
+  if ($form_state['values']['controlNav'] !== 'thumbnails' && $element['#value']) {
+    form_set_value($element, '', $form_state);
   }
 }
