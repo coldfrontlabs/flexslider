@@ -155,8 +155,15 @@ function template_preprocess_flexslider_list_item(&$variables) {
     if (!empty($src[1])) {
       $attributes['data-thumb'] = $src[1];
     }
-    // @todo Use something like this instead if we switch to using render arrays
-    // $attributes['data-thumb'] = $item['#item']->entity->url();
+
+    // Let's also get the alt attribute to apply to thumbnails.
+    // This only works in library version 2.6+.
+    $alt = array();
+    preg_match("<img.+?alt=[\"'](.+?)[\"'].+?>", $item, $alt);
+
+    if (!empty($alt)) {
+      $attributes['data-thumb-alt'] = $alt[1];
+    }
   }
 
   if ($optionset->getOption('thumbCaptions') and !empty($caption)) {
