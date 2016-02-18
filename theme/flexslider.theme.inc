@@ -151,10 +151,19 @@ function template_process_flexslider_list_item(&$variables) {
     // If the thumbnails are enabled in the option set, scan for the first img
     // tag and extract the src attribute to set as the thumbnail data
     $src = array();
-    preg_match("<img.+?src=[\"'](.+?)[\"'].+?>", $item, $src);
+    preg_match("/<img.+?src=[\"'](.+?)[\"'].+?>/", $item, $src);
 
     if (!empty($src[1])) {
       $attributes['data-thumb'] = $src[1];
+    }
+
+    // Let's also get the alt attribute to apply to thumbnails.
+    // This only works in library version 2.6+.
+    $alt = array();
+    preg_match("/<img.+?alt=[\"'](.+?)[\"'].+?>/", $item, $alt);
+
+    if (!empty($alt)) {
+      $attributes['data-thumb-alt'] = $alt[1];
     }
   }
 
