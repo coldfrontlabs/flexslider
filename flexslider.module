@@ -272,9 +272,14 @@ function flexslider_add($id = NULL, $optionset = NULL) {
   if (!empty($id)) {
     // JavaScript settings.
     $attached['drupalSettings']['flexslider']['instances'] = array(
-      $id => $optionset->id(),
+      $id => $optionset ? $optionset->id() : '-1',
     );
-
+    // Create an empty optionset setting if none given.
+    if (empty($optionset)) {
+      $attached['drupalSettings']['flexslider']['optionsets'] = array(
+        '-1' => [],
+      );
+    }
   }
 
   return $attached;
