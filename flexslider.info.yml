@@ -6,3 +6,4 @@ dependencies:
   - image
   - libraries (>=2.x)
 type: module
+configure: entity.flexslider.collection
