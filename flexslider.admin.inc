@@ -404,6 +404,10 @@ function flexslider_form_optionset_edit($form, &$form_state) {
     '#default_value' => $optionset->name,
   );
 
+  if ($optionset->name) {
+    $form['name']['#disabled'] = TRUE;
+  }
+
   // Options Vertical Tab Group table
   $form['options'] = array(
     '#type' => 'vertical_tabs',

@@ -1,0 +1,15 @@
+diff --git a/flexslider.admin.inc b/flexslider.admin.inc
+index 4066fbf..a2486c6 100644
+--- a/flexslider.admin.inc
++++ b/flexslider.admin.inc
+@@ -404,6 +404,10 @@ function flexslider_form_optionset_edit($form, &$form_state) {
+     '#default_value' => $optionset->name,
+   );
+ 
++  if ($optionset->name) {
++    $form['name']['#disabled'] = TRUE;
++  }
++
+   // Options Vertical Tab Group table
+   $form['options'] = array(
+     '#type' => 'vertical_tabs',
