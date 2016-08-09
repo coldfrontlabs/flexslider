@@ -4,6 +4,6 @@ core: 8.x
 package: FlexSlider
 dependencies:
   - image
-  - libraries (>=2.x)
+  - libraries
 type: module
 configure: entity.flexslider.collection
