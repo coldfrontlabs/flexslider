@@ -40,7 +40,7 @@ Tasks
 -----
 
 1. Download the FlexSlider library from
-https://github.com/woothemes/FlexSlider/tree/version/2.2
+https://github.com/woothemes/FlexSlider
 2. Unzip the file and rename the folder to "flexslider" (pay attention to the
 case of the letters)
 3. Put the folder in a libraries directory
@@ -129,7 +129,6 @@ removed. The module will attempt to remove them automatically on any image
 matching the pattern
 
     ul.slides > li > img
-    
 
 
 Export API
