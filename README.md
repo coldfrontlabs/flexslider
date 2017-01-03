@@ -25,7 +25,7 @@ Library available at https://github.com/woothemes/FlexSlider
 - Custom navigation options
 - Use any html elements in the slides
 - Built for beginners and pros, alike
-- Free to use under the MIT license
+- Free to use under the GPLv2+ license
 
 Installation
 ============
@@ -41,10 +41,14 @@ Tasks
 
 1. Download the FlexSlider library from
 https://github.com/woothemes/FlexSlider
+(To use Composer instead, see instructions below)
 2. Unzip the file and rename the folder to "flexslider" (pay attention to the
 case of the letters)
-3. Put the folder in a libraries directory
-    - Ex: libraries or sites/all/libraries
+3. Put the folder in one of the following places relative to drupal root.
+    - libraries
+    - profiles/PROFILE-NAME/libraries
+    - sites/all/libraries
+    - sites/SITE-NAME/libraries
 4. The following files are required (last file is required for javascript debugging)
     - jquery.flexslider-min.js
     - flexslider.css
@@ -53,6 +57,47 @@ case of the letters)
     - Ex: libraries/flexslider/jquery.flexslider-min.js
 
 That's it!
+
+
+Composer
+----------
+Composer may be used to download the library as follows...
+
+1. Add the following to composer.json _require_ section
+  `
+    "woothemes/flexslider": "~2.0"
+  `
+
+2. Add the following to composer.json _installer-paths_ section
+(if not already added)
+  `
+    "libraries/{$name}": ["type:drupal-library"]
+  `
+
+3. Add the following to composer.json _repositories_ section
+(your version may differ)
+
+
+    {
+      "type": "package",
+      "package": {
+        "name": "woothemes/FlexSlider",
+        "version": "2.6.3",
+        "type": "drupal-library",
+        "source": {
+          "url": "https://github.com/woothemes/FlexSlider.git",
+          "type": "git",
+          "reference": "2.6.3"
+        }
+      }
+    }
+
+4 . Open a command line terminal and navigate to the same directory as your
+composer.json file and run
+  `
+    composer update
+  `
+
 
 Drush Make
 ----------
