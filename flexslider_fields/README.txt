@@ -16,3 +16,15 @@ Ex: admin/structure/types/manage/article
 Select any field of type "image" or "media" and set the display options to
 "FlexSlider". Then select your option set in the display formatter settings.
 That's it!
+
+
+Responsive Images
+============
+
+The Responsive Image module is a core Drupal 8 module that provides an image
+formatter and breakpoint mappings to output responsive images using the
+HTML5 picture tag.
+
+FlexSlider Fields provides a FlexSlider Responsive formatter that
+utilizes the core responsive image formatter. This formatter is available for
+multi-file image fields when the Responsive Image module is enabled.
