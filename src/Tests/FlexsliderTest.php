@@ -1,6 +1,5 @@
 <?php
 /**
- * @file
  * Test cases for FlexSlider.
  *
  * @author Mathew Winstone <mwinstone@coldfrontlabs.ca>

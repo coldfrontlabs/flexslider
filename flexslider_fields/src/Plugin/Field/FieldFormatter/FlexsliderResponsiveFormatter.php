@@ -1,8 +1,5 @@
 <?php
 /**
- * @file
- * Contains \Drupal\flexslider_fields\Plugin\Field\FieldFormatter\FlexsliderResponsiveFormatter.
- *
  * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>
  */
 

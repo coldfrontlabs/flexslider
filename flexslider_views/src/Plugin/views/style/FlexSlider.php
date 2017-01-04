@@ -1,7 +1,6 @@
 <?php
 
 /**
- * @file
  * Definition of Drupal\flexslider_views\Plugin\views\style\FlexSlider.
  *
  * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>

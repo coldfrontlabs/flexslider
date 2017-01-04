@@ -1,8 +1,5 @@
 <?php
 /**
- * @file
- * Contains Drupal\flexslider_fields\FlexsliderFormatterTrait
- *
  * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>
  */
 
