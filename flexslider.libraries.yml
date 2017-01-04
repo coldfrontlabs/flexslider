@@ -10,13 +10,19 @@ flexslider:
     gpl-compatible: true
   js:
     jquery.flexslider-min.js: { minified: true }
+  css:
+    component:
+      flexslider.css: {}
+
+integration:
+  js:
     assets/js/flexslider.load.js: {}
   css:
     theme:
-      flexslider.css: {}
       assets/css/flexslider_img.css: {}
   dependencies:
     - core/jquery
     - core/drupal
     - core/drupalSettings
     - core/jquery.once
+    - flexslider/flexslider

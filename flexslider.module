@@ -32,11 +32,6 @@ function flexslider_libraries_info() {
         'flexslider.css',
       ),
     ),
-    'integration files' => array(
-      'flexslider' => array(
-        'css' => array('assets/css/flexslider_img.css'),
-      ),
-    ),
   );
 
   return $libraries;
@@ -72,28 +67,27 @@ function flexslider_library_info_alter(&$libraries, $extension) {
       $library_path = '/' . $library_path;
     }
 
-    // Set the correct path where the user downloaded the library.
+    // Set the correct path to where the library was downloaded.
     $libraries['flexslider']['js'][$library_path . '/jquery.flexslider-min.js'] = $libraries['flexslider']['js']['jquery.flexslider-min.js'];
-    $libraries['flexslider']['js'] = array(
-        $library_path . '/jquery.flexslider.js' => $libraries['flexslider']['js']['jquery.flexslider-min.js'],
-      ) + $libraries['flexslider']['js'];
     unset($libraries['flexslider']['js']['jquery.flexslider-min.js']);
 
-    $libraries['flexslider']['css']['theme'][$library_path . '/flexslider.css'] = $libraries['flexslider']['css']['theme']['flexslider.css'];
-    $libraries['flexslider']['css']['theme'] = array(
-        $library_path . '/flexslider.css' => $libraries['flexslider']['css']['theme']['flexslider.css'],
-      ) + $libraries['flexslider']['js'];
-    unset($libraries['flexslider']['css']['theme']['flexslider.css']);
+    $libraries['flexslider']['css']['component'][$library_path . '/flexslider.css'] = $libraries['flexslider']['css']['component']['flexslider.css'];
+    unset($libraries['flexslider']['css']['component']['flexslider.css']);
 
     // Enable debug mode.
     if (FLEXSLIDER_DEBUG) {
-      // Prepend the unminified version.
+      // Add the unminified version.
       $libraries['flexslider']['js'] = array(
         $library_path . '/jquery.flexslider.js' => array(),
-      ) + $libraries['flexslider']['js'];
-      // Remove the minified version.
-      unset($libraries['flexslider']['js'][$library_path . '/jquery.flexslider-min.js']);
+      );
     }
+
+    // Add support for jQuery Easing module.
+    if (\Drupal::moduleHandler()->moduleExists('jqeasing')) {
+      // Using the jqeasing module.
+      $libraries['flexslider']['dependencies'][] = 'jqeasing.easing';
+    }
+
   }
 }
 
@@ -212,7 +206,7 @@ function flexslider_add($id = NULL, $optionset = NULL) {
   // @todo not currently in use
   $cache = &drupal_static(__FUNCTION__, array());
 
-  $attached['library'][] = 'flexslider/flexslider';
+  $attached['library'][] = 'flexslider/integration';
 
   // If the ID or optionset aren't set, it is assumed the settings will be set
   // manually via the calling module/theme.
