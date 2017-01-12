@@ -78,8 +78,11 @@ class FlexsliderResponsiveFormatter extends ResponsiveImageFormatter {
    * {@inheritdoc}
    */
   public static function isApplicable(FieldDefinitionInterface $field_definition) {
-    // This formatter only applies to multi-image fields
-    return parent::isApplicable($field_definition) && $field_definition->getFieldStorageDefinition()->isMultiple();
+    // This formatter only applies to multi-image fields when Responsive Image module is loaded.
+    if (\Drupal::moduleHandler()->moduleExists('responsive_image')) {
+      return parent::isApplicable($field_definition) && $field_definition->getFieldStorageDefinition()->isMultiple();
+    }
+    return false;
   }
 
 }
