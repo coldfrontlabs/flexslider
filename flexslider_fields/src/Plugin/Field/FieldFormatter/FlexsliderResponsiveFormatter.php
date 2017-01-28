@@ -85,4 +85,24 @@ class FlexsliderResponsiveFormatter extends ResponsiveImageFormatter {
     return false;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function calculateDependencies() {
+    $dependencies = parent::calculateDependencies();
+    return $dependencies + $this->getOptionsetDependencies($this);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function onDependencyRemoval(array $dependencies) {
+    $changed = parent::onDependencyRemoval($dependencies);
+
+    if ($this->optionsetDependenciesDeleted($this, $dependencies)) {
+      $changed = true;
+    }
+    return $changed;
+  }
+
 }

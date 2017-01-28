@@ -236,4 +236,38 @@ trait FlexsliderFormatterTrait {
 
     return $element;
   }
+
+  /**
+   * Return the currently configured option set as a dependency array.
+   *
+   * @param FormatterBase $formatter
+   * @return array
+   */
+  protected function getOptionsetDependencies(FormatterBase $formatter) {
+    $dependencies = array();
+    $option_id = $formatter->getSetting('optionset');
+    if ($option_id && $optionset = $this->loadOptionset($option_id)) {
+      // Add the optionset as dependency.
+      $dependencies[$optionset->getConfigDependencyKey()][] = $optionset->getConfigDependencyName();
+    }
+    return $dependencies;
+  }
+
+  /**
+   * If a dependency is going to be deleted, set the option set to default.
+   *
+   * @param FormatterBase $formatter
+   * @param array $dependencies_deleted
+   * @return bool
+   */
+  protected function optionsetDependenciesDeleted(FormatterBase $formatter, array $dependencies_deleted) {
+    $option_id = $formatter->getSetting('optionset');
+    if ($option_id && $optionset = $this->loadOptionset($option_id)) {
+      if (!empty($dependencies_deleted[$optionset->getConfigDependencyKey()]) && in_array($optionset->getConfigDependencyName(), $dependencies_deleted[$optionset->getConfigDependencyKey()])) {
+        $formatter->setSetting('optionset', 'default');
+        return true;
+      }
+    }
+    return false;
+  }
 }

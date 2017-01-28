@@ -81,7 +81,7 @@ Composer may be used to download the library as follows...
     {
       "type": "package",
       "package": {
-        "name": "woothemes/FlexSlider",
+        "name": "woothemes/flexslider",
         "version": "2.6.3",
         "type": "drupal-library",
         "source": {

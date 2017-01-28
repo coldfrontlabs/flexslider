@@ -82,4 +82,24 @@ class FlexsliderFormatter extends ImageFormatter {
     return parent::isApplicable($field_definition) && $field_definition->getFieldStorageDefinition()->isMultiple();
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function calculateDependencies() {
+    $dependencies = parent::calculateDependencies();
+    return $dependencies + $this->getOptionsetDependencies($this);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function onDependencyRemoval(array $dependencies) {
+    $changed = parent::onDependencyRemoval($dependencies);
+
+    if ($this->optionsetDependenciesDeleted($this, $dependencies)) {
+      $changed = true;
+    }
+    return $changed;
+  }
+
 }
