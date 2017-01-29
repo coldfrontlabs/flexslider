@@ -41,7 +41,7 @@ Tasks
 
 1. Download the FlexSlider library from
 https://github.com/woothemes/FlexSlider
-(To use Composer instead, see instructions below)
+(To use Composer instead, see instructions in the Composer section below)
 2. Unzip the file and rename the folder to "flexslider" (pay attention to the
 case of the letters)
 3. Put the folder in one of the following places relative to drupal root.
