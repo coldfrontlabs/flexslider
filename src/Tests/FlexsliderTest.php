@@ -1,10 +1,4 @@
 <?php
-/**
- * Test cases for FlexSlider.
- *
- * @author Mathew Winstone <mwinstone@coldfrontlabs.ca>
- * @author Agnes Chisholm <amaria@chisholmtech.com>
- */
 
 namespace Drupal\flexslider\Tests;
 
@@ -85,7 +79,7 @@ class FlexsliderTest extends WebTestBase {
   public function testOptionSetCrud() {
     // Login as the admin user.
     $this->drupalLogin($this->adminUser);
-    $testsets  = array('testset', 'testset2');
+    $testsets = array('testset', 'testset2');
 
     foreach ($testsets as $name) {
       // Create a new optionset with default settings.

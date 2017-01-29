@@ -1,14 +1,12 @@
 <?php
 
-/**
- * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>
- */
-
 namespace Drupal\flexslider\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 use Drupal\flexslider\FlexsliderDefaults;
 
 /**
@@ -17,6 +15,7 @@ use Drupal\flexslider\FlexsliderDefaults;
  * @package Drupal\flexslider\Form
  */
 class FlexsliderForm extends EntityForm {
+
   /**
    * {@inheritdoc}
    */
@@ -493,7 +492,7 @@ class FlexsliderForm extends EntityForm {
       if ($element['#value'] && !version_compare($version, $required, '>=')) {
         $form_state->setError($element, t('To use %name you must install FlexSlider version !required or higher.', array(
           '%name' => $element['#title'],
-          '!required' => \Drupal\Core\Link::fromTextAndUrl($required, \Drupal\Core\Url::fromUri('https://github.com/woothemes/FlexSlider/tree/version/2.2')),
+          '!required' => Link::fromTextAndUrl($required, Url::fromUri('https://github.com/woothemes/FlexSlider/tree/version/2.2')),
         )));
       }
     }
@@ -506,7 +505,9 @@ class FlexsliderForm extends EntityForm {
    * is not set to thumbnails.
    *
    * @param array $element
+   *   The element to validate.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
    */
   public function validateThumbnailOptions(array &$element, FormStateInterface $form_state) {
     if ($form_state->getValue('controlNav') !== 'thumbnails' && $element['#value']) {

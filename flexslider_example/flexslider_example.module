@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Flexslider_example module.
@@ -6,6 +7,7 @@
  * @author Agnes Chisholm <amaria@chisholmtech.com>
  */
 
+use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Url;
 
 /**
@@ -15,7 +17,7 @@ function flexslider_example_toolbar() {
   $items = array();
 
   // Load the menu.
-  $fs_tree = Drupal::service('toolbar.menu_tree')->load('flexslider-example', new Drupal\Core\Menu\MenuTreeParameters());
+  $fs_tree = Drupal::service('toolbar.menu_tree')->load('flexslider-example', new MenuTreeParameters());
   // Build the menu render array.
   $fs_menu = Drupal::service('toolbar.menu_tree')->build($fs_tree);
 

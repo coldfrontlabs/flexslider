@@ -1,7 +1,4 @@
 <?php
-/**
- * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>
- */
 
 namespace Drupal\flexslider_fields\Plugin\Field\FieldFormatter;
 
@@ -47,7 +44,7 @@ class FlexsliderFormatter extends ImageFormatter {
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    // Add the optionset setting
+    // Add the optionset setting.
     $element = $this->buildSettingsForm($this);
 
     // Add the image settings.
@@ -55,7 +52,7 @@ class FlexsliderFormatter extends ImageFormatter {
     // We don't need the link setting.
     $element['image_link']['#access'] = FALSE;
 
-    // Add the caption setting
+    // Add the caption setting.
     if (!empty($this->getSettings())) {
       $element += $this->captionSettings($this, $this->fieldDefinition);
     }
@@ -78,7 +75,7 @@ class FlexsliderFormatter extends ImageFormatter {
    * {@inheritdoc}
    */
   public static function isApplicable(FieldDefinitionInterface $field_definition) {
-    // This formatter only applies to multi-image fields
+    // This formatter only applies to multi-image fields.
     return parent::isApplicable($field_definition) && $field_definition->getFieldStorageDefinition()->isMultiple();
   }
 
@@ -97,7 +94,7 @@ class FlexsliderFormatter extends ImageFormatter {
     $changed = parent::onDependencyRemoval($dependencies);
 
     if ($this->optionsetDependenciesDeleted($this, $dependencies)) {
-      $changed = true;
+      $changed = TRUE;
     }
     return $changed;
   }

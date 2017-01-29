@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * A light-weight, customizable image gallery plugin for Drupal based on jQuery.
@@ -94,7 +95,7 @@ function flexslider_library_info_alter(&$libraries, $extension) {
 /**
  * Implements hook_help().
  */
-function flexslider_help($route_name, \Drupal\Core\Routing\RouteMatchInterface $route_match) {
+function flexslider_help($route_name, $route_match) {
 
   switch ($route_name) {
     case 'help.page.flexslider':

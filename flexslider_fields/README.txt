@@ -29,5 +29,6 @@ FlexSlider Fields provides a FlexSlider Responsive formatter that
 utilizes the core responsive image formatter. This formatter is available for
 multi-file image fields when the Responsive Image module is installed.
 
-If the Responsive Image module is uninstalled after installing FlexSlider, be sure to rebuild the
-cache to clean out any references to the FlexSlider Responsive formatter.
+If the Responsive Image module is uninstalled after installing FlexSlider,
+be sure to rebuild the cache to clean out any references to the FlexSlider
+Responsive formatter.

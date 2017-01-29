@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>.
- */
-
 namespace Drupal\flexslider\Form;
 
 use Drupal\Core\Entity\EntityConfirmFormBase;
@@ -14,6 +10,7 @@ use Drupal\Core\Url;
  * Builds the form to delete Flexslider optionset entities.
  */
 class FlexsliderDeleteForm extends EntityConfirmFormBase {
+
   /**
    * {@inheritdoc}
    */

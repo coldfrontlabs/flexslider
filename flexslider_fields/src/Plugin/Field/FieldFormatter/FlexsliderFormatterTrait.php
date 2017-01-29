@@ -1,7 +1,4 @@
 <?php
-/**
- * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>
- */
 
 namespace Drupal\flexslider_fields\Plugin\Field\FieldFormatter;
 
@@ -10,6 +7,7 @@ use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Url;
 use Drupal\Core\Cache\Cache;
 use Drupal\Component\Utility\Xss;
+use Drupal\flexslider\Entity\Flexslider;
 
 /**
  * A common Trait for flexslider formatters.
@@ -25,20 +23,23 @@ trait FlexsliderFormatterTrait {
    * Returns the flexslider specific default settings.
    *
    * @return array
+   *   An array of default settings for the formatter.
    */
   protected static function getDefaultSettings() {
     return array(
       'optionset' => 'default',
       'caption' => '',
-    ) ;
+    );
   }
 
   /**
    * Builds the flexslider settings summary.
    *
    * @param \Drupal\Core\Field\FormatterBase $formatter
+   *   The formatter having this trait.
    *
    * @return array
+   *   The settings summary build array.
    */
   protected function buildSettingsSummary(FormatterBase $formatter) {
     $summary = array();
@@ -57,9 +58,10 @@ trait FlexsliderFormatterTrait {
    * Builds the flexslider settings form.
    *
    * @param \Drupal\Core\Field\FormatterBase $formatter
-   * @param array $formatter_settings
+   *   The formatter having this trait.
    *
    * @return array
+   *   The render array for Optionset settings.
    */
   protected function buildSettingsForm(FormatterBase $formatter) {
 
@@ -95,9 +97,12 @@ trait FlexsliderFormatterTrait {
    * The flexslider formatted view for images.
    *
    * @param array $images
+   *   Images render array from the (Responsive)Image Formatter.
    * @param array $formatter_settings
+   *   Render array of settings.
    *
    * @return array
+   *   Render of flexslider formatted images.
    */
   protected function viewImages(array $images, array $formatter_settings) {
 
@@ -153,21 +158,25 @@ trait FlexsliderFormatterTrait {
    * Loads the selected option set.
    *
    * @param string $id
+   *   This option set id.
    *
    * @returns \Drupal\flexslider\Entity\Flexslider
    *   The option set selected in the formatter settings.
    */
   protected function loadOptionset($id) {
-      return \Drupal\flexslider\Entity\Flexslider::load($id);
+    return Flexslider::load($id);
   }
 
   /**
    * Returns the form element for caption settings.
    *
    * @param \Drupal\Core\Field\FormatterBase $formatter
+   *   The formatter having this trait.
    * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The image field definition.
    *
    * @return array
+   *   The caption settings render array.
    */
   protected function captionSettings(FormatterBase $formatter, FieldDefinitionInterface $field_definition) {
     $field_settings = $field_definition->getSettings();
@@ -182,12 +191,12 @@ trait FlexsliderFormatterTrait {
     // Remove the options that are not available.
     $action_fields = array();
     if ($field_settings['title_field'] == FALSE) {
-      unset( $caption_options[1]);
+      unset($caption_options[1]);
       // User action required on the image title.
       $action_fields[] = 'title';
     }
     if ($field_settings['alt_field'] == FALSE) {
-      unset( $caption_options['alt']);
+      unset($caption_options['alt']);
       // User action required on the image alt.
       $action_fields[] = 'alt';
     }
@@ -199,9 +208,10 @@ trait FlexsliderFormatterTrait {
       '#options' => $caption_options,
     );
 
-    // If the image field doesn't have all of the suitable caption sources, tell the user.
+    // If the image field doesn't have all of the suitable caption sources,
+    // tell the user.
     if ($action_fields) {
-      $action_text = $formatter->t('enable the @action_field field', array('@action_field' => join(' and/or ', $action_fields)));
+      $action_text = $formatter->t('enable the @action_field field', array('@action_field' => implode(' and/or ', $action_fields)));
       /* This may be a base field definition (e.g. in Views UI) which means it
        * is not associated with a bundle and will not have the toUrl() method.
        * So we need to check for the existence of the method before we can
@@ -241,7 +251,10 @@ trait FlexsliderFormatterTrait {
    * Return the currently configured option set as a dependency array.
    *
    * @param FormatterBase $formatter
+   *   The formatter having this trait.
+   *
    * @return array
+   *   An array of option set dependencies
    */
   protected function getOptionsetDependencies(FormatterBase $formatter) {
     $dependencies = array();
@@ -257,17 +270,22 @@ trait FlexsliderFormatterTrait {
    * If a dependency is going to be deleted, set the option set to default.
    *
    * @param FormatterBase $formatter
+   *   The formatter having this trait.
    * @param array $dependencies_deleted
+   *   An array of dependencies that will be deleted.
+   *
    * @return bool
+   *   Whether or not option set dependencies changed.
    */
   protected function optionsetDependenciesDeleted(FormatterBase $formatter, array $dependencies_deleted) {
     $option_id = $formatter->getSetting('optionset');
     if ($option_id && $optionset = $this->loadOptionset($option_id)) {
       if (!empty($dependencies_deleted[$optionset->getConfigDependencyKey()]) && in_array($optionset->getConfigDependencyName(), $dependencies_deleted[$optionset->getConfigDependencyKey()])) {
         $formatter->setSetting('optionset', 'default');
-        return true;
+        return TRUE;
       }
     }
-    return false;
+    return FALSE;
   }
+
 }

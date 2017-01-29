@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>
- */
-
 namespace Drupal\flexslider\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
@@ -29,7 +25,7 @@ class FlexsliderFormSettings extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->config('flexslider.settings');
     $config->set('flexslider_debug', $form_state->getValue('flexslider_debug'))
-              ->save();
+      ->save();
 
     // Invalidate the library discovery cache to update new assets.
     \Drupal::service('library.discovery')->clearCachedDefinitions();
@@ -47,7 +43,7 @@ class FlexsliderFormSettings extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state) {
     $form = [];
 
     $form['library'] = [

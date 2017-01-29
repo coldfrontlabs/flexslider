@@ -1,7 +1,4 @@
 <?php
-/**
- * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>
- */
 
 namespace Drupal\flexslider_fields\Plugin\Field\FieldFormatter;
 
@@ -47,7 +44,7 @@ class FlexsliderResponsiveFormatter extends ResponsiveImageFormatter {
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    // Add the optionset setting
+    // Add the optionset setting.
     $element = $this->buildSettingsForm($this);
 
     // Add the image settings.
@@ -55,7 +52,7 @@ class FlexsliderResponsiveFormatter extends ResponsiveImageFormatter {
     // We don't need the link setting.
     $element['image_link']['#access'] = FALSE;
 
-    // Add the caption setting
+    // Add the caption setting.
     if (!empty($this->getSettings())) {
       $element += $this->captionSettings($this, $this->fieldDefinition);
     }
@@ -78,11 +75,12 @@ class FlexsliderResponsiveFormatter extends ResponsiveImageFormatter {
    * {@inheritdoc}
    */
   public static function isApplicable(FieldDefinitionInterface $field_definition) {
-    // This formatter only applies to multi-image fields when Responsive Image module is loaded.
+    // This formatter only applies to multi-image fields when Responsive Image
+    // module is loaded.
     if (\Drupal::moduleHandler()->moduleExists('responsive_image')) {
       return parent::isApplicable($field_definition) && $field_definition->getFieldStorageDefinition()->isMultiple();
     }
-    return false;
+    return FALSE;
   }
 
   /**
@@ -100,7 +98,7 @@ class FlexsliderResponsiveFormatter extends ResponsiveImageFormatter {
     $changed = parent::onDependencyRemoval($dependencies);
 
     if ($this->optionsetDependenciesDeleted($this, $dependencies)) {
-      $changed = true;
+      $changed = TRUE;
     }
     return $changed;
   }

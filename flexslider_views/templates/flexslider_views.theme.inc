@@ -20,7 +20,7 @@
  *     - separator: A string to be placed between inline fields to keep them
  *       visually distinct.
  */
-function template_preprocess_flexslider_views_style(&$variables) {
+function template_preprocess_flexslider_views_style(array &$variables) {
   // Only run the preprocessor if it is a view.
   if (empty($variables['view'])) {
     return;

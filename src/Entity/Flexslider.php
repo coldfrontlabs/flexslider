@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @author Agnes Chisholm <amaria@66428.no-reply.drupal.org>
- */
-
 namespace Drupal\flexslider\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;

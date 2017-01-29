@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Theming functions for the flexslider module.
@@ -7,6 +8,7 @@
  * functions to make theming easier.
  */
 
+use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\flexslider\Entity\Flexslider;
 use Drupal\flexslider\FlexsliderDefaults;
@@ -68,11 +70,11 @@ function template_preprocess_flexslider(&$variables) {
   $attributes['class'][] = 'flexslider';
 
   // Add the optionset name as a class to the container.
-  $attributes['class'][] = 'optionset-' . Drupal\Component\Utility\Html::getClass($optionset->id());
+  $attributes['class'][] = 'optionset-' . Html::getClass($optionset->id());
 
   // Add the image style name as a class to the container.
   if (!empty($settings['image_style'])) {
-    $attributes['class'][] = 'imagestyle-' . Drupal\Component\Utility\Html::getClass($settings['image_style']);
+    $attributes['class'][] = 'imagestyle-' . Html::getClass($settings['image_style']);
   }
 
   // Pass attributes to twig.
