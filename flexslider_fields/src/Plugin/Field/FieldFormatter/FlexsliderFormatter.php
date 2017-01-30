@@ -14,8 +14,7 @@ use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatter;
  *   id = "flexslider",
  *   label = @Translation("FlexSlider"),
  *   field_types = {
- *     "image",
- *     "media"
+ *     "image"
  *   }
  * )
  */

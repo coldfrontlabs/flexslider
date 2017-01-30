@@ -14,8 +14,7 @@ use Drupal\responsive_image\Plugin\Field\FieldFormatter\ResponsiveImageFormatter
  *   id = "flexslider_responsive",
  *   label = @Translation("FlexSlider Responsive"),
  *   field_types = {
- *     "image",
- *     "media"
+ *     "image"
  *   }
  * )
  */
