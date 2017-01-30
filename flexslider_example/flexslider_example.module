@@ -3,8 +3,6 @@
 /**
  * @file
  * Flexslider_example module.
- *
- * @author Agnes Chisholm <amaria@chisholmtech.com>
  */
 
 use Drupal\Core\Menu\MenuTreeParameters;

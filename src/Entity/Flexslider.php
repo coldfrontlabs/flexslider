@@ -83,7 +83,7 @@ class Flexslider extends ConfigEntityBase implements FlexsliderInterface {
   /**
    * {@inheritdoc}
    */
-  public function setOptions($options) {
+  public function setOptions(array $options) {
     $this->options = $options;
   }
 

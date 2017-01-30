@@ -3,9 +3,6 @@
 /**
  * @file
  * Install tasks for flexslider_example.
- *
- * @author Mathew Winstone <mwinstone@coldfrontlabs.ca>
- * @author Agnes Chisholm <amaria@chisholmtech.com>
  */
 
 use Drupal\node\Entity\Node;

@@ -3,8 +3,6 @@
 /**
  * @file
  * Theme functions for FlexSlider Views.
- *
- * @author Mathew Winstone <mwinstone@coldfrontlabs.ca>
  */
 
 /**
@@ -34,7 +32,7 @@ function template_preprocess_flexslider_views_style(array &$variables) {
   $settings = array();
   $settings['optionset'] = $options['optionset'];
 
-  foreach ($variables['rows'] as $id => $row) {
+  foreach ($variables['rows'] as $row) {
     // Render the row into a slide.
     // @todo should use render arrays instead of actual output
     $item['slide'] = render($row);

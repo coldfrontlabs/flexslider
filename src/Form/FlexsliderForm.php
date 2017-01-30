@@ -99,7 +99,7 @@ class FlexsliderForm extends EntityForm {
 
     // Build in support for easing plugin.
     $easing_options = array('swing' => $this->t('Swing'), 'linear' => $this->t('Linear'));
-    if (\Drupal::moduleHandler()->moduleExists('jqeasing')) {
+    if ($this->moduleHandler->moduleExists('jqeasing')) {
       $easing_options = array_merge($easing_options, _flexslider_jqeasing_options());
     }
 
@@ -453,7 +453,7 @@ class FlexsliderForm extends EntityForm {
    */
   protected function actions(array $form, FormStateInterface $form_state) {
     $actions = parent::actions($form, $form_state);
-    // Prevent access to the delete button when editing the default configuration.
+    // Prevent access to delete button when editing default configuration.
     if ($this->entity->id() == 'default' && isset($actions['delete'])) {
       $actions['delete']['#access'] = FALSE;
     }
@@ -484,13 +484,13 @@ class FlexsliderForm extends EntityForm {
   public function validateMinimumVersion22(array &$element, FormStateInterface $form_state) {
     $lib = libraries_detect('flexslider');
     if (!isset($lib['version'])) {
-      drupal_set_message(t('Unable to detect FlexSlider library version. Some options may not function properly. Please review the README.md file for installation instructions.'), 'warning');
+      drupal_set_message($this->t('Unable to detect FlexSlider library version. Some options may not function properly. Please review the README.md file for installation instructions.'), 'warning');
     }
     else {
       $version = $lib['version'];
       $required = "2.2";
       if ($element['#value'] && !version_compare($version, $required, '>=')) {
-        $form_state->setError($element, t('To use %name you must install FlexSlider version !required or higher.', array(
+        $form_state->setError($element, $this->t('To use %name you must install FlexSlider version !required or higher.', array(
           '%name' => $element['#title'],
           '!required' => Link::fromTextAndUrl($required, Url::fromUri('https://github.com/woothemes/FlexSlider/tree/version/2.2')),
         )));
