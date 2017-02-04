@@ -21,9 +21,9 @@ use Drupal\flexslider\FlexsliderDefaults;
 function template_preprocess_flexslider(&$variables) {
 
   // Reference configuration variables.
-  $optionset = &$variables['settings']['optionset'];
-  $settings = &$variables['settings'];
-  $items = &$variables['items'];
+  $settings = &$variables['flexslider']['settings'];
+  $optionset = &$settings['optionset'];
+  $items = &$variables['flexslider']['items'];
 
   // Set the default container type.
   if (empty($settings['type'])) {
@@ -88,7 +88,7 @@ function template_preprocess_flexslider(&$variables) {
   );
 
   // Finally, add the configuration to the page.
-  $attached = flexslider_add($variables['attributes']['id'], $variables['settings']['optionset']);
+  $attached = flexslider_add($variables['attributes']['id'], $variables['flexslider']['settings']['optionset']);
   $variables['#attached'] = $attached;
 
 }

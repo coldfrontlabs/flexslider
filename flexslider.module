@@ -137,7 +137,7 @@ function flexslider_theme() {
   return array(
     // Flexslider container.
     'flexslider' => array(
-      'variables' => array('items' => array(), 'settings' => array()),
+      'variables' => array('flexslider' => array()),
       'file' => 'templates/flexslider.theme.inc',
     ),
 

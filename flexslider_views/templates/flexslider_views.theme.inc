@@ -31,6 +31,7 @@ function template_preprocess_flexslider_views_style(array &$variables) {
   $items = array();
   $settings = array();
   $settings['optionset'] = $options['optionset'];
+  $settings['attributes'] = array('id' => $variables['options']['id']);
 
   foreach ($variables['rows'] as $row) {
     // Render the row into a slide.
@@ -42,9 +43,10 @@ function template_preprocess_flexslider_views_style(array &$variables) {
 
   $content = array(
     '#theme' => 'flexslider',
-    '#items' => $items,
-    '#settings' => $settings,
-    '#attributes' => array('id' => $variables['options']['id']),
+    '#flexslider' => array(
+      'items' => $items,
+      'settings' => $settings,
+    ),
   );
 
   // Add the slide items to the variables.

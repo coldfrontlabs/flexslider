@@ -144,14 +144,13 @@ trait FlexsliderFormatterTrait {
       $items[$delta] = $item;
     }
 
-    // We have to pass an array of elements for Views compatibility.
-    $elements[] = array(
-      '#theme' => 'flexslider',
-      '#items' => $items,
-      '#settings' => $formatter_settings,
+    $images['#theme'] = 'flexslider';
+    $images['#flexslider'] = array(
+      'settings' => $formatter_settings,
+      'items' => $items,
     );
 
-    return $elements;
+    return $images;
   }
 
   /**
