@@ -49,7 +49,8 @@ case of the letters)
     - profiles/PROFILE-NAME/libraries
     - sites/all/libraries
     - sites/SITE-NAME/libraries
-4. The following files are required (last file is required for javascript debugging)
+4. The following files are required (last file is required for javascript
+debugging)
     - jquery.flexslider-min.js
     - flexslider.css
     - jquery.flexslider.js
@@ -92,7 +93,7 @@ Composer may be used to download the library as follows...
       }
     }
 
-4 . Open a command line terminal and navigate to the same directory as your
+4. Open a command line terminal and navigate to the same directory as your
 composer.json file and run
   `
     composer update

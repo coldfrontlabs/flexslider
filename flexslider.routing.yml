@@ -66,4 +66,3 @@ entity.flexslider.disable:
     _permission: 'administer flexslider'
   options:
     _admin_route: TRUE
-

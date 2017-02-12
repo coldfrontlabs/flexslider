@@ -5,4 +5,3 @@ entity.flexslider.collection:
   route_name: entity.flexslider.collection
   parent: system.admin_config_media
   weight: 99
-
