@@ -168,6 +168,15 @@ You can toggle the development version of the library in the administrative
 settings page. This will load the unminified version of the library.  Uncheck
 this when moving to a production site to load the smaller minified version.
 
+CSS
+---
+
+This module comes with a css file that attempts to fix the issues with styling
+the FlexSlider on Drupal sites. These fixes are a moving target, as the library
+and Drupal tend to change quite often. You can opt out of loading this css as
+well as the base css that comes with the library, on the administrative
+settings page.
+
 ### Image Width/Height Attributes
 
 If your images aren't resizing, ensure the width and height attributes are

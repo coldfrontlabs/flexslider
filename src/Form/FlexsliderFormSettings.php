@@ -72,6 +72,8 @@ class FlexsliderFormSettings extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->config('flexslider.settings');
     $config->set('flexslider_debug', $form_state->getValue('flexslider_debug'))
+      ->set('flexslider_css', $form_state->getValue('flexslider_css'))
+      ->set('flexslider_module_css', $form_state->getValue('integration_css'))
       ->save();
 
     // Invalidate the library discovery cache to update new assets.
@@ -94,9 +96,9 @@ class FlexsliderFormSettings extends ConfigFormBase {
     $form = [];
 
     $form['library'] = [
-      '#type' => 'fieldset',
+      '#type' => 'details',
       '#title' => 'Library',
-      '#tree' => FALSE,
+      '#open' => TRUE,
     ];
 
     // Debug mode toggle.
@@ -107,6 +109,27 @@ class FlexsliderFormSettings extends ConfigFormBase {
       '#default_value' => $this->config('flexslider.settings')->get('flexslider_debug'),
       '#access' => $this->currentUser->hasPermission('administer flexslider'),
     ];
+
+    // Style toggles.
+    $form['styles'] = array(
+      '#type' => 'details',
+      '#title' => $this->t('Syles'),
+      '#open' => TRUE,
+    );
+
+    $form['styles']['flexslider_css'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('flexslider.css'),
+      '#description' => $this->t('Load the FlexSlider base css.'),
+      '#default_value' => $this->config('flexslider.settings')->get('flexslider_css'),
+    );
+
+    $form['styles']['integration_css'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('flexslider_img.css'),
+      '#description' => $this->t('Load the module\'s css fixes.'),
+      '#default_value' => $this->config('flexslider.settings')->get('flexslider_module_css'),
+    );
 
     return parent::buildForm($form, $form_state);
   }

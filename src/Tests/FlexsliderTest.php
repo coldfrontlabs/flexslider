@@ -22,7 +22,7 @@ class FlexsliderTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('flexslider');
+  public static $modules = array('flexslider', 'flexslider_library_test');
 
   /**
    * User with permission to admin flexslider.
@@ -209,6 +209,69 @@ class FlexsliderTest extends WebTestBase {
     $this->assertResponse(200);
     $this->assertText("Deleted the {$testset->label()} FlexSlider optionset.", t('Deleted test set using form.'));
 
+  }
+
+  /**
+   * Test settings and their affect on loading FlexSlider assets.
+   *
+   * This works since aggregation is off by default in SimpleTest.
+   */
+  public function testSettings() {
+
+    // Login with admin user.
+    $this->drupalLogin($this->adminUser);
+
+    // Debug flag initially off.
+    $this->assertRaw(
+      'libraries/flexslider/jquery.flexslider-min.js',
+      t('Debug flag off: The minified FlexSlider library is loaded.')
+    );
+
+    // Change the debug settings.
+    $this->drupalGet('admin/config/media/flexslider/advanced');
+    $settings['flexslider_debug'] = true;
+    $this->drupalPostForm('admin/config/media/flexslider/advanced', $settings, t('Save configuration'));
+
+    $this->assertResponse(200);
+    $this->assertText('The configuration options have been saved.', t('Successfully saved the configuration options'));
+
+    $this->drupalGet('user/' . $this->adminUser->id());
+
+    $this->assertRaw(
+      'libraries/flexslider/jquery.flexslider.js',
+      t('Debug flag on: The unminified FlexSlider library is loaded.')
+    );
+
+    // Test the css settings.
+    // Show that the css files are originally loaded.
+    $this->assertRaw(
+      'libraries/flexslider/flexslider.css',
+      t('The library css is initially loaded.')
+    );
+    $this->assertRaw(
+      'flexslider/assets/css/flexslider_img.css',
+      t('The module integration css is initially loaded.')
+    );
+
+    // Turn off the css.
+    $this->drupalGet('admin/config/media/flexslider/advanced');
+    $settings = array(
+      'flexslider_css' => false,
+      'integration_css' => false,
+    );
+    $this->drupalPostForm('admin/config/media/flexslider/advanced', $settings, t('Save configuration'));
+
+    $this->drupalGet('user/' . $this->adminUser->id());
+
+    // Show css is not loaded when flags are off.
+    $this->assertNoRaw(
+      'libraries/flexslider/flexslider.css',
+      t('FlexSlider css flag off: The library css is not loaded.')
+    );
+    $this->assertNoRaw(
+      'flexslider/assets/css/flexslider_img.css',
+      t('FlexSlider integration css flag off: The module integration css is not loaded.')
+    );
   }
 
   /**

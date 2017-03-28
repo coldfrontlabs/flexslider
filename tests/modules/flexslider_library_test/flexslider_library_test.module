@@ -1,0 +1,21 @@
+<?php
+/**
+ * @file
+ * Hooks for flexslider library testing.
+ */
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function flexslider_library_test_page_attachments_alter(array &$attachments)
+{
+  // Attach the flexslider assets on the user page for testing.
+  $current_path = \Drupal::service('path.current')->getPath();
+  if (preg_match('|^\/?user\/\d+$|', $current_path)) {
+    $flexslider_attachments = flexslider_add();
+    $attachments['#attached']['library'] = array_merge(
+      $attachments['#attached']['library'],
+      $flexslider_attachments['library']
+    );
+  }
+}

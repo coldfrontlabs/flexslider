@@ -6,6 +6,10 @@ flexslider.settings:
       type: string
     flexslider_debug:
       type: boolean
+    flexslider_css:
+      type: boolean
+    flexslider_module_css:
+      type: boolean
 
 flexslider.optionset.*:
   type: config_entity

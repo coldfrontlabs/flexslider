@@ -53,6 +53,13 @@ function flexslider_libraries_info_alter(&$libraries) {
   if (\Drupal::moduleHandler()->moduleExists('jqeasing')) {
     $libraries['flexslider']['dependencies'][] = 'easing (>=1.3)';
   }
+
+  // Remove the library css if privileged user disabled it.
+  if (!\Drupal::config('flexslider.settings')->get('flexslider_css')) {
+    if (!empty($libraries['flexslider']['files']['css']) && ($key = array_search('flexslider.css', $libraries['flexslider']['files']['css']))) {
+      unset($libraries['flexslider']['files']['css'][$key]);
+    }
+  }
 }
 
 /**
@@ -60,6 +67,19 @@ function flexslider_libraries_info_alter(&$libraries) {
  */
 function flexslider_library_info_alter(&$libraries, $extension) {
   if ($extension == 'flexslider' and isset($libraries['flexslider'])) {
+
+    // Remove the library and/or module css if privileged user disabled it.
+    if (!\Drupal::config('flexslider.settings')->get('flexslider_css')) {
+      if (isset($libraries['flexslider']['css'])) {
+        unset($libraries['flexslider']['css']);
+      }
+    }
+    if (!\Drupal::config('flexslider.settings')->get('flexslider_module_css')) {
+      if (isset($libraries['integration']['css'])) {
+        unset($libraries['integration']['css']);
+      }
+    }
+
     $library_path = libraries_get_path('flexslider');
     if (strpos($library_path, '/') !== 0) {
       $library_path = '/' . $library_path;
@@ -69,8 +89,10 @@ function flexslider_library_info_alter(&$libraries, $extension) {
     $libraries['flexslider']['js'][$library_path . '/jquery.flexslider-min.js'] = $libraries['flexslider']['js']['jquery.flexslider-min.js'];
     unset($libraries['flexslider']['js']['jquery.flexslider-min.js']);
 
-    $libraries['flexslider']['css']['component'][$library_path . '/flexslider.css'] = $libraries['flexslider']['css']['component']['flexslider.css'];
-    unset($libraries['flexslider']['css']['component']['flexslider.css']);
+    if (!empty($libraries['flexslider']['css'])) {
+      $libraries['flexslider']['css']['component'][$library_path . '/flexslider.css'] = $libraries['flexslider']['css']['component']['flexslider.css'];
+      unset($libraries['flexslider']['css']['component']['flexslider.css']);
+    }
 
     // Enable debug mode.
     $debug = \Drupal::config('flexslider.settings')->get('flexslider_debug');
