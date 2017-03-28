@@ -5,11 +5,13 @@
  * Install file for the flexslider library test module.
  */
 
+use Drupal\Core\Site\Settings;
+
 /**
  * Implements hook_install().
  */
 function flexslider_library_test_install() {
-  $library_folder = DRUPAL_ROOT . '/libraries';
+  $library_folder = Settings::get('file_public_path') . '/libraries';
   $flexslider_folder = $library_folder . '/flexslider';
   if (file_exists($flexslider_folder)) {
     return;
