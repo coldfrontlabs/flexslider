@@ -14,15 +14,16 @@ function flexslider_library_test_library_info_alter(&$libraries, $extension)
 {
   if ($extension == 'flexslider' and isset($libraries['flexslider'])) {
 
-    $library_path = '/libraries/flexslider';
-    $library_path_test = '/' . Settings::get('file_public_path') . $library_path;
+    $paths = array_keys($libraries['flexslider']['js']);
+    $library_path = dirname($paths[0]);
+    $library_path_test = '/' . Settings::get('file_public_path') . '/libraries/flexslider';
 
     // Set path to where the library was downloaded in the test environment.
     $js = \Drupal::config('flexslider.settings')->get('flexslider_debug') ? 'jquery.flexslider.js' : 'jquery.flexslider-min.js';
     $libraries['flexslider']['js'][$library_path_test . '/' . $js] = $libraries['flexslider']['js'][$library_path . '/' . $js];
     unset($libraries['flexslider']['js'][$library_path . '/' . $js]);
 
-    if (!empty($libraries['flexslider']['css']['component'][$library_path . '/flexslider.css'])) {
+    if (isset($libraries['flexslider']['css']['component'][$library_path . '/flexslider.css'])) {
       $libraries['flexslider']['css']['component'][$library_path_test . '/flexslider.css'] = $libraries['flexslider']['css']['component'][$library_path . '/flexslider.css'];
       unset($libraries['flexslider']['css']['component'][$library_path . '/flexslider.css']);
     }
