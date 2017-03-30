@@ -15,7 +15,7 @@ class FlexsliderDeleteForm extends EntityConfirmFormBase {
    * {@inheritdoc}
    */
   public function getQuestion() {
-    return $this->t('Are you sure you want to delete %name?', array('%name' => $this->entity->label()));
+    return $this->t('Are you sure you want to delete %name?', ['%name' => $this->entity->label()]);
   }
 
   /**
@@ -57,7 +57,7 @@ class FlexsliderDeleteForm extends EntityConfirmFormBase {
 
     if ($this->entity->id() == 'default') {
       $form['#title'] = $this->t('The default optionset cannot be deleted.');
-      $form['description'] = array('#markup' => t('Please click Cancel to go back to the list of optionsets.'));
+      $form['description'] = ['#markup' => t('Please click Cancel to go back to the list of optionsets.')];
       $form['actions']['submit']['#access'] = FALSE;
     }
 

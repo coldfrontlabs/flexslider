@@ -28,10 +28,10 @@ function template_preprocess_flexslider_views_style(array &$variables) {
   $style = $view->style_plugin;
   $options = $style->options;
 
-  $items = array();
-  $settings = array();
+  $items = [];
+  $settings = [];
   $settings['optionset'] = $options['optionset'];
-  $settings['attributes'] = array('id' => $variables['options']['id']);
+  $settings['attributes'] = ['id' => $variables['options']['id']];
 
   foreach ($variables['rows'] as $row) {
     // Render the row into a slide.
@@ -41,13 +41,13 @@ function template_preprocess_flexslider_views_style(array &$variables) {
     $items[] = $item;
   }
 
-  $content = array(
+  $content = [
     '#theme' => 'flexslider',
-    '#flexslider' => array(
+    '#flexslider' => [
       'items' => $items,
       'settings' => $settings,
-    ),
-  );
+    ],
+  ];
 
   // Add the slide items to the variables.
   $variables['content'] = $content;

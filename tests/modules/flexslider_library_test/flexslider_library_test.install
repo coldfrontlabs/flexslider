@@ -25,4 +25,3 @@ function flexslider_library_test_install() {
   $zip->extractTo($library_folder);
   rename($library_folder . '/FlexSlider-master', $flexslider_folder);
 }
-

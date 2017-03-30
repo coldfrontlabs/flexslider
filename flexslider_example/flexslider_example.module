@@ -12,30 +12,30 @@ use Drupal\Core\Url;
  * Implements hook_toolbar().
  */
 function flexslider_example_toolbar() {
-  $items = array();
+  $items = [];
 
   // Load the menu.
   $fs_tree = Drupal::service('toolbar.menu_tree')->load('flexslider-example', new MenuTreeParameters());
   // Build the menu render array.
   $fs_menu = Drupal::service('toolbar.menu_tree')->build($fs_tree);
 
-  $items['flexslider_examples'] = array(
+  $items['flexslider_examples'] = [
     '#type' => 'toolbar_item',
-    'tab' => array(
+    'tab' => [
       '#type' => 'link',
       '#title' => t('FlexSlider Examples'),
       '#url' => Url::fromRoute('<front>'),
-      '#attributes' => array(
+      '#attributes' => [
         'title' => t('FlexSlider examples menu'),
-        'class' => array('toolbar-icon', 'toolbar-icon-menu'),
-      ),
-    ),
-    'tray' => array(
+        'class' => ['toolbar-icon', 'toolbar-icon-menu'],
+      ],
+    ],
+    'tray' => [
       '#heading' => t('FlexSlider examples menu'),
       'flexslider_example_menu' => $fs_menu,
-    ),
+    ],
     '#weight' => 99,
-  );
+  ];
 
   return $items;
 }

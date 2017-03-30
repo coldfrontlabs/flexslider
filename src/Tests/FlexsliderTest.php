@@ -22,7 +22,7 @@ class FlexsliderTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('flexslider', 'flexslider_library_test');
+  public static $modules = ['flexslider', 'flexslider_library_test'];
 
   /**
    * User with permission to admin flexslider.
@@ -45,8 +45,8 @@ class FlexsliderTest extends WebTestBase {
     parent::setUp();
 
     // Create users.
-    $this->adminUser = $this->drupalCreateUser(array('administer flexslider'), NULL, TRUE);
-    $this->anyUser = $this->drupalCreateUser(array('access administration pages'));
+    $this->adminUser = $this->drupalCreateUser(['administer flexslider'], NULL, TRUE);
+    $this->anyUser = $this->drupalCreateUser(['access administration pages']);
   }
 
   /**
@@ -79,13 +79,13 @@ class FlexsliderTest extends WebTestBase {
   public function testOptionSetCrud() {
     // Login as the admin user.
     $this->drupalLogin($this->adminUser);
-    $testsets = array('testset', 'testset2');
+    $testsets = ['testset', 'testset2'];
 
     foreach ($testsets as $name) {
       // Create a new optionset with default settings.
-      /** @var Flexslider $optionset */
-      $optionset = Flexslider::create(array('id' => $name, 'label' => $name));
-      $this->assertTrue($optionset->id() == $name, t('Optionset object created: @name', array('@name' => $optionset->id())));
+      /** @var \Drupal\flexslider\Entity\Flexslider $optionset */
+      $optionset = Flexslider::create(['id' => $name, 'label' => $name]);
+      $this->assertTrue($optionset->id() == $name, t('Optionset object created: @name', ['@name' => $optionset->id()]));
       $this->assertFalse(empty($optionset->getOptions()), t('Create optionset works.'));
 
       // Save the optionset to the database.
@@ -97,12 +97,12 @@ class FlexsliderTest extends WebTestBase {
       $optionset = Flexslider::load($name);
 
       $this->assertTrue(is_object($optionset), t('Loaded option set.'));
-      $this->assertEqual($name, $optionset->id(), t('Loaded name matches: @name', array('@name' => $optionset->id())));
+      $this->assertEqual($name, $optionset->id(), t('Loaded name matches: @name', ['@name' => $optionset->id()]));
 
-      /** @var Flexslider $default_optionset */
+      /** @var \Drupal\flexslider\Entity\Flexslider $default_optionset */
       $default_optionset = Flexslider::create();
       foreach ($default_optionset->getOptions() as $key => $value) {
-        $this->assertEqual($value, $optionset->getOptions()[$key], t('Option @option matches saved value.', array('@option' => $key)));
+        $this->assertEqual($value, $optionset->getOptions()[$key], t('Option @option matches saved value.', ['@option' => $key]));
       }
 
     }
@@ -139,7 +139,7 @@ class FlexsliderTest extends WebTestBase {
 
     // Compare settings to the test options.
     foreach ($test_options['set2'] as $key => $value) {
-      $this->assertEqual($optionset->getOptions()[$key], $value, t('Saved value matches set value: @key', array('@key' => $key)));
+      $this->assertEqual($optionset->getOptions()[$key], $value, t('Saved value matches set value: @key', ['@key' => $key]));
     }
 
     // Delete the optionset.
@@ -147,10 +147,10 @@ class FlexsliderTest extends WebTestBase {
     try {
       $optionset->delete();
       // Ensure the delete is successful.
-      $this->pass(t('Optionset successfully deleted: @name', array('@name' => $optionset->id())));
+      $this->pass(t('Optionset successfully deleted: @name', ['@name' => $optionset->id()]));
     }
     catch (\Exception $e) {
-      $this->fail(t('Caught exception: @msg', array('@msg' => $e->getMessage())));
+      $this->fail(t('Caught exception: @msg', ['@msg' => $e->getMessage()]));
     }
 
   }
@@ -169,7 +169,7 @@ class FlexsliderTest extends WebTestBase {
     $this->assertResponse(200, t('Administrative user can reach the "Add" form.'));
 
     // Save new optionset.
-    $optionset = array();
+    $optionset = [];
     $optionset['label'] = t('testset');
     $optionset['id'] = 'testset';
     $this->drupalPostForm('admin/config/media/flexslider/add', $optionset, t('Save'));
@@ -194,7 +194,7 @@ class FlexsliderTest extends WebTestBase {
       $this->drupalGet('admin/config/media/flexslider/default');
       $this->assertResponse(200, t('Default optionset reloaded.'));
       foreach ($testset as $key => $option) {
-        $this->assertFieldByName($key, $option, t('Value for @key appears in form correctly.', array('@key' => $key)));
+        $this->assertFieldByName($key, $option, t('Value for @key appears in form correctly.', ['@key' => $key]));
       }
     }
 
@@ -229,7 +229,7 @@ class FlexsliderTest extends WebTestBase {
 
     // Change the debug settings.
     $this->drupalGet('admin/config/media/flexslider/advanced');
-    $settings['flexslider_debug'] = true;
+    $settings['flexslider_debug'] = TRUE;
     $this->drupalPostForm('admin/config/media/flexslider/advanced', $settings, t('Save configuration'));
 
     $this->assertResponse(200);
@@ -255,10 +255,10 @@ class FlexsliderTest extends WebTestBase {
 
     // Turn off the css.
     $this->drupalGet('admin/config/media/flexslider/advanced');
-    $settings = array(
-      'flexslider_css' => false,
-      'integration_css' => false,
-    );
+    $settings = [
+      'flexslider_css' => FALSE,
+      'integration_css' => FALSE,
+    ];
     $this->drupalPostForm('admin/config/media/flexslider/advanced', $settings, t('Save configuration'));
 
     $this->drupalGet('user/' . $this->adminUser->id());
@@ -282,19 +282,19 @@ class FlexsliderTest extends WebTestBase {
    */
   protected function getTestOptions() {
     // Valid option set data.
-    $valid = array(
+    $valid = [
       'set1' => FlexsliderDefaults::defaultOptions(),
-      'set2' => array(
+      'set2' => [
         'animation' => 'slide',
         'startAt' => 4,
         // @todo add more option tests
-      ),
-    );
+      ],
+    ];
 
     // Invalid edge cases.
-    $error = array();
+    $error = [];
 
-    return array('valid' => $valid, 'error' => $error);
+    return ['valid' => $valid, 'error' => $error];
   }
 
 }

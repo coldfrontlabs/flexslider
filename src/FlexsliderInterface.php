@@ -37,7 +37,7 @@ interface FlexsliderInterface extends ConfigEntityInterface {
    * Sets the flexslider library options array.
    *
    * @param array $options
-   *    New/updated array of options.
+   *   New/updated array of options.
    */
   public function setOptions(array $options);
 

@@ -38,4 +38,5 @@ class FlexsliderSettingsUpdateTest extends UpdatePathTestBase {
     $this->assertTrue($settings['flexslider_css'], 'FlexSlider base css setting is TRUE after update');
     $this->assertTrue($settings['flexslider_css'], 'FlexSlider module integration css setting is TRUE after update');
   }
+
 }

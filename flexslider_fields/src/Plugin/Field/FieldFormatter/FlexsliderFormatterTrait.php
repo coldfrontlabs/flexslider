@@ -26,10 +26,10 @@ trait FlexsliderFormatterTrait {
    *   An array of default settings for the formatter.
    */
   protected static function getDefaultSettings() {
-    return array(
+    return [
       'optionset' => 'default',
       'caption' => '',
-    );
+    ];
   }
 
   /**
@@ -42,14 +42,14 @@ trait FlexsliderFormatterTrait {
    *   The settings summary build array.
    */
   protected function buildSettingsSummary(FormatterBase $formatter) {
-    $summary = array();
+    $summary = [];
 
     // Load the selected optionset.
     $optionset = $this->loadOptionset($formatter->getSetting('optionset'));
 
     // Build the optionset summary.
     $os_summary = $optionset ? $optionset->label() : $formatter->t('Default settings');
-    $summary[] = $formatter->t('Option set: %os_summary', array('%os_summary' => $os_summary));
+    $summary[] = $formatter->t('Option set: %os_summary', ['%os_summary' => $os_summary]);
 
     return $summary;
   }
@@ -68,27 +68,27 @@ trait FlexsliderFormatterTrait {
     // Get list of option sets as an associative array.
     $optionsets = flexslider_optionset_list();
 
-    $element['optionset'] = array(
+    $element['optionset'] = [
       '#title' => $formatter->t('Option Set'),
       '#type' => 'select',
       '#default_value' => $formatter->getSetting('optionset'),
       '#options' => $optionsets,
-    );
+    ];
 
-    $element['links'] = array(
+    $element['links'] = [
       '#theme' => 'links',
-      '#links' => array(
-        array(
+      '#links' => [
+        [
           'title' => $formatter->t('Create new option set'),
-          'url' => Url::fromRoute('entity.flexslider.add_form', array(), array('query' => \Drupal::destination()->getAsArray())),
-        ),
-        array(
+          'url' => Url::fromRoute('entity.flexslider.add_form', [], ['query' => \Drupal::destination()->getAsArray()]),
+        ],
+        [
           'title' => $formatter->t('Manage option sets'),
-          'url' => Url::fromRoute('entity.flexslider.collection', array(), array('query' => \Drupal::destination()->getAsArray())),
-        ),
-      ),
+          'url' => Url::fromRoute('entity.flexslider.collection', [], ['query' => \Drupal::destination()->getAsArray()]),
+        ],
+      ],
       '#access' => \Drupal::currentUser()->hasPermission('administer flexslider'),
-    );
+    ];
 
     return $element;
   }
@@ -108,7 +108,7 @@ trait FlexsliderFormatterTrait {
 
     // Bail out if no images to render.
     if (empty($images)) {
-      return array();
+      return [];
     }
 
     // Get cache tags for the option set.
@@ -116,7 +116,7 @@ trait FlexsliderFormatterTrait {
       $cache_tags = $optionset->getCacheTags();
     }
     else {
-      $cache_tags = array();
+      $cache_tags = [];
     }
 
     $items = [];
@@ -129,7 +129,7 @@ trait FlexsliderFormatterTrait {
       }
 
       // Prepare the slide item render array.
-      $item = array();
+      $item = [];
       // @todo Should find a way of dealing with render arrays instead of the actual output
       $item['slide'] = render($image);
 
@@ -145,10 +145,10 @@ trait FlexsliderFormatterTrait {
     }
 
     $images['#theme'] = 'flexslider';
-    $images['#flexslider'] = array(
+    $images['#flexslider'] = [
       'settings' => $formatter_settings,
       'items' => $items,
-    );
+    ];
 
     return $images;
   }
@@ -181,14 +181,14 @@ trait FlexsliderFormatterTrait {
     $field_settings = $field_definition->getSettings();
 
     // Set the caption options.
-    $caption_options = array(
+    $caption_options = [
       0 => $formatter->t('None'),
       1 => $formatter->t('Image title'),
       'alt' => $formatter->t('Image ALT attribute'),
-    );
+    ];
 
     // Remove the options that are not available.
-    $action_fields = array();
+    $action_fields = [];
     if ($field_settings['title_field'] == FALSE) {
       unset($caption_options[1]);
       // User action required on the image title.
@@ -201,16 +201,16 @@ trait FlexsliderFormatterTrait {
     }
 
     // Create the caption element.
-    $element['caption'] = array(
+    $element['caption'] = [
       '#title' => $formatter->t('Choose a caption source'),
       '#type' => 'select',
       '#options' => $caption_options,
-    );
+    ];
 
     // If the image field doesn't have all of the suitable caption sources,
     // tell the user.
     if ($action_fields) {
-      $action_text = $formatter->t('enable the @action_field field', array('@action_field' => implode(' and/or ', $action_fields)));
+      $action_text = $formatter->t('enable the @action_field field', ['@action_field' => implode(' and/or ', $action_fields)]);
       /* This may be a base field definition (e.g. in Views UI) which means it
        * is not associated with a bundle and will not have the toUrl() method.
        * So we need to check for the existence of the method before we can
@@ -220,10 +220,10 @@ trait FlexsliderFormatterTrait {
         // Build the link to the image field edit form for this bundle.
         $rel = "{$field_definition->getTargetEntityTypeId()}-field-edit-form";
         $action = $field_definition->toLink($action_text, $rel,
-          array(
+          [
             'fragment' => 'edit-settings-alt-field',
             'query' => \Drupal::destination()->getAsArray(),
-          )
+          ]
         )->toRenderable();
       }
       else {
@@ -232,7 +232,7 @@ trait FlexsliderFormatterTrait {
       }
       $element['caption']['#description']
         = $formatter->t('You need to @action for this image field to be able to use it as a caption.',
-        array('@action' => render($action)));
+        ['@action' => render($action)]);
 
       // If there are no suitable caption sources, disable the caption element.
       if (count($action_fields) >= 2) {
@@ -249,14 +249,14 @@ trait FlexsliderFormatterTrait {
   /**
    * Return the currently configured option set as a dependency array.
    *
-   * @param FormatterBase $formatter
+   * @param \Drupal\Core\Field\FormatterBase $formatter
    *   The formatter having this trait.
    *
    * @return array
    *   An array of option set dependencies
    */
   protected function getOptionsetDependencies(FormatterBase $formatter) {
-    $dependencies = array();
+    $dependencies = [];
     $option_id = $formatter->getSetting('optionset');
     if ($option_id && $optionset = $this->loadOptionset($option_id)) {
       // Add the optionset as dependency.
@@ -268,7 +268,7 @@ trait FlexsliderFormatterTrait {
   /**
    * If a dependency is going to be deleted, set the option set to default.
    *
-   * @param FormatterBase $formatter
+   * @param \Drupal\Core\Field\FormatterBase $formatter
    *   The formatter having this trait.
    * @param array $dependencies_deleted
    *   An array of dependencies that will be deleted.

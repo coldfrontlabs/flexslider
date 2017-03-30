@@ -23,12 +23,12 @@ function flexslider_example_install() {
 function flexslider_example_uninstall() {
   // Collect all of the example nodes and delete them.
   $storage_handler = \Drupal::entityTypeManager()->getStorage('node');
-  $nodes = $storage_handler->loadByProperties(array('type' => 'flexslider_example'));
+  $nodes = $storage_handler->loadByProperties(['type' => 'flexslider_example']);
 
   // Ensure we have some nodes before deleting.
   if (!empty($nodes)) {
     $storage_handler->delete($nodes);
-    \Drupal::logger('flexslider')->info(t('Deleted @count flexslider_example nodes', array('@count' => count($nodes))), array());
+    \Drupal::logger('flexslider')->info(t('Deleted @count flexslider_example nodes', ['@count' => count($nodes)]), []);
   }
 
   // Now delete all of the configuration installed by this module.
@@ -37,7 +37,7 @@ function flexslider_example_uninstall() {
   foreach ($files as $file) {
     \Drupal::configFactory()->getEditable($file->name)->delete();
   }
-  \Drupal::logger('flexslider')->info(t('Deleted flexslider example configuration'), array());
+  \Drupal::logger('flexslider')->info(t('Deleted flexslider example configuration'), []);
 
 }
 
@@ -78,14 +78,14 @@ function flexslider_example_generate_content() {
         $saved = 'Updated';
       }
       else {
-        throw new Exception(t('Unknown value [@result] was returned', array('@result' => $result)));
+        throw new Exception(t('Unknown value [@result] was returned', ['@result' => $result]));
       }
 
-      \Drupal::logger('flexslider')->info(t('@saved flexslider_example node @nid', array('@saved' => $saved, '@nid' => $node->id())), array());
+      \Drupal::logger('flexslider')->info(t('@saved flexslider_example node @nid', ['@saved' => $saved, '@nid' => $node->id()]), []);
 
     }
     catch (Exception $e) {
-      \Drupal::logger('flexslider')->error(t('Node create failure: @msg', array('@msg' => $e->getMessage())), array());
+      \Drupal::logger('flexslider')->error(t('Node create failure: @msg', ['@msg' => $e->getMessage()]), []);
     }
 
   }

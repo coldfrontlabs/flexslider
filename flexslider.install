@@ -17,37 +17,37 @@ function flexslider_uninstall() {
   foreach ($files as $file) {
     \Drupal::configFactory()->getEditable($file->name)->delete();
   }
-  \Drupal::logger('flexslider')->info(t('Deleted flexslider configuration'), array());
+  \Drupal::logger('flexslider')->info(t('Deleted flexslider configuration'), []);
 }
 
 /**
  * Implements hook_requirements().
  */
 function flexslider_requirements($phase) {
-  $requirements = array();
+  $requirements = [];
 
   // Check to see if the flexslider library is available.
   if ($phase == 'runtime') {
     $library = libraries_detect('flexslider');
     if ($library && !empty($library['installed'])) {
       if ($library['version']) {
-        $description = t('Version %i installed', array('%i' => $library['version']));
+        $description = t('Version %i installed', ['%i' => $library['version']]);
       }
       else {
         $description = t('Unable to detect version.');
       }
-      $requirements['flexslider'] = array(
+      $requirements['flexslider'] = [
         'title' => t('FlexSlider'),
         'description' => $description,
         'severity' => REQUIREMENT_OK,
-      );
+      ];
     }
     else {
-      $requirements['flexslider'] = array(
+      $requirements['flexslider'] = [
         'title' => t('FlexSlider'),
         'description' => t('FlexSlider library not found. Please consult the README.md for installation instructions.'),
         'severity' => REQUIREMENT_ERROR,
-      );
+      ];
     }
   }
   return $requirements;

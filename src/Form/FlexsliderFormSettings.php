@@ -19,14 +19,14 @@ class FlexsliderFormSettings extends ConfigFormBase {
   /**
    * The library discovery service.
    *
-   * @var LibraryDiscovery
+   * @var \Drupal\Core\Asset\LibraryDiscovery
    */
   private $libraryDiscovery;
 
   /**
    * The current user account service.
    *
-   * @var AccountProxyInterface
+   * @var \Drupal\Core\Session\AccountProxyInterface
    */
   private $currentUser;
 
@@ -111,25 +111,25 @@ class FlexsliderFormSettings extends ConfigFormBase {
     ];
 
     // Style toggles.
-    $form['styles'] = array(
+    $form['styles'] = [
       '#type' => 'details',
       '#title' => $this->t('Syles'),
       '#open' => TRUE,
-    );
+    ];
 
-    $form['styles']['flexslider_css'] = array(
+    $form['styles']['flexslider_css'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('flexslider.css'),
       '#description' => $this->t('Load the FlexSlider base css.'),
       '#default_value' => $this->config('flexslider.settings')->get('flexslider_css'),
-    );
+    ];
 
-    $form['styles']['integration_css'] = array(
+    $form['styles']['integration_css'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('flexslider_img.css'),
-      '#description' => $this->t('Load the module\'s css fixes.'),
+      '#description' => $this->t('Load the module css fixes.'),
       '#default_value' => $this->config('flexslider.settings')->get('flexslider_module_css'),
-    );
+    ];
 
     return parent::buildForm($form, $form_state);
   }

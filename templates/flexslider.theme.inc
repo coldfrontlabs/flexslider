@@ -39,7 +39,7 @@ function template_preprocess_flexslider(&$variables) {
   if (is_null($optionset)) {
     // Fall back to 'default' options.
     $options = FlexsliderDefaults::defaultOptions();
-    \Drupal::logger('flexslider')->warning('Fallback to default optionset.', array());
+    \Drupal::logger('flexslider')->warning('Fallback to default optionset.', []);
   }
   else {
     $options = $optionset->getOptions();
@@ -81,11 +81,11 @@ function template_preprocess_flexslider(&$variables) {
   $variables['attributes'] = $attributes;
 
   // Add the list render array.
-  $variables['content']['list'] = array(
+  $variables['content']['list'] = [
     '#theme' => 'flexslider_list',
     '#items' => $items,
     '#settings' => $settings,
-  );
+  ];
 
   // Finally, add the configuration to the page.
   $attached = flexslider_add($variables['attributes']['id'], $variables['flexslider']['settings']['optionset']);
@@ -109,7 +109,7 @@ function template_preprocess_flexslider_list(&$variables) {
   $attributes['class'][] = 'slides';
 
   // Build the list.
-  $variables['content']['list'] = array();
+  $variables['content']['list'] = [];
   if (!empty($items)) {
     foreach ($items as $i => $item) {
 
@@ -119,14 +119,14 @@ function template_preprocess_flexslider_list(&$variables) {
       }
 
       // Add the list item render array.
-      $variables['content']['list'][$i] = array(
+      $variables['content']['list'][$i] = [
         '#theme' => 'flexslider_list_item',
         '#item' => $item['slide'],
-        '#settings' => array(
+        '#settings' => [
           'optionset' => $optionset,
-        ),
+        ],
         '#caption' => $caption,
-      );
+      ];
     }
   }
 
@@ -151,7 +151,7 @@ function template_preprocess_flexslider_list_item(&$variables) {
   if ($optionset->getOption('controlNav') === "thumbnails") {
     // If the thumbnails are enabled in the option set,
     // extract the url to set as the thumbnail data.
-    $src = array();
+    $src = [];
     if (!preg_match("/<img.+?src=[\"'](.+?)[\"'].+?>/", $item, $src)) {
       preg_match("/<img.+?srcset=[\"'](.+?)[\"'].+?>/", $item, $src);
     }
@@ -162,7 +162,7 @@ function template_preprocess_flexslider_list_item(&$variables) {
 
     // Let's also get the alt attribute to apply to thumbnails.
     // This only works in library version 2.6+.
-    $alt = array();
+    $alt = [];
     preg_match("/<img.+?alt=[\"'](.+?)[\"'].+?>/", $item, $alt);
 
     if (!empty($alt)) {

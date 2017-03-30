@@ -47,9 +47,9 @@ class FlexSlider extends StylePluginBase {
    */
   protected function defineOptions() {
     $options = parent::defineOptions();
-    $options['optionset'] = array('default' => 'default');
-    $options['captionfield'] = array('default' => '');
-    $options['id'] = array('default' => '');
+    $options['optionset'] = ['default' => 'default'];
+    $options['captionfield'] = ['default' => ''];
+    $options['id'] = ['default' => ''];
     return $options;
   }
 
@@ -59,39 +59,39 @@ class FlexSlider extends StylePluginBase {
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
 
-    $form['flexslider'] = array(
+    $form['flexslider'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('FlexSlider'),
-    );
+    ];
 
-    $form['flexslider']['optionset'] = array(
+    $form['flexslider']['optionset'] = [
       '#title' => t('Option set'),
       '#type' => 'select',
       '#options' => flexslider_optionset_list(),
       '#default_value' => $this->options['optionset'],
-    );
+    ];
 
-    $captionfield_options = array('' => $this->t('None'));
+    $captionfield_options = ['' => $this->t('None')];
     foreach ($this->displayHandler->getHandlers('field') as $field => $handler) {
       $captionfield_options[$field] = $handler->adminLabel();
     }
 
-    $form['flexslider']['captionfield'] = array(
+    $form['flexslider']['captionfield'] = [
       '#type' => 'select',
       '#title' => $this->t('Caption Field'),
       '#description' => $this->t("Select a field to be used as the caption. This can also be set manually by adding the '.flex-caption' class to a field. Required to use thumbnail captions."),
       '#options' => $captionfield_options,
       '#default_value' => $this->options['captionfield'],
-    );
+    ];
 
-    $form['flexslider']['id'] = array(
+    $form['flexslider']['id'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Element ID'),
       '#description' => $this->t("Manually define the FlexSlider container ID attribute <em>Ensure you don't display similar ID elements on the same page</em>."),
       '#size' => 40,
       '#maxlength' => 255,
       '#default_value' => $this->options['id'],
-    );
+    ];
 
   }
 
@@ -136,15 +136,15 @@ class FlexSlider extends StylePluginBase {
      * values are saved properly.
      * Original: values['style_options']['flexslider'] = ['options', 'caption', 'id'].
      */
-    $flexslider_options = $form_state->getValue(array('style_options', 'flexslider'));
+    $flexslider_options = $form_state->getValue(['style_options', 'flexslider']);
 
     // Edit:  values['style_options'] += ['options', 'caption', 'id'].
     foreach ($flexslider_options as $key => $value) {
-      $form_state->setValue(array('style_options', $key), $value);
+      $form_state->setValue(['style_options', $key], $value);
     }
 
     // Edit:  values['style_options']['flexslider'] = NULL.
-    $form_state->setValue(array('style_options', 'flexslider'), NULL);
+    $form_state->setValue(['style_options', 'flexslider'], NULL);
   }
 
 }

@@ -62,7 +62,7 @@ class Flexslider extends ConfigEntityBase implements FlexsliderInterface {
    *
    * @var array
    */
-  protected $options = array();
+  protected $options = [];
 
   /**
    * {@inheritdoc}
@@ -97,7 +97,7 @@ class Flexslider extends ConfigEntityBase implements FlexsliderInterface {
   /**
    * {@inheritdoc}
    */
-  public static function create(array $values = array()) {
+  public static function create(array $values = []) {
     $flexslider = parent::create($values);
     // Merge options with default options.
     $default_options = FlexsliderDefaults::defaultOptions();
