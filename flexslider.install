@@ -117,8 +117,6 @@ function flexslider_requirements($phase) {
 }
 
 /**
- * Implements hook_update_N().
- *
  * Remove/Update table fields to better suit FlexSlider
  */
 function flexslider_update_7001(&$sandbox) {
@@ -136,8 +134,6 @@ function flexslider_update_7001(&$sandbox) {
 }
 
 /**
- * Implements hook_update_N().
- *
  * Enables the Image module since it is now explicitly listed as a
  * dependency.
  */
@@ -146,13 +142,11 @@ function flexslider_update_7002(&$sandbox) {
 }
 
 /**
- * Implements hook_update_N().
- *
  * Migrate settings from FlexSlider v1 to v2
  */
 function flexslider_update_7200(&$sandbox) {
   $t = get_t();
-  
+
   module_load_include('module', 'flexslider', 'flexslider');
   $optionsets = flexslider_optionset_load_all();
 
@@ -186,6 +180,9 @@ function flexslider_update_7200(&$sandbox) {
   drupal_set_message($t('Optionsets migrated. However it is recommended to go validate all your settings manually. Especially if you have callback functions defined. They may reference functions which no longer exist.'), 'warning');
 }
 
+/**
+ * Add thumbnail image config.
+ */
 function flexslider_update_7201(&$sandbox) {
   $field_new = array(
     'description' => 'The image style for thumbnail images.',
@@ -199,8 +196,6 @@ function flexslider_update_7201(&$sandbox) {
 }
 
 /**
- * Implements hook_update_N().
- *
  * Remove the image style settings from the optionset
  */
 function flexslider_update_7202(&$sandbox) {
@@ -209,12 +204,8 @@ function flexslider_update_7202(&$sandbox) {
 }
 
 /**
- * Implements hook_update_N().
- *
  * Remove the flexslider_version variable.
  */
 function flexslider_update_7203(&$sandbox) {
   variable_del('flexslider_version');
 }
-
-// @todo add hook_update_N function to migrate old option set data to new values
