@@ -16,7 +16,7 @@ function flexslider_libraries_info() {
     'vendor url' => 'http://www.woothemes.com/flexslider/',
     'download url' => 'https://github.com/woothemes/FlexSlider',
     'version arguments' => array(
-      'file' => 'jquery.flexslider-min.js',
+      'file' => 'jquery.flexslider.js',
       'pattern' => '/jQuery FlexSlider v([0-9a-zA-Z\.-]+)/',
       'lines' => 2,
     ),
