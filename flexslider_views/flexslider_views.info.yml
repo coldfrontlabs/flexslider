@@ -3,6 +3,6 @@ description: 'Adds a Views style plugin for FlexSlider'
 core: 8.x
 package: FlexSlider
 dependencies:
-  - views
-  - flexslider
+  - drupal:views
+  - flexslider:flexslider
 type: module

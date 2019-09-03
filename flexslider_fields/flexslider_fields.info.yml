@@ -3,5 +3,5 @@ description: 'Adds a display mode in Fields for FlexSlider'
 core: 8.x
 package: FlexSlider
 dependencies:
-  - flexslider
+  - flexslider:flexslider
 type: module
