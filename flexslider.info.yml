@@ -4,6 +4,5 @@ core: 8.x
 package: FlexSlider
 dependencies:
   - drupal:image
-  - libraries:libraries
 type: module
 configure: entity.flexslider.collection
