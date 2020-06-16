@@ -218,7 +218,7 @@ function flexslider_optionset_list() {
  *
  * @param string $id
  *   optional ID Attribute for FlexSlider container.
- * @param object $optionset
+ * @param object|string $optionset
  *   optional Option set to load or the machine name of an existing optionset.
  *
  * @return array

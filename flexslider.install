@@ -13,7 +13,7 @@
 function flexslider_uninstall() {
   // Delete all of the configuration installed by this module.
   $dir = drupal_get_path('module', 'flexslider') . '/config/install';
-  $files = file_scan_directory($dir, '/.*/');
+  $files = \Drupal::service('file_system')->scanDirectory($dir, '/.*/');
   foreach ($files as $file) {
     \Drupal::configFactory()->getEditable($file->name)->delete();
   }
