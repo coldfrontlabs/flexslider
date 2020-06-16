@@ -1,8 +1,8 @@
 <?php
 
-namespace Drupal\flexslider\Tests\Update;
+namespace Drupal\Tests\flexslider\Functional\Update;
 
-use Drupal\system\Tests\Update\UpdatePathTestBase;
+use Drupal\FunctionalTests\Update\UpdatePathTestBase;
 
 /**
  * Provides tests for settings update.
@@ -16,7 +16,7 @@ class FlexsliderSettingsUpdateTest extends UpdatePathTestBase {
    */
   protected function setDatabaseDumpFiles() {
     $this->databaseDumpFiles = [
-      __DIR__ . '/../../../tests/fixtures/update/drupal-8.flexslider.pre8001.php.gz',
+      __DIR__ . '/../../../../tests/fixtures/update/drupal-8.flexslider.pre8001.php.gz',
     ];
   }
 
@@ -35,8 +35,8 @@ class FlexsliderSettingsUpdateTest extends UpdatePathTestBase {
 
     // Make sure settings are available and set to TRUE after the update.
     $settings = \Drupal::config('flexslider.settings')->get();
-    $this->assertTrue($settings['flexslider_css'], 'FlexSlider base css setting is TRUE after update');
-    $this->assertTrue($settings['flexslider_css'], 'FlexSlider module integration css setting is TRUE after update');
+    $this->assertNotEmpty($settings['flexslider_css'], 'FlexSlider base css setting is TRUE after update');
+    $this->assertNotEmpty($settings['flexslider_css'], 'FlexSlider module integration css setting is TRUE after update');
   }
 
 }

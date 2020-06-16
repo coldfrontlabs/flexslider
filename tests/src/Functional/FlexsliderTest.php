@@ -1,17 +1,19 @@
 <?php
 
-namespace Drupal\flexslider\Tests;
+namespace Drupal\Tests\flexslider\Functional;
 
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\flexslider\Entity\Flexslider;
 use Drupal\flexslider\FlexsliderDefaults;
-use Drupal\simpletest\WebTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Test the FlexSlider presets, configuration options and permission controls.
  *
  * @group flexslider
  */
-class FlexsliderTest extends WebTestBase {
+class FlexsliderTest extends BrowserTestBase {
+  use StringTranslationTrait;
 
   /**
    * Our module dependencies.
@@ -23,6 +25,11 @@ class FlexsliderTest extends WebTestBase {
    * @var array
    */
   public static $modules = ['flexslider', 'flexslider_library_test'];
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
 
   /**
    * User with permission to admin flexslider.
@@ -59,7 +66,7 @@ class FlexsliderTest extends WebTestBase {
 
     // Load admin page.
     $this->drupalGet('admin/config/media/flexslider');
-    $this->assertResponse(200, t('Administrative permission allows access to administration page.'));
+    $this->assertResponse(200);
 
     // Logout as admin user.
     $this->drupalLogout();
@@ -69,7 +76,7 @@ class FlexsliderTest extends WebTestBase {
 
     // Attempt to load admin page.
     $this->drupalGet('admin/config/media/flexslider');
-    $this->assertResponse(403, t('Regular users do not have access to administrative pages.'));
+    $this->assertResponse(403);
 
   }
 
@@ -85,38 +92,38 @@ class FlexsliderTest extends WebTestBase {
       // Create a new optionset with default settings.
       /** @var \Drupal\flexslider\Entity\Flexslider $optionset */
       $optionset = Flexslider::create(['id' => $name, 'label' => $name]);
-      $this->assertTrue($optionset->id() == $name, t('Optionset object created: @name', ['@name' => $optionset->id()]));
-      $this->assertFalse(empty($optionset->getOptions()), t('Create optionset works.'));
+      $this->assertNotEmpty($optionset->id() == $name, $this->t('Optionset object created: @name', ['@name' => $optionset->id()]));
+      $this->assertNotEmpty($optionset->getOptions(), $this->t('Create optionset works.'));
 
       // Save the optionset to the database.
       $optionset->save();
 
-      $this->assertFalse(FALSE === $optionset, t('Optionset saved to database.'));
+      $this->assertNotEmpty($optionset, $this->t('Optionset saved to database.'));
 
       // Read the values from the database.
       $optionset = Flexslider::load($name);
 
-      $this->assertTrue(is_object($optionset), t('Loaded option set.'));
-      $this->assertEqual($name, $optionset->id(), t('Loaded name matches: @name', ['@name' => $optionset->id()]));
+      $this->assertTrue(is_object($optionset), $this->t('Loaded option set.'));
+      $this->assertEqual($name, $optionset->id(), $this->t('Loaded name matches: @name', ['@name' => $optionset->id()]));
 
       /** @var \Drupal\flexslider\Entity\Flexslider $default_optionset */
       $default_optionset = Flexslider::create();
       foreach ($default_optionset->getOptions() as $key => $value) {
-        $this->assertEqual($value, $optionset->getOptions()[$key], t('Option @option matches saved value.', ['@option' => $key]));
+        $this->assertEqual($value, $optionset->getOptions()[$key], $this->t('Option @option matches saved value.', ['@option' => $key]));
       }
 
     }
 
     // Load all optionsets.
     $optionsets = Flexslider::loadMultiple();
-    $this->assertTrue(is_array($optionsets), t('Array of optionsets loaded'));
-    $this->assertTrue(count($optionsets) == 3, t('Proper number of optionsets loaded (two created, one default): 3'));
+    $this->assertTrue(is_array($optionsets), $this->t('Array of optionsets loaded'));
+    $this->assertNotEmpty(count($optionsets) == 3, $this->t('Proper number of optionsets loaded (two created, one default): 3'));
 
     // Ensure they all loaded correctly.
     foreach ($optionsets as $optionset) {
-      $this->assertTrue($optionset->id(), t('Loaded optionsets have a defined machine name'));
-      $this->assertTrue($optionset->label(), t('Loaded optionsets have a defined human readable name (label)'));
-      $this->assertTrue(!empty($optionset->getOptions()), t('Loaded optionsets have a defined array of options'));
+      $this->assertNotEmpty($optionset->id(), $this->t('Loaded optionsets have a defined machine name'));
+      $this->assertNotEmpty($optionset->label(), $this->t('Loaded optionsets have a defined human readable name (label)'));
+      $this->assertTrue(!empty($optionset->getOptions()), $this->t('Loaded optionsets have a defined array of options'));
     }
 
     // Update the optionset.
@@ -132,25 +139,25 @@ class FlexsliderTest extends WebTestBase {
     // Save the updated values.
     $saved = $optionset->save();
 
-    $this->assertTrue(SAVED_UPDATED == $saved, t('Saved updates to optionset to database.'));
+    $this->assertEqual($saved, SAVED_UPDATED, $this->t('Saved updates to optionset to database.'));
 
     // Load the values from the database again.
     $optionset = Flexslider::load($testsets[0]);
 
     // Compare settings to the test options.
     foreach ($test_options['set2'] as $key => $value) {
-      $this->assertEqual($optionset->getOptions()[$key], $value, t('Saved value matches set value: @key', ['@key' => $key]));
+      $this->assertEqual($optionset->getOptions()[$key], $value, $this->t('Saved value matches set value: @key', ['@key' => $key]));
     }
 
     // Delete the optionset.
-    $this->assertTrue(is_object($optionset), t('Optionset exists and is ready to be deleted.'));
+    $this->assertTrue(is_object($optionset), $this->t('Optionset exists and is ready to be deleted.'));
     try {
       $optionset->delete();
       // Ensure the delete is successful.
-      $this->pass(t('Optionset successfully deleted: @name', ['@name' => $optionset->id()]));
+      $this->pass($this->t('Optionset successfully deleted: @name', ['@name' => $optionset->id()]));
     }
     catch (\Exception $e) {
-      $this->fail(t('Caught exception: @msg', ['@msg' => $e->getMessage()]));
+      $this->fail($this->t('Caught exception: @msg', ['@msg' => $e->getMessage()]));
     }
 
   }
@@ -166,35 +173,35 @@ class FlexsliderTest extends WebTestBase {
     // ------------ Test Option Set Add ------------ //
     // Load create form.
     $this->drupalGet('admin/config/media/flexslider/add');
-    $this->assertResponse(200, t('Administrative user can reach the "Add" form.'));
+    $this->assertResponse(200);
 
     // Save new optionset.
     $optionset = [];
-    $optionset['label'] = t('testset');
+    $optionset['label'] = $this->t('testset');
     $optionset['id'] = 'testset';
-    $this->drupalPostForm('admin/config/media/flexslider/add', $optionset, t('Save'));
+    $this->drupalPostForm('admin/config/media/flexslider/add', $optionset, $this->t('Save'));
 
     $this->assertResponse(200);
-    $this->assertText('Created the testset FlexSlider optionset.', t('Successfully saved the new optionset "testset"'));
+    $this->assertText('Created the testset FlexSlider optionset.');
 
     // Attempt to save option set of the same name again.
-    $this->drupalPostForm('admin/config/media/flexslider/add', $optionset, t('Save'));
+    $this->drupalPostForm('admin/config/media/flexslider/add', $optionset, $this->t('Save'));
     $this->assertResponse(200);
-    $this->assertText('The machine-readable name is already in use. It must be unique.', t('Blocked the creation of duplicate named optionset.'));
+    $this->assertText('The machine-readable name is already in use. It must be unique.');
 
     // ------------ Test Option Set Edit ------------ //
     // Attempt to save each option value.
     $options = $this->getTestOptions();
 
     foreach ($options['valid'] as $testset) {
-      $this->drupalPostForm('admin/config/media/flexslider/default', $testset, t('Save'));
+      $this->drupalPostForm('admin/config/media/flexslider/default', $testset, $this->t('Save'));
       $this->assertResponse(200);
 
       // Test saved values loaded into form.
       $this->drupalGet('admin/config/media/flexslider/default');
-      $this->assertResponse(200, t('Default optionset reloaded.'));
+      $this->assertResponse(200);
       foreach ($testset as $key => $option) {
-        $this->assertFieldByName($key, $option, t('Value for @key appears in form correctly.', ['@key' => $key]));
+        $this->assertFieldByName($key, $option);
       }
     }
 
@@ -204,10 +211,10 @@ class FlexsliderTest extends WebTestBase {
     // Test the delete workflow.
     $this->drupalGet("admin/config/media/flexslider/{$testset->id()}/delete");
     $this->assertResponse(200);
-    $this->assertText("Are you sure you want to delete {$testset->label()}?", t('Delete confirmation form loaded.'));
-    $this->drupalPostForm("admin/config/media/flexslider/{$testset->id()}/delete", [], t('Delete'));
+    $this->assertText("Are you sure you want to delete {$testset->label()}?");
+    $this->drupalPostForm("admin/config/media/flexslider/{$testset->id()}/delete", [], $this->t('Delete'));
     $this->assertResponse(200);
-    $this->assertText("Deleted the {$testset->label()} FlexSlider optionset.", t('Deleted test set using form.'));
+    $this->assertText("Deleted the {$testset->label()} FlexSlider optionset.");
 
   }
 
@@ -222,36 +229,24 @@ class FlexsliderTest extends WebTestBase {
     $this->drupalLogin($this->adminUser);
 
     // Debug flag initially off.
-    $this->assertRaw(
-      'libraries/flexslider/jquery.flexslider-min.js',
-      t('Debug flag off: The minified FlexSlider library is loaded.')
-    );
+    $this->assertRaw('libraries/flexslider/jquery.flexslider-min.js');
 
     // Change the debug settings.
     $this->drupalGet('admin/config/media/flexslider/advanced');
     $settings['flexslider_debug'] = TRUE;
-    $this->drupalPostForm('admin/config/media/flexslider/advanced', $settings, t('Save configuration'));
+    $this->drupalPostForm('admin/config/media/flexslider/advanced', $settings, $this->t('Save configuration'));
 
     $this->assertResponse(200);
-    $this->assertText('The configuration options have been saved.', t('Successfully saved the configuration options'));
+    $this->assertText('The configuration options have been saved.');
 
     $this->drupalGet('user/' . $this->adminUser->id());
 
-    $this->assertRaw(
-      'libraries/flexslider/jquery.flexslider.js',
-      t('Debug flag on: The unminified FlexSlider library is loaded.')
-    );
+    $this->assertRaw('libraries/flexslider/jquery.flexslider.js');
 
     // Test the css settings.
     // Show that the css files are originally loaded.
-    $this->assertRaw(
-      'libraries/flexslider/flexslider.css',
-      t('The library css is initially loaded.')
-    );
-    $this->assertRaw(
-      'flexslider/assets/css/flexslider_img.css',
-      t('The module integration css is initially loaded.')
-    );
+    $this->assertRaw('libraries/flexslider/flexslider.css');
+    $this->assertRaw('flexslider/assets/css/flexslider_img.css');
 
     // Turn off the css.
     $this->drupalGet('admin/config/media/flexslider/advanced');
@@ -259,19 +254,13 @@ class FlexsliderTest extends WebTestBase {
       'flexslider_css' => FALSE,
       'integration_css' => FALSE,
     ];
-    $this->drupalPostForm('admin/config/media/flexslider/advanced', $settings, t('Save configuration'));
+    $this->drupalPostForm('admin/config/media/flexslider/advanced', $settings, $this->t('Save configuration'));
 
     $this->drupalGet('user/' . $this->adminUser->id());
 
     // Show css is not loaded when flags are off.
-    $this->assertNoRaw(
-      'libraries/flexslider/flexslider.css',
-      t('FlexSlider css flag off: The library css is not loaded.')
-    );
-    $this->assertNoRaw(
-      'flexslider/assets/css/flexslider_img.css',
-      t('FlexSlider integration css flag off: The module integration css is not loaded.')
-    );
+    $this->assertNoRaw('libraries/flexslider/flexslider.css');
+    $this->assertNoRaw('flexslider/assets/css/flexslider_img.css');
   }
 
   /**
