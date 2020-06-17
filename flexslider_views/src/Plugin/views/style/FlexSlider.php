@@ -65,7 +65,7 @@ class FlexSlider extends StylePluginBase {
     ];
 
     $form['flexslider']['optionset'] = [
-      '#title' => t('Option set'),
+      '#title' => $this->t('Option set'),
       '#type' => 'select',
       '#options' => flexslider_optionset_list(),
       '#default_value' => $this->options['optionset'],
