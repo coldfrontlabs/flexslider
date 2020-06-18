@@ -162,8 +162,7 @@ function flexslider_help($route_name, $route_match) {
       $output .= t('An <em>option set</em> defines exactly how a flexslider image gallery looks and behaves on your site.');
       $output .= '<br/>';
       $output .= t('For a full documentation of all options, refer to the official <a href=":docs" target="_new">FlexSlider documentation</a>.', ['@docs' => Url::fromUri('http://www.woothemes.com/flexslider/')->getUri()]);
-      return
-        '<p>' . $output . '</p>';
+      return '<p>' . $output . '</p>';
   }
 }
 
