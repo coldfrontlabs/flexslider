@@ -33,6 +33,12 @@ function flexslider_example_uninstall() {
     \Drupal::logger('flexslider')->info(t('Deleted @count flexslider_example nodes', ['@count' => count($nodes)]), []);
   }
 
+  // Remove Flexslider node type.
+  $content_type = \Drupal::entityTypeManager()->getStorage('node_type')->load('flexslider_example');
+  if (!empty($content_type)) {
+    $content_type->delete();
+  }
+
   // Now delete all of the configuration installed by this module.
   $dir = drupal_get_path('module', 'flexslider_example') . '/config/install';
   $files = \Drupal::service('file_system')->scanDirectory($dir, '/.*/');
