@@ -130,8 +130,6 @@ trait FlexsliderFormatterTrait {
 
       // Prepare the slide item render array.
       $item = [];
-      // @todo Should find a way of dealing with render arrays instead of the actual output
-      $item['slide'] = render($image);
 
       // Check caption settings.
       if ($formatter_settings['caption'] == 1) {
@@ -140,6 +138,9 @@ trait FlexsliderFormatterTrait {
       elseif ($formatter_settings['caption'] == 'alt') {
         $item['caption'] = ['#markup' => Xss::filterAdmin($image['#item']->alt)];
       }
+
+      // @todo Should find a way of dealing with render arrays instead of the actual output
+      $item['slide'] = render($image);
 
       $items[$delta] = $item;
     }
