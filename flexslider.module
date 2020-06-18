@@ -10,6 +10,7 @@ use Drupal\flexslider\Entity\Flexslider;
 
 /**
  * Implements hook_libraries_info().
+ *
  * @TODO: Remove this once 8.9 is the minimal core version and Libraries is no
  * longer required.
  */
@@ -39,6 +40,7 @@ function flexslider_libraries_info() {
 
 /**
  * Implements hook_libraries_info_alter().
+ *
  * @TODO: Remove this once 8.9 is the minimal core version and Libraries is no
  * longer required.
  */
@@ -94,7 +96,7 @@ function flexslider_library_info_alter(&$libraries, $extension) {
     }
     elseif (\Drupal::moduleHandler()->moduleExists('libraries')) {
       $library_path = '/' . libraries_get_path('flexslider');
-      // Set the correct path to where the library was downloaded if not standard.
+      // Set correct path to where the library was downloaded if not standard.
       if ($library_path !== $standard) {
         $libraries['flexslider']['js'][$library_path . '/jquery.flexslider-min.js'] = $libraries['flexslider']['js'][$standard . '/jquery.flexslider-min.js'];
         unset($libraries['flexslider']['js'][$standard . '/jquery.flexslider-min.js']);

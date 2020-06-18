@@ -215,8 +215,7 @@ trait FlexsliderFormatterTrait {
       '#type' => 'select',
       '#options' => $caption_options,
       '#default_value' => $default_value,
-     ];
-
+    ];
 
     // If the image field doesn't have all of the suitable caption sources,
     // tell the user.
