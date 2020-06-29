@@ -116,7 +116,7 @@ class FlexsliderTest extends BrowserTestBase {
 
     // Load all optionsets.
     $optionsets = Flexslider::loadMultiple();
-    $this->assertTrue(is_array($optionsets), $this->t('Array of optionsets loaded'));
+    $this->assertIsArray($optionsets, $this->t('Array of optionsets loaded'));
     $this->assertNotEmpty(count($optionsets) == 3, $this->t('Proper number of optionsets loaded (two created, one default): 3'));
 
     // Ensure they all loaded correctly.
