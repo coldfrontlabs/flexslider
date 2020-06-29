@@ -103,7 +103,7 @@ class FlexsliderTest extends BrowserTestBase {
       // Read the values from the database.
       $optionset = Flexslider::load($name);
 
-      $this->assertTrue(is_object($optionset), $this->t('Loaded option set.'));
+      $this->assertIsObject($optionset, $this->t('Loaded option set.'));
       $this->assertEqual($name, $optionset->id(), $this->t('Loaded name matches: @name', ['@name' => $optionset->id()]));
 
       /** @var \Drupal\flexslider\Entity\Flexslider $default_optionset */
@@ -150,7 +150,7 @@ class FlexsliderTest extends BrowserTestBase {
     }
 
     // Delete the optionset.
-    $this->assertTrue(is_object($optionset), $this->t('Optionset exists and is ready to be deleted.'));
+    $this->assertIsObject($optionset, $this->t('Optionset exists and is ready to be deleted.'));
     try {
       $optionset->delete();
       // Ensure the delete is successful.
