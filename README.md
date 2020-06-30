@@ -74,23 +74,27 @@ Composer may be used to download the library as follows...
     "libraries/{$name}": ["type:drupal-library"]
   `
 
-2. Add the following to composer.json _repositories_ section
-(your version may differ)
+2. Add the FlexSlider Library package to your composer file. Use _ONE_ of the
+following methods.
+    * Use https://github.com/balbuf/drupal-libraries-installer
+    OR
+    * Add the following to composer.json _repositories_ section
+    (your version may differ)
 
 
-    {
-      "type": "package",
-      "package": {
-        "name": "woothemes/flexslider",
-        "version": "2.6.3",
-        "type": "drupal-library",
-        "source": {
-          "url": "https://github.com/woothemes/FlexSlider.git",
-          "type": "git",
-          "reference": "2.6.3"
+        {
+          "type": "package",
+          "package": {
+            "name": "woothemes/flexslider",
+            "version": "2.6.3",
+            "type": "drupal-library",
+            "source": {
+              "url": "https://github.com/woothemes/FlexSlider.git",
+              "type": "git",
+              "reference": "2.6.3"
+            }
+          }
         }
-      }
-    }
 
 3. Open a command line terminal and navigate to the same directory as your
 composer.json file and run
