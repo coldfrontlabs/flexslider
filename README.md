@@ -85,13 +85,13 @@ following methods.
         {
           "type": "package",
           "package": {
-            "name": "woothemes/flexslider",
-            "version": "2.6.3",
+            "name": "woocommerce/flexslider",
+            "version": "2.7.2",
             "type": "drupal-library",
             "source": {
-              "url": "https://github.com/woothemes/FlexSlider.git",
+              "url": "https://github.com/woocommerce/FlexSlider.git",
               "type": "git",
-              "reference": "2.6.3"
+              "reference": "2.7.2"
             }
           }
         }
@@ -99,7 +99,7 @@ following methods.
 3. Open a command line terminal and navigate to the same directory as your
 composer.json file and run
   `
-    composer require woothemes/flexslider:~2.0
+    composer require woocommerce/flexslider:~2.0
   `
 
 Drush Make (Drush 8.x and below only)
