@@ -88,7 +88,7 @@ class FlexsliderResponsiveFormatter extends ResponsiveImageFormatter {
    */
   public function onDependencyRemoval(array $dependencies) {
     $changed = parent::onDependencyRemoval($dependencies);
-    if ($this->optionsetDependenciesDeleted($this, $dependencies)) {
+    if ($this->optionsetDependenciesDeleted($dependencies)) {
       $changed = TRUE;
     }
     return $changed;
