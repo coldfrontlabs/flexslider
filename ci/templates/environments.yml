@@ -1,0 +1,112 @@
+# This file is managed by dropfort/dropfort_module_build.
+# Modifications to this file will be overwritten by default.
+
+# Copyright (c) 2022 Coldfront Labs Inc.
+
+# This file is part of DropfortCI Scripts.
+
+# DropfortCI Scripts is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# DropfortCI Scripts is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with DropfortCI Scripts.  If not, see <https://www.gnu.org/licenses/>.
+
+
+########################################
+# Environment detection patterns.
+########################################
+
+## Feature environment.
+.feature_detect_template:
+  variables:
+    DF_ENV_TYPE: feature
+  environment:
+    name: feature/$CI_COMMIT_REF_NAME
+    action: prepare
+
+## Feature environment exclude rules.
+.feature_detect_exclude_rules:
+  rules:
+    - if: '$CI_COMMIT_TAG'
+      when: never
+    - if: '$CI_COMMIT_REF_PROTECTED == "true"'
+      when: never
+
+## Feature environment include rules.
+.feature_detect_include_rules:
+  rules:
+    - if: '$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH'
+
+## Dev environment.
+.dev_detect_template:
+  variables:
+    DF_ENV_TYPE: dev
+  environment:
+    name: dev
+    action: prepare
+
+## Dev environment exclude rules.
+.dev_detect_exclude_rules:
+  rules:
+    - if: '$CI_COMMIT_TAG'
+      when: never
+
+## Dev environment include rules.
+.dev_detect_include_rules:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+## QA environment.
+.qa_detect_template:
+  variables:
+    DF_ENV_TYPE: qa
+  environment:
+    name: qa
+    action: prepare
+
+## QA environment include rules.
+.qa_detect_include_rules:
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v?\d+\.\d+\.\d+-.+$/'
+
+## Prod environment.
+.prod_detect_template:
+  variables:
+    DF_ENV_TYPE: prod
+  environment:
+    name: prod
+    action: prepare
+
+## Prod environment include rules.
+.prod_detect_include_rules:
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v?\d+\.\d+\.\d+$/'
+
+## Non-release environment exclude rules.
+.non_release_detect_exclude_rules:
+  rules:
+    - if: '$CI_COMMIT_TAG'
+      when: never
+
+## Non-release environment include rules.
+.non_release_detect_include_rules:
+  rules:
+    - if: '$CI_COMMIT_BRANCH'
+
+## Release environment exclude rules.
+.release_detect_exclude_rules:
+  rules:
+    - if: '$CI_COMMIT_BRANCH'
+      when: never
+
+## Release environment include rules.
+.release_detect_include_rules:
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v?\d+\.\d+\.\d+(-.*)?$/'

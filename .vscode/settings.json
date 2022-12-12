@@ -1,0 +1,100 @@
+{
+  // This file is managed by dropfort/dropfort_module_build.
+  // Modifications to this file will be overwritten by default.
+  /* Dropfort Defaults */
+  "breadcrumbs.enabled": true,
+  "css.validate": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.tabSize": 2,
+  "editor.autoIndent": "full",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.insertSpaces": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": false,
+  "editor.renderWhitespace": "boundary",
+  "editor.wordWrapColumn": 80,
+  "editor.wordWrap": "off",
+  "editor.detectIndentation": true,
+  "editor.rulers": [
+    80
+  ],
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.maxColumn": 200,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[php]": {
+    "editor.defaultFormatter": "wongjn.php-sniffer",
+    "editor.formatOnPaste": false,
+    "editor.quickSuggestions": {
+      "comments": true
+    }
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "octref.vetur"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.associations": {
+    "*.inc": "php",
+    "*.module": "php",
+    "*.install": "php",
+    "*.theme": "php",
+    "*.tpl.php": "php",
+    "*.test": "php",
+    "*.php": "php",
+    "*.info": "ini",
+    "*.html.twig": "twig",
+    "devcontainer.json": "jsonc",
+    "settings.json": "jsonc"
+  },
+  "emmet.includeLanguages": {
+    "twig": "html"
+  },
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "html.format.enable": true,
+  "html.format.wrapLineLength": 80,
+  "typescript.suggest.paths": false,
+  "telemetry.enableCrashReporter": false,
+  "gitlab.instanceUrl": "https://git.dropfort.com",
+  "conventionalCommits.scopes": [
+    "vscode",
+    "ci",
+    "config",
+    "code",
+    "tests",
+    "docs",
+    "npm",
+    "composer",
+    "security",
+    "dependencies",
+    "ui"
+  ],
+  /* PHP Settings */
+  "php.suggest.basic": false,
+  "phpSniffer.run": "onSave",
+  "phpSniffer.executablesFolder": "./bin/",
+  "phpSniffer.standard": "Drupal,DrupalPractice",
+  "intelephense.environment.documentRoot": "web/core/index.php",
+  "debug.allowBreakpointsEverywhere": true,
+  "debug.showBreakpointsInOverviewRuler": true,
+  "terminal.integrated.env.osx": {
+    "VAGRANT_DOCKER_PROJECT_DIR": "${workspaceFolder}",
+    "COMPOSER_MEMORY_LIMIT": "-1"
+  },
+  "terminal.integrated.env.linux": {
+    "VAGRANT_DOCKER_PROJECT_DIR": "${workspaceFolder}",
+    "COMPOSER_MEMORY_LIMIT": "-1",
+    "PATH": "${env:PATH}:${workspaceFolder}/bin"
+  }
+}

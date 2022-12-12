@@ -1,0 +1,10 @@
+# This file is managed by dropfort/dropfort_module_build.
+# Delete this file and run `composer update dropfort/dropfort_module_build` to regenerate it.
+
+# Include the template scripts.
+include:
+  - '/ci/main.yml'
+
+default:
+  image:
+    name: "git.dropfort.com:4567/dropfort/dropfort_ci_runner:php80"

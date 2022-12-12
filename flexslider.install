@@ -12,7 +12,7 @@
  */
 function flexslider_uninstall() {
   // Delete all of the configuration installed by this module.
-  $dir = drupal_get_path('module', 'flexslider') . '/config/install';
+  $dir = \Drupal::service('extension.list.module')->getPath('flexslider') . '/config/install';
   $files = \Drupal::service('file_system')->scanDirectory($dir, '/.*/');
   foreach ($files as $file) {
     \Drupal::configFactory()->getEditable($file->name)->delete();
@@ -44,7 +44,7 @@ function flexslider_requirements($phase) {
 
       // Find the library in the profiles path if not found.
       if (!$found) {
-        $path = drupal_get_path('profile', \Drupal::installProfile());
+        $path = \Drupal::service('extension.list.profile')->getPath(\Drupal::installProfile());
         $path .= '/libraries/flexslider/jquery.flexslider-min.js';
         $found = file_exists($path);
       }

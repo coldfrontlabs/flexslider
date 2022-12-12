@@ -1,0 +1,81 @@
+# This file is managed by dropfort/dropfort_module_build.
+# Modifications to this file will be overwritten by default.
+
+# Copyright (c) 2022 Coldfront Labs Inc.
+
+# This file is part of DropfortCI Scripts.
+
+# DropfortCI Scripts is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# DropfortCI Scripts is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with DropfortCI Scripts.  If not, see <https://www.gnu.org/licenses/>.
+
+
+########################################
+# Test for outdated composer packages.
+########################################
+
+
+########################################
+# Templates.
+########################################
+
+## Composer outdated check template.
+.test_outdated_composer_template:
+  stage: validate
+  script:
+    - composer outdated --direct --outdated --minor-only --strict --no-interaction
+  interruptible: true
+  allow_failure: true
+
+## Composer outdated check exclude rules.
+.test_outdated_composer_exclude_rules:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - if: '$TARGET_PIPELINE != "all" && $TARGET_PIPELINE != "outdated" && $TARGET_PIPELINE != "validation"'
+      when: never
+    - if: '$SKIP_VALIDATE == "true"'
+      when: never
+    - if: '$CI_COMMIT_MESSAGE =~ /\[skip validate\]/'
+      when: never
+
+########################################
+# Jobs.
+########################################
+
+## Dev composer outdated check.
+#
+# Will run for both Feature and Development branches.
+test_outdated_composer_dev:
+  extends: .test_outdated_composer_template
+  needs:
+    - module_dev_build
+  rules:
+    - if: '$SKIP_JOBS =~ /test_outdated_composer_dev/'
+      when: never
+    - !reference [.test_outdated_composer_exclude_rules, rules]
+    - !reference [.non_release_detect_exclude_rules, rules]
+    - !reference [.non_release_detect_include_rules, rules]
+
+## Release composer outdated check.
+#
+# Will run for both QA and Production tags.
+test_outdated_composer_release:
+  extends: .test_outdated_composer_template
+  needs:
+    - module_release_build
+  rules:
+    - if: '$SKIP_JOBS =~ /test_outdated_composer_release/'
+      when: never
+    - !reference [.test_outdated_composer_exclude_rules, rules]
+    - !reference [.release_detect_exclude_rules, rules]
+    - !reference [.release_detect_include_rules, rules]

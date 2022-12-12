@@ -74,7 +74,7 @@ trait FlexsliderImageFormatterTrait {
       }
 
       // @todo Should find a way of dealing with render arrays instead of the actual output
-      $item['slide'] = render($image);
+      $item['slide'] = \Drupal::service('renderer')->render($image);
 
       $items[$delta] = $item;
     }
@@ -163,7 +163,7 @@ trait FlexsliderImageFormatterTrait {
       }
       $element['caption']['#description']
         = $formatter->t('You need to @action for this image field to be able to use it as a caption.',
-        ['@action' => render($action)]);
+        ['@action' => \Drupal::service('renderer')->render($action)]);
 
       // If there are no suitable caption sources, disable the caption element.
       if (count($action_fields) >= 2) {

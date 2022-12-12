@@ -11,7 +11,7 @@ use Drupal\flexslider\Entity\Flexslider;
 /**
  * Implements hook_libraries_info().
  *
- * @TODO: Remove this once 8.9 is the minimal core version and Libraries is no
+ * @todo Remove this once 8.9 is the minimal core version and Libraries is no
  * longer required.
  */
 function flexslider_libraries_info() {
@@ -41,7 +41,7 @@ function flexslider_libraries_info() {
 /**
  * Implements hook_libraries_info_alter().
  *
- * @TODO: Remove this once 8.9 is the minimal core version and Libraries is no
+ * @todo Remove this once 8.9 is the minimal core version and Libraries is no
  * longer required.
  */
 function flexslider_libraries_info_alter(&$libraries) {
@@ -87,7 +87,7 @@ function flexslider_library_info_alter(&$libraries, $extension) {
     }
 
     $standard = '/libraries/flexslider';
-    // @TODO Remove this conditional once 8.9 is the minimum supported core
+    // @todo Remove this conditional once 8.9 is the minimum supported core
     // version.
     if (\Drupal::hasService('library.libraries_directory_file_finder')) {
       /** @var \Drupal\Core\Asset\LibrariesDirectoryFileFinder $library_file_finder */

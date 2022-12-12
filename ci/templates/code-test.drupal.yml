@@ -1,0 +1,76 @@
+# This file is managed by dropfort/dropfort_module_build.
+# Modifications to this file will be overwritten by default.
+
+# Copyright (c) 2022 Coldfront Labs Inc.
+
+# This file is part of DropfortCI Scripts.
+
+# DropfortCI Scripts is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# DropfortCI Scripts is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with DropfortCI Scripts.  If not, see <https://www.gnu.org/licenses/>.
+
+
+########################################
+# Drupal coding standards.
+########################################
+
+
+########################################
+# Templates.
+########################################
+
+## Drupal code check template.
+.drupal_coding_standards_template:
+  stage: test
+  script:
+    - composer install --optimize-autoloader
+    - npm run lint:php
+
+## Drupal code check exclude rules.
+.drupal_coding_standards_exclude_rules:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - if: '$TARGET_PIPELINE != "all" && $TARGET_PIPELINE != "build_and_deploy"'
+      when: never
+
+########################################
+# Jobs.
+########################################
+
+## Dev Drupal coding standards check.
+#
+# Will run for both Feature and Development branches.
+drupal_coding_standards_dev:
+  extends: .drupal_coding_standards_template
+  dependencies:
+    - module_dev_build
+  rules:
+    - if: '$SKIP_JOBS =~ /drupal_coding_standards_dev/'
+      when: never
+    - !reference [.drupal_coding_standards_exclude_rules, rules]
+    - !reference [.non_release_detect_exclude_rules, rules]
+    - !reference [.non_release_detect_include_rules, rules]
+
+## Release Drupal coding standard check.
+#
+# Will run for both QA and Production tags.
+drupal_coding_standards_release:
+  extends: .drupal_coding_standards_template
+  dependencies:
+    - module_release_build
+  rules:
+    - if: '$SKIP_JOBS =~ /drupal_coding_standards_release/'
+      when: never
+    - !reference [.drupal_coding_standards_exclude_rules, rules]
+    - !reference [.release_detect_exclude_rules, rules]
+    - !reference [.release_detect_include_rules, rules]

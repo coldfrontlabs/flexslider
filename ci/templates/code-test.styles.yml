@@ -1,0 +1,66 @@
+# This file is managed by dropfort/dropfort_module_build.
+# Modifications to this file will be overwritten by default.
+
+# Copyright (c) 2022 Coldfront Labs Inc.
+
+# This file is part of DropfortCI Scripts.
+
+# DropfortCI Scripts is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# DropfortCI Scripts is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with DropfortCI Scripts.  If not, see <https://www.gnu.org/licenses/>.
+
+
+########################################
+# Styles coding standards.
+########################################
+
+
+########################################
+# Templates.
+########################################
+
+## Styles code check template.
+.styles_coding_standards_template:
+  stage: test
+  script:
+    - npm install
+    - npm run lint:styles
+  interruptible: true
+  needs: []
+
+## Styles code check exclude rules.
+.styles_coding_standards_exclude_rules:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - if: '$TARGET_PIPELINE != "all" && $TARGET_PIPELINE != "build_and_deploy"'
+      when: never
+
+## Styles code check include rules.
+.styles_coding_standards_include_rules:
+  rules:
+    - exists:
+        - ".stylelintrc.js"
+
+
+########################################
+# Jobs.
+########################################
+
+## Styles coding standards check.
+styles_coding_standards:
+  extends: .styles_coding_standards_template
+  rules:
+    - if: '$SKIP_JOBS =~ /styles_coding_standards/'
+      when: never
+    - !reference [.styles_coding_standards_exclude_rules, rules]
+    - !reference [.styles_coding_standards_include_rules, rules]

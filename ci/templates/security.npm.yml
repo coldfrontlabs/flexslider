@@ -1,0 +1,88 @@
+# This file is managed by dropfort/dropfort_module_build.
+# Modifications to this file will be overwritten by default.
+
+# Copyright (c) 2022 Coldfront Labs Inc.
+
+# This file is part of DropfortCI Scripts.
+
+# DropfortCI Scripts is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# DropfortCI Scripts is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with DropfortCI Scripts.  If not, see <https://www.gnu.org/licenses/>.
+
+
+########################################
+# NPM security test.
+########################################
+
+
+########################################
+# Templates.
+########################################
+
+## NPM security check template.
+.npm_security_template:
+  stage: security
+  variables:
+    GIT_STRATEGY: clone
+  interruptible: true
+  allow_failure: true
+  script:
+    - test -f package-lock.json || npm i --package-lock-only
+    - mkdir -p testing/security/reports
+    - npm audit --production | tee testing/security/reports/npm_audit.txt
+  artifacts:
+    name: "$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME-npm_audit"
+    paths:
+      - testing/security/reports
+    when: on_failure
+
+## NPM security check exclude rules.
+.npm_security_exclude_rules:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - if: '$TARGET_PIPELINE != "all" && $TARGET_PIPELINE != "security_checks" && $TARGET_PIPELINE != "outdated"'
+      when: never
+    - if: '$CI_COMMIT_MESSAGE =~ /\[validate only\]/'
+      when: never
+
+########################################
+# Jobs.
+########################################
+
+## Dev NPM security check.
+#
+# Will run for both Feature and Development branches.
+validate_security_npm_dev:
+  extends:
+    - .npm_security_template
+  artifacts:
+    expire_in: 1 day
+  rules:
+    - if: '$SKIP_JOBS =~ /validate_security_npm_dev/'
+      when: never
+    - !reference [.npm_security_exclude_rules, rules]
+    - !reference [.non_release_detect_exclude_rules, rules]
+    - !reference [.non_release_detect_include_rules, rules]
+
+## Release NPM security check.
+#
+# Will run for both QA and Production tags.
+validate_security_npm_release:
+  extends:
+    - .npm_security_template
+  rules:
+    - if: '$SKIP_JOBS =~ /validate_security_npm_release/'
+      when: never
+    - !reference [.npm_security_exclude_rules, rules]
+    - !reference [.release_detect_exclude_rules, rules]
+    - !reference [.release_detect_include_rules, rules]

@@ -1,0 +1,71 @@
+# This file is managed by dropfort/dropfort_module_build.
+# Modifications to this file will be overwritten by default.
+
+# Copyright (c) 2022 Coldfront Labs Inc.
+
+# This file is part of DropfortCI Scripts.
+
+# DropfortCI Scripts is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# DropfortCI Scripts is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with DropfortCI Scripts.  If not, see <https://www.gnu.org/licenses/>.
+
+include:
+  - local: '/ci/templates/environments.yml'
+  - local: '/ci/templates/build.module.yml'
+  - local: '/ci/templates/code-test.drupal.yml'
+  - local: '/ci/templates/code-test.scripts.yml'
+  - local: '/ci/templates/code-test.styles.yml'
+  - local: '/ci/templates/release.package.yml'
+  - local: '/ci/templates/post-security.apply-updates.yml'
+  - local: '/ci/templates/security.composer.yml'
+  - local: '/ci/templates/security.npm.yml'
+  - local: '/ci/templates/validate.outdated.composer.yml'
+  - local: '/ci/templates/validate.outdated.npm.yml'
+  - local: '/ci/templates/validate.phpcompatibility.yml'
+
+stages:
+  - build
+  - test
+  - validate
+  - security
+  - post_security
+  - release
+
+variables:
+  GET_SOURCES_ATTEMPTS: 3
+  PHPCS_EXTENSIONS: php,module,inc,install,test,profile,theme
+  PHPCS_IGNORE: "**/testing/*,**/test/*,**/node_modules/*,**/vendor/*,**/bin/*,**/docker/*,*.md,web/autoload.php,web/*/contrib/*,web/core/*,web/libraries/*,web/sites/*/files/*"
+  TARGET_PIPELINE: all
+  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
+  COMPOSER_VERSION: '--2'
+
+default:
+  before_script:
+    - mkdir -p bin
+    - export PATH="$(pwd)/vendor/bin:$(pwd)/bin:$PATH"
+    - >
+      php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+      && php -r "if (hash_file('SHA384', 'composer-setup.php') === '$COMPOSER_SHA') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+      && php composer-setup.php --install-dir=bin --filename=composer
+      && php -r "unlink('composer-setup.php');"
+      && echo "Composer installed"
+    - composer self-update $COMPOSER_VERSION
+    - composer --version
+    - composer clearcache
+
+  # Composer stores all downloaded packages in the vendor/ directory.
+  # Do not use the following if the vendor/ directory is commited to
+  # your git repository.
+  cache: {}
+    # key: ${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_IID}
+    # untracked: true
+    # policy: pull
