@@ -37,9 +37,6 @@ function flexslider_requirements($phase) {
     }
     else {
       $path = DRUPAL_ROOT . '/libraries/flexslider/jquery.flexslider-min.js';
-      if (\Drupal::moduleHandler()->moduleExists('libraries')) {
-        $path = libraries_get_path('flexslider') . '/jquery.flexslider-min.js';
-      }
       $found = file_exists($path);
 
       // Find the library in the profiles path if not found.

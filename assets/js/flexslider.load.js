@@ -16,47 +16,45 @@
    * @private
    */
   function flexsliderInit(id, optionset, context) {
-    $(`#${id}`, context)
-      .once("flexslider")
-      .each(() => {
-        // Remove width/height attributes.
-        // @todo load the css path from the settings
-        $(this)
-          .find("ul.slides > li > *")
-          .removeAttr("width")
-          .removeAttr("height");
+    $(once("flexslider", `#${id}`, context)).each(() => {
+      // Remove width/height attributes.
+      // @todo load the css path from the settings
+      $(this)
+        .find("ul.slides > li > *")
+        .removeAttr("width")
+        .removeAttr("height");
 
-        if (optionset) {
-          // Add events that developers can use to interact.
-          $(this).flexslider(
-            $.extend(optionset, {
-              start(slider) {
-                slider.trigger("start", [slider]);
-              },
-              before(slider) {
-                slider.trigger("before", [slider]);
-              },
-              after(slider) {
-                slider.trigger("after", [slider]);
-              },
-              end(slider) {
-                slider.trigger("end", [slider]);
-              },
-              added(slider) {
-                slider.trigger("added", [slider]);
-              },
-              removed(slider) {
-                slider.trigger("removed", [slider]);
-              },
-              init(slider) {
-                slider.trigger("init", [slider]);
-              },
-            })
-          );
-        } else {
-          $(this).flexslider();
-        }
-      });
+      if (optionset) {
+        // Add events that developers can use to interact.
+        $(this).flexslider(
+          $.extend(optionset, {
+            start(slider) {
+              slider.trigger("start", [slider]);
+            },
+            before(slider) {
+              slider.trigger("before", [slider]);
+            },
+            after(slider) {
+              slider.trigger("after", [slider]);
+            },
+            end(slider) {
+              slider.trigger("end", [slider]);
+            },
+            added(slider) {
+              slider.trigger("added", [slider]);
+            },
+            removed(slider) {
+              slider.trigger("removed", [slider]);
+            },
+            init(slider) {
+              slider.trigger("init", [slider]);
+            },
+          })
+        );
+      } else {
+        $(this).flexslider();
+      }
+    });
   }
 
   Drupal.behaviors.flexslider = {

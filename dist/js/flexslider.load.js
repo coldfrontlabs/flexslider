@@ -4,7 +4,7 @@
   (function ($) {
     function flexsliderInit(id, optionset, context) {
       var _this = this;
-      $("#".concat(id), context).once("flexslider").each(function () {
+      $(once('flexslider', "#".concat(id), context)).each(function () {
         $(_this).find("ul.slides > li > *").removeAttr("width").removeAttr("height");
         if (optionset) {
           $(_this).flexslider($.extend(optionset, {

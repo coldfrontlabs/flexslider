@@ -94,19 +94,6 @@ function flexslider_library_info_alter(&$libraries, $extension) {
       $library_file_finder = \Drupal::service('library.libraries_directory_file_finder');
       $library_path = '/' . $library_file_finder->find('flexslider');
     }
-    elseif (\Drupal::moduleHandler()->moduleExists('libraries')) {
-      $library_path = '/' . libraries_get_path('flexslider');
-      // Set correct path to where the library was downloaded if not standard.
-      if ($library_path !== $standard) {
-        $libraries['flexslider']['js'][$library_path . '/jquery.flexslider-min.js'] = $libraries['flexslider']['js'][$standard . '/jquery.flexslider-min.js'];
-        unset($libraries['flexslider']['js'][$standard . '/jquery.flexslider-min.js']);
-
-        if (!empty($libraries['flexslider']['css'])) {
-          $libraries['flexslider']['css']['component'][$library_path . '/flexslider.css'] = $libraries['flexslider']['css']['component'][$standard . '/flexslider.css'];
-          unset($libraries['flexslider']['css']['component'][$standard . '/flexslider.css']);
-        }
-      }
-    }
     else {
       $library_path = $standard;
     }

@@ -1,7 +1,7 @@
 name: 'FlexSlider Views Style'
 description: 'Adds a Views style plugin for FlexSlider'
 core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10
 package: FlexSlider
 dependencies:
   - drupal:views
