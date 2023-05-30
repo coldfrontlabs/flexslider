@@ -16,7 +16,7 @@
    * @private
    */
   function flexsliderInit(id, optionset, context) {
-    $(once("flexslider", `#${id}`, context)).each(() => {
+    $(once("flexslider", `#${id}`, context)).each(function () {
       // Remove width/height attributes.
       // @todo load the css path from the settings
       $(this)

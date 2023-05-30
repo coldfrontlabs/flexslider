@@ -3,11 +3,10 @@
 
   (function ($) {
     function flexsliderInit(id, optionset, context) {
-      var _this = this;
-      $(once('flexslider', "#".concat(id), context)).each(function () {
-        $(_this).find("ul.slides > li > *").removeAttr("width").removeAttr("height");
+      $(once("flexslider", "#".concat(id), context)).each(function () {
+        $(this).find("ul.slides > li > *").removeAttr("width").removeAttr("height");
         if (optionset) {
-          $(_this).flexslider($.extend(optionset, {
+          $(this).flexslider($.extend(optionset, {
             start: function start(slider) {
               slider.trigger("start", [slider]);
             },
@@ -31,7 +30,7 @@
             }
           }));
         } else {
-          $(_this).flexslider();
+          $(this).flexslider();
         }
       });
     }
