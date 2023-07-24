@@ -28,23 +28,14 @@ function flexslider_requirements($phase) {
 
   // Check to see if the flexslider library is available.
   if ($phase == 'runtime') {
-    // @todo Remove this conditional once 8.9 is the minimum supported core
-    // version.
-    if (\Drupal::hasService('library.libraries_directory_file_finder')) {
-      /** @var \Drupal\Core\Asset\LibrariesDirectoryFileFinder $library_file_finder */
-      $library_file_finder = \Drupal::service('library.libraries_directory_file_finder');
-      $found = (bool) $library_file_finder->find('flexslider/jquery.flexslider-min.js');
-    }
-    else {
-      $path = DRUPAL_ROOT . '/libraries/flexslider/jquery.flexslider-min.js';
-      $found = file_exists($path);
+    $path = DRUPAL_ROOT . '/libraries/flexslider/jquery.flexslider-min.js';
+    $found = file_exists($path);
 
-      // Find the library in the profiles path if not found.
-      if (!$found) {
-        $path = \Drupal::service('extension.list.profile')->getPath(\Drupal::installProfile());
-        $path .= '/libraries/flexslider/jquery.flexslider-min.js';
-        $found = file_exists($path);
-      }
+    // Find the library in the profiles path if not found.
+    if (!$found) {
+      $path = \Drupal::service('extension.list.profile')->getPath(\Drupal::installProfile());
+      $path .= '/libraries/flexslider/jquery.flexslider-min.js';
+      $found = file_exists($path);
     }
 
     if (!$found) {

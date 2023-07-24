@@ -1,7 +1,7 @@
 name: 'FlexSlider Example'
 description: 'Provide FlexSlider Example content type and related configuration. Used for generating example FlexSlider implementations'
 type: module
-core_version_requirement: ^8 || ^9 || ^10
+core_version_requirement: ^9 || ^10
 package: FlexSlider
 dependencies:
   - drupal:field
